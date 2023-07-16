@@ -7,7 +7,7 @@
 }
 
 .form-container {
-  background-color: rgb(230, 226, 226);
+  background-color: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -50,7 +50,7 @@ button[type="submit"]:hover {
 }
 
 .user-container {
-  background-color: rgb(149, 145, 145);
+  background-color: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

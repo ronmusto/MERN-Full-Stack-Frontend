@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Home.css';
+import './Home.module.css';
 
 const Home = () => {
     return <h1>Home</h1>;
