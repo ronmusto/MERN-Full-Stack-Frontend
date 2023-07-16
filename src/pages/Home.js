@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Home.module.css';
+import styles from './Home.module.css';
 
-const Home = () => {
-    return <h1>Home</h1>;
-};
+/* const Home = () => {
+    return <h1 className={styles.homeContainer}>Home</h1>;
+};*/
 
 function App() {
   const navigate = useNavigate();
@@ -54,11 +54,10 @@ function App() {
   
   
   return (
-    <div className="App">
-      <Home /> {/* Incorporating the Home component here */}
-      <div className="container">
-        <div className="form-container">
-          <h1 className="register-heading">Register</h1>
+    <div className={styles.homeContainer}>
+      <div className={styles.container}>
+        <div className={styles.formContainer}>
+          <h1 className={styles.registerHeading}>Register</h1>
           <form onSubmit={handleRegister}>
             <input
               type="email"
@@ -75,8 +74,8 @@ function App() {
             <button type="submit">Register</button>
           </form>
         </div>
-        <div className="form-container">
-          <h1 className="login-heading">Login</h1>
+        <div className={styles.formContainer}>
+          <h1 className={styles.loginHeading}>Login</h1>
           <form onSubmit={handleLogin}>
             <input
               type="email"
@@ -96,7 +95,7 @@ function App() {
       </div>
 
       {user && (
-        <div className="user-container">
+        <div className={styles.userContainer}>
           <h2>User</h2>
           <p>Email: {user.email}</p>
           {/* User's password should not be displayed for security reasons */}

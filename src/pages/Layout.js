@@ -1,21 +1,21 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import './Layout.module.css';
+import styles from './Layout.module.css';
 
 const Layout = () => {
   return (
-    <div className="container">
-      <header className="header">
-        <h1 className="logo">My Website</h1>
-        <nav className="navigation">
-          <ul className="nav-list">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">
-                Home
+    <div className={styles.layoutContainer}>
+      <header className={styles.layoutHeader}>
+        <h1 className={styles.layoutLogo}>Renaldo's Website</h1>
+        <nav className={styles.layoutNavigation}>
+          <ul className={styles.layoutNavList}>
+            <li className={styles.layoutNavItem}>
+              <Link to="/" className={styles.layoutNavLink}>
+                Login
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/contact" className="nav-link">
+            <li className={styles.layoutNavItem}>
+              <Link to="/contact" className={styles.layoutNavLink}>
                 Contact
               </Link>
             </li>

@@ -1,4 +1,4 @@
-.home-container {
+.homeContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background-color: #353131;
 }
 
-.form-container {
+.formContainer {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
@@ -14,13 +14,13 @@
   margin: 1rem;
 }
 
-.register-heading {
+.registerHeading {
   color: #ff5e3a;
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-.login-heading {
+.loginHeading {
   color: #0bceaf;
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -49,7 +49,7 @@ button[type="submit"]:hover {
   background-color: #079e8f;
 }
 
-.user-container {
+.userContainer {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
@@ -58,9 +58,8 @@ button[type="submit"]:hover {
   text-align: center;
 }
 
-.user-container h2 {
+.userContainer h2 {
   color: #ff5e3a;
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
-  

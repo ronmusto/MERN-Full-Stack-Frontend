@@ -1,8 +1,9 @@
-.layout-container {
+.layoutContainer {
   background-color: #fcfcfc;
+  padding-top: 75px;
 }
 
-.layout-header {
+.layoutHeader {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,32 +12,32 @@
   align-items: center;
   justify-content: space-between;
   background-color: #323232;
-  padding: 10px 20px;
+  padding: 10px 15px;
   z-index: 999;
 }
 
-.layout-logo {
+.layoutLogo {
   font-size: 24px;
   font-weight: bold;
 }
 
-.layout-navigation {
+.layoutNavigation {
   display: flex;
 }
 
-.layout-nav-list {
+.layoutNavList {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
 }
 
-.layout-nav-item {
+.layoutNavItem {
   margin-left: 10px;
 }
 
-.layout-nav-link {
-  color: #333;
+.layoutNavLink {
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
 }
