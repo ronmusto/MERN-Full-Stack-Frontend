@@ -1,0 +1,42 @@
+.layout-container {
+    background-color: #8b8787;
+  }
+  
+  .layout-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #746d6d;
+    padding: 10px 20px;
+    z-index: 999;
+  }
+  
+  .layout-logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .layout-navigation {
+    display: flex;
+  }
+  
+  .layout-nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .layout-nav-item {
+    margin-left: 10px;
+  }
+  
+  .layout-nav-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
