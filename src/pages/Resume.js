@@ -1,8 +1,9 @@
 import React from 'react';
+import './Resume.module.css';
 
 const Resume = () => {
   return (
-    <div>
+    <div className="resume">
       <h1>Resume</h1>
 
       <section>
@@ -20,7 +21,7 @@ const Resume = () => {
 
       <section>
         <h2>Technical Skills</h2>
-        <ul>
+        <ul className="skills-list">
           <li>Programming Languages: JavaScript, Java, C++, SQL, R, Python, Typescript, HTML & CSS</li>
           <li>Full Stack Development: MEAN Stack (MongoDB, Express, Angular, Node.js)</li>
           <li>Cloud Deployment: AWS (API Gateway, Lambda, DynamoDB, S3)</li>
@@ -34,7 +35,7 @@ const Resume = () => {
 
       <section>
         <h2>Additional Skills</h2>
-        <ul>
+        <ul className="skills-list">
           <li>Proficient in version control using Git</li>
           <li>Proficient in using command line for various purposes</li>
           <li>Strong knowledge of common data structures and algorithms</li>

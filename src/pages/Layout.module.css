@@ -1,8 +1,3 @@
-.layoutContainer {
-  background-color: #fcfcfc;
-  padding-top: 75px;
-}
-
 .layoutHeader {
   position: fixed;
   top: 0;
@@ -11,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #323232;
+  background-color: #333333;
   padding: 10px 15px;
   z-index: 999;
 }
@@ -19,6 +14,7 @@
 .layoutLogo {
   font-size: 24px;
   font-weight: bold;
+  color: #ffffff;
 }
 
 .layoutNavigation {

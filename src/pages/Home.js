@@ -16,13 +16,14 @@ function App() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-
+  
     fetch('http://localhost:4200/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: regEmail, password: regPassword })
+      body: JSON.stringify({ email: regEmail, password: regPassword }),
+      credentials: 'include'  // include credentials
     })
       .then(response => response.json())
       .then(data => {
@@ -30,7 +31,7 @@ function App() {
       })
       .catch(err => console.error('Error registering:', err));
   };
-
+  
   const handleLogin = (e) => {
     e.preventDefault();
   
@@ -39,7 +40,8 @@ function App() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: loginEmail, password: loginPassword })
+      body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+      credentials: 'include'  // include credentials
     })
     .then(response => response.json())
     .then(data => {
@@ -50,8 +52,6 @@ function App() {
     })
     .catch(err => console.error('Error logging in:', err));
   };
-  
-  
   
   return (
     <div className={styles.homeContainer}>
