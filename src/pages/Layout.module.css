@@ -1,0 +1,39 @@
+.layoutHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #333333;
+  padding: 10px 15px;
+  z-index: 999;
+}
+
+.layoutLogo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.layoutNavigation {
+  display: flex;
+}
+
+.layoutNavList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.layoutNavItem {
+  margin-left: 10px;
+}
+
+.layoutNavLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
