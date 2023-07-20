@@ -1,13 +1,18 @@
-// ProtectedRoute.js
-import { Navigate, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../UserContex';  // Import your UserContext
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../UserContex';
 
-function ProtectedRoute({ children }) {
+const ProtectedRoute = ({ children }) => {
   const { user } = useContext(UserContext);
-  const location = useLocation();
+  const navigate = useNavigate();
 
-  return user ? children : <Navigate to="/" state={{ from: location }} />;
-}
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
+  return user ? children : <Navigate to="/login" replace />;
+};
 
 export default ProtectedRoute;

@@ -42,14 +42,14 @@ function App() {
       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
       credentials: 'include'  // include credentials
     })
-    .then(response => response.json())
-    .then(data => {
-      setUser(data.user);
-      if (data.user) {
-        navigate('/AI');
-      }
-    })
-    .catch(err => console.error('Error logging in:', err));
+      .then(response => response.json())
+      .then(data => {
+        setUser(data.user);
+        if (data.user) {
+          navigate('/AI'); // Redirect to /AI page
+        }
+      })
+      .catch(err => console.error('Error logging in:', err));
   };
 
   return (
