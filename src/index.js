@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from 'react';
-import { UserContext } from "./UserContex"; // Make sure this path is correct
+import { useState, useEffect } from "react";
+import { UserContext } from "./UserContext";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -12,7 +12,37 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [user, setUser] = useState(null);
-  
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Verify token on page refresh
+      fetch("http://localhost:4200/verify", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setUser(data.user);
+        })
+        .catch((err) => {
+          console.error("Error verifying token:", err);
+          setUser(null);
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or your custom loading component
+  }
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
@@ -30,5 +60,5 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
