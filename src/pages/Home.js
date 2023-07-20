@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import styles from './Home.module.css';
 import { UserContext } from '../UserContex';
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -7,11 +7,11 @@ import AI from './AI';
 
 function App() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext); // Use context here
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [user, setUser] = useState(null);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -53,10 +53,11 @@ function App() {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <div>
       <Routes>
-        <Route path="/login" element={
+        <Route path="/" element={
           <div className={styles.homeContainer}>
+            {/* Login and registration forms */}
             <div className={styles.container}>
               <div className={styles.formContainer}>
                 <h1 className={styles.registerHeading}>Register</h1>
@@ -95,7 +96,6 @@ function App() {
                 </form>
               </div>
             </div>
-
             {user && (
               <div className={styles.userContainer}>
                 <h2>User</h2>
@@ -111,7 +111,7 @@ function App() {
           </ProtectedRoute>
         } />
       </Routes>
-    </UserContext.Provider>
+    </div>
   );
 }
 

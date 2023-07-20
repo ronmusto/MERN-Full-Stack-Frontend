@@ -7,7 +7,7 @@ function ProtectedRoute({ children }) {
   const { user } = useContext(UserContext);
   const location = useLocation();
 
-  return user ? children : <Navigate to="/login" state={{ from: location }} />;
+  return user ? children : <Navigate to="/" state={{ from: location }} />;
 }
 
 export default ProtectedRoute;
