@@ -6,7 +6,6 @@ const Layout = () => {
   return (
     <div className={styles.layoutContainer}>
       <header className={styles.layoutHeader}>
-        <h1 className={styles.layoutLogo}>Renaldo's Website</h1>
         <nav className={styles.layoutNavigation}>
           <ul className={styles.layoutNavList}>
             <li className={styles.layoutNavItem}>
