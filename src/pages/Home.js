@@ -12,62 +12,35 @@ function Home() {
   const [regPassword, setRegPassword] = useState('');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    console.log("Stored token:", token);
-
-    if (token) {
-      fetch('http://localhost:4200/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: 'include',
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.user) {
-            setUser(data.user);
-            console.log("User after verification:", data.user);
-          } else {
-            setUser(null);
-            localStorage.removeItem('token');
-          }
-        })
-        .catch(err => {
-          console.error('Error verifying token:', err);
-          setUser(null);
-          localStorage.removeItem('token');
-        });
-    } else {
-      setUser(null);
-    }
-  }, [setUser]);
-
-  const handleRegister = e => {
-    e.preventDefault();
-
-    fetch('http://localhost:4200/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: regEmail, password: regPassword }),
-      credentials: 'include',
+    fetch('http://localhost:4200/verify', {
+      method: 'GET',
+      credentials: 'include',  // include credentials to send the cookies
     })
-      .then(response => response.json())
-      .then(data => {
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response from /verify:', data);  // log the response from the server
+      if (data.user) {
         setUser(data.user);
-        localStorage.setItem('token', data.token);
-      })
-      .catch(err => console.error('Error registering:', err));
-  };
+      } else {
+        setUser(null);
+      }
+    })
+    .catch(err => {
+      console.error('Error verifying token:', err);
+      setUser(null);
+    })
+    .finally(() => {
+      setIsLoading(false);  // set isLoading to false once the request is complete
+    });
+  }, [setUser]);
+  
 
   const handleLogin = e => {
     e.preventDefault();
-
+  
     fetch('http://localhost:4200/login', {
       method: 'POST',
       headers: {
@@ -80,16 +53,32 @@ function Home() {
       .then(data => {
         setUser(data.user);
         if (data.user) {
-          localStorage.setItem('token', data.token);
           navigate('/ai'); // Redirect to /ai page
         }
       })
       .catch(err => console.error('Error logging in:', err));
   };
+  
+  const handleRegister = e => {
+    e.preventDefault();
+  
+    fetch('http://localhost:4200/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: regEmail, password: regPassword }),
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then(data => {
+        setUser(data.user);
+      })
+      .catch(err => console.error('Error registering:', err));
+  };
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('token');
     navigate('/'); // Redirect to home page
   };
 

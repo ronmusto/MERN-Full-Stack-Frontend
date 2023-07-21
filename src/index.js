@@ -12,7 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);  // set this to false initially
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,7 +47,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/*" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="AI" element={<ProtectedRoute><AI /></ProtectedRoute>} />
             <Route path="contact" element={<Contact />} />
