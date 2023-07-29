@@ -9,19 +9,23 @@ Chart.register(BarController, LinearScale, CategoryScale, BarElement);
 const AI = () => {
   const [prediction, setPrediction] = useState('');
   const [inputs, setInputs] = useState({
-    medInc: '',
-    houseAge: '',
-    aveRooms: '',
-    aveBedrms: '',
-    population: '',
-    aveOccup: '',
-    latitude: '',
-    longitude: ''
+    medInc: '2.5',
+    houseAge: '35',
+    aveRooms: '5',
+    aveBedrms: '1',
+    population: '1000',
+    aveOccup: '3',
+    latitude: '34',
+    longitude: '-118'
   });
 
   const [importances, setImportances] = useState([]);
 
-  const expectedFeatures = ['medInc', 'houseAge', 'aveRooms', 'aveBedrms', 'population', 'aveOccup', 'latitude', 'longitude'];
+  // ADD THIS NEW STATE VARIABLE
+  const [key, setKey] = useState(0);
+
+  const expectedFeatures = ['medInc', 'houseAge', 'aveRooms', 'aveBedrms',
+   'population', 'aveOccup', 'latitude', 'longitude'];
 
   const handleChange = (event) => {
     setInputs({ ...inputs, [event.target.name]: event.target.value });
@@ -29,7 +33,7 @@ const AI = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
     fetch('http://localhost:5000/predict', {
       method: 'POST',
       headers: {
@@ -44,15 +48,23 @@ const AI = () => {
         return response.json();
       })
       .then(data => {
-        setPrediction(`Prediction: ${data.prediction}`);
+        // Format the prediction into a dollar amount
+        const predictedPrice = (data.prediction * 100000).toFixed(2);
+        // Convert the price to a string and add commas as thousands separators
+        const formattedPrice = Number(predictedPrice).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        setPrediction(`Predicted Price: ${formattedPrice}`);
         setImportances(data.importances);
+        
+        // Increment the key here
+        setKey(prevKey => prevKey + 1);
       })
       .catch(error => {
         console.error('Error:', error);
       });
   };
 
-  const data = {
+  // Sort the features by their importances
+  const chartData = {
     labels: expectedFeatures,
     datasets: [
       {
@@ -62,14 +74,17 @@ const AI = () => {
       },
     ],
   };
-  
+
+  chartData.labels.sort((a, b) => chartData.datasets[0].data[expectedFeatures.indexOf(b)] - chartData.datasets[0].data[expectedFeatures.indexOf(a)]);
+  chartData.datasets[0].data.sort((a, b) => b - a);
+
   const options = {
     scales: {
       y: {
         beginAtZero: true,
       },
     },
-  };  
+  };
 
   const columns = React.useMemo(
     () => [
@@ -83,7 +98,7 @@ const AI = () => {
       },
     ],
     []
-  )
+  );
 
   const tableData = React.useMemo(
     () => expectedFeatures.map((feature, index) => ({
@@ -91,7 +106,7 @@ const AI = () => {
       value: inputs[feature]
     })),
     [inputs]
-  )
+  );
 
   const {
     getTableProps,
@@ -99,7 +114,7 @@ const AI = () => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data: tableData })
+  } = useTable({ columns, data: tableData });
 
   return (
     <div>
@@ -107,58 +122,50 @@ const AI = () => {
       <form id="predict-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <h3>Median Income (0 to 10):</h3>
-          <label htmlFor="medInc">Median Income:</label>
           <br />
-          <input type="number" id="medInc" name="medInc" onChange={handleChange} />
+          <input type="number" id="medInc" name="medInc" onChange={handleChange} value={inputs.medInc}/>
           <br />
         </div>
         <div className="form-group">
           <h3>House Age (0 to 50):</h3>
-          <label htmlFor="houseAge">House Age:</label>
           <br />
-          <input type="number" id="houseAge" name="houseAge" onChange={handleChange} />
+          <input type="number" id="houseAge" name="houseAge" onChange={handleChange} value={inputs.houseAge}/>
           <br />
         </div>
         <div className="form-group">
           <h3>Average Rooms (0 to 10):</h3>
-          <label htmlFor="aveRooms">Average Rooms:</label>
           <br />
-          <input type="number" id="aveRooms" name="aveRooms" onChange={handleChange} />
+          <input type="number" id="aveRooms" name="aveRooms" onChange={handleChange} value={inputs.aveRooms}/>
           <br />
         </div>
         <div className="form-group">
           <h3>Average Bedrooms (0 to 5):</h3>
-          <label htmlFor="aveBedrms">Average Bedrooms:</label>
           <br />
-          <input type="number" id="aveBedrms" name="aveBedrms" onChange={handleChange} />
+          <input type="number" id="aveBedrms" name="aveBedrms" onChange={handleChange} value={inputs.aveBedrms}/>
           <br />
         </div>
         <div className="form-group">
           <h3>Population (0 to 5000):</h3>
-          <label htmlFor="population">Population:</label>
           <br />
-          <input type="number" id="population" name="population" onChange={handleChange} />
+          <input type="number" id="population" name="population" onChange={handleChange} value={inputs.population}/>
           <br />
         </div>
         <div className="form-group">
           <h3>Average Occupancy (0 to 10):</h3>
-          <label htmlFor="aveOccup">Average Occupancy:</label>
           <br />
-          <input type="number" id="aveOccup" name="aveOccup" onChange={handleChange} />
+          <input type="number" id="aveOccup" name="aveOccup" onChange={handleChange} value={inputs.aveOccup}/>
           <br />
         </div>
         <div className="form-group">
           <h3>Latitude (33 to 42):</h3>
-          <label htmlFor="latitude">Latitude:</label>
           <br />
-          <input type="number" id="latitude" name="latitude" onChange={handleChange} />
+          <input type="number" id="latitude" name="latitude" onChange={handleChange} value={inputs.latitude}/>
           <br />
         </div>
         <div className="form-group">
           <h3>Longitude (-124 to -114):</h3>
-          <label htmlFor="longitude">Longitude:</label>
           <br />
-          <input type="number" id="longitude" name="longitude" onChange={handleChange} />
+          <input type="number" id="longitude" name="longitude" onChange={handleChange} value={inputs.longitude}/>
           <br />
         </div>
         <div className="form-group">
@@ -167,9 +174,17 @@ const AI = () => {
       </form>
       <div id="prediction">{prediction}</div>
       <div>
-      <Bar data={data} options={options} />
+        <h2>Feature Importances</h2>
+        <p>This bar chart shows the importance of each feature for predicting house prices, 
+          according to our machine learning model. The taller the bar, the more important the
+           feature. For example, if the 'Median Income' bar is taller than the 'House Age' 
+           bar, that means median income is a more important predictor of house price than 
+           house age. Note that this doesn't tell us whether house prices go up or down as 
+           these features increase; it only tells us how important the feature is for making 
+           accurate predictions.</p>
+        <Bar data={chartData} options={options} key={key} />
       </div>
-      <div>
+      <div className="table-container">
         <table {...getTableProps()} style={{ margin: 'auto' }}>
           <thead>
             {headerGroups.map(headerGroup => (

@@ -1,11 +1,7 @@
 .layoutHeader {
   /* control header vertically */
   padding: 3px;
-
-  /* Optionally, you can reduce the font size to further shrink the header */
   font-size: 14px;
-
-  /*adjust the height of the header directly */
   height: 20px;
 }
 
