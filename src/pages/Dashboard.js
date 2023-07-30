@@ -1,69 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.module.css';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush } from 'recharts';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
-import TimeSeriesChart from './TimeSeriesChart';
-
 
 function Dashboard() {
     const [retailData1, setRetailData1] = useState([]);
     const [retailData2, setRetailData2] = useState([]);
     const [skip, setSkip] = useState(0);
     const [skip2, setSkip2] = useState(0);
-    const [xMetric, setXMetric] = useState('InvoiceDate');
-    const [yMetric, setYMetric] = useState('Quantity');
-    const [aggregation, setAggregation] = useState('Day');
+    const [xMetric, setXMetric] = useState('_id');
+    const [yMetric, setYMetric] = useState('totalQuantity');
+    const [aggregation, setAggregation] = useState('Day');  // Add initial state for 'aggregation'
 
     const handleXChange = (eventKey) => {
         setXMetric(eventKey);
     };
 
-    const handleAggregationChange = (eventKey) => {
-        setAggregation(eventKey);
-      };
-
     const handleYChange = (eventKey) => {
         setYMetric(eventKey);
     };
 
-    useEffect(() => {
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?aggregation=${aggregation}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data from /retail-data-2009-2010:', data);
-            setRetailData1(prevData => [...prevData, ...data]);
-            setSkip(prevSkip => prevSkip + data.length);
-        })
-        .catch(err => console.error('There has been a problem with your fetch operation:', err));
-
-        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated?aggregation=${aggregation}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data from /retail-data-2010-2011:', data);
-            setRetailData2(prevData => [...prevData, ...data]);
-            setSkip2(prevSkip => prevSkip + data.length);
-        })
-        .catch(err => console.error('There has been a problem with your fetch operation:', err));
-    }, []); // The empty array ensures this runs only on mount and not on updates
-
-    const handleFilterChange = (filterValues) => {
-        // update the data based on filter values
+    // Define the handleAggregationChange function
+    const handleAggregationChange = (eventKey) => {
+        setAggregation(eventKey);
     };
+
+    useEffect(() => {
+        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?limit=100`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Data from /retail-data-2009-2010:', data);
+          setRetailData1(prevData => [...prevData, ...data]);
+          setSkip(prevSkip => prevSkip + data.length);
+        })
+        .catch(err => console.error('There has been a problem with your fetch operation:', err));
+      
+        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated?limit=100`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Data from /retail-data-2010-2011:', data);
+          setRetailData2(prevData => [...prevData, ...data]);
+          setSkip2(prevSkip => prevSkip + data.length);
+        })
+        .catch(err => console.error('There has been a problem with your fetch operation:', err));
+      }, []); // The empty array ensures this runs only on mount and not on updates
 
     const fetchMoreData1 = () => {
         // Fetch more data for retailData1
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?aggregation=${aggregation}&skip=${skip}`)
+        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?skip=${skip}`)
           .then(response => response.json())
           .then(data => {
             setRetailData1(prevData => [...prevData, ...data]);  // Append new data to existing data
@@ -74,7 +69,7 @@ function Dashboard() {
     
       const fetchMoreData2 = () => {
         // Fetch more data for retailData2
-        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated?aggregation=${aggregation}&skip=${skip2}`)
+        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated?skip=${skip2}`)
           .then(response => response.json())
           .then(data => {
             setRetailData2(prevData => [...prevData, ...data]);  // Append new data to existing data
@@ -83,7 +78,7 @@ function Dashboard() {
           .catch(err => console.error(err));
       }
 
-    return (
+      return (
         <div>
             <h1>Data Dashboard</h1>
 
@@ -95,13 +90,7 @@ function Dashboard() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item eventKey="Quantity">Quantity</Dropdown.Item>
-                        <Dropdown.Item eventKey="InvoiceDate">Invoice Date</Dropdown.Item>
-                        <Dropdown.Item eventKey="Invoice">Invoice Number</Dropdown.Item>
-                        <Dropdown.Item eventKey="StockCode">Stock Code</Dropdown.Item>
-                        <Dropdown.Item eventKey="Price">Price</Dropdown.Item>
-                        <Dropdown.Item eventKey="Customer ID">Customer ID</Dropdown.Item>
-                        <Dropdown.Item eventKey="Description">Description</Dropdown.Item>
+                        <Dropdown.Item eventKey="_id">Invoice Date</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 
@@ -111,13 +100,7 @@ function Dashboard() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item eventKey="Quantity">Quantity</Dropdown.Item>
-                        <Dropdown.Item eventKey="InvoiceDate">Invoice Date</Dropdown.Item>
-                        <Dropdown.Item eventKey="Invoice">Invoice Number</Dropdown.Item>
-                        <Dropdown.Item eventKey="StockCode">Stock Code</Dropdown.Item>
-                        <Dropdown.Item eventKey="Price">Price</Dropdown.Item>
-                        <Dropdown.Item eventKey="Customer ID">Customer ID</Dropdown.Item>
-                        <Dropdown.Item eventKey="Description">Description</Dropdown.Item>
+                        <Dropdown.Item eventKey="totalQuantity">Quantity</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 
@@ -134,7 +117,6 @@ function Dashboard() {
                     </Dropdown.Menu>
                 </Dropdown>
             </div>
-
             <div>
                 <h2>Visualizations</h2>
                 <h3>Data Set 1</h3>
@@ -168,9 +150,6 @@ function Dashboard() {
                 )}
                 <Button variant="primary" onClick={fetchMoreData1}>Load More 2009-2010 Data</Button>
                 <Button variant="primary" onClick={fetchMoreData2}>Load More 2010-2011 Data</Button>
-
-                {Array.isArray(retailData1) && <TimeSeriesChart data={retailData1} />}
-
             </div>
         </div>
     );
