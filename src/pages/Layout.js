@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import styles from './Layout.module.css';
+import { UserContext } from '../UserContext';
 
 const Layout = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className={styles.layoutContainer}>
       <header className={styles.layoutHeader}>
@@ -18,6 +21,20 @@ const Layout = () => {
                 Contact
               </Link>
             </li>
+            {user && (
+              <li className={styles.layoutNavItem}>
+                <Link to="/AI" className={styles.layoutNavLink}>
+                  AI
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li className={styles.layoutNavItem}>
+                <Link to="/dashboard" className={styles.layoutNavLink}>
+                  Data
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       </header>

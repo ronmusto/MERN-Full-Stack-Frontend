@@ -9,47 +9,48 @@ import NoPage from "./pages/NoPage";
 import Resume from "./pages/Resume";
 import AI from "./pages/AI";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);  // set this to false initially
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Verify token on page refresh
-      fetch("http://localhost:4200/verify", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setUser(data.user);
-        })
-        .catch((err) => {
-          console.error("Error verifying token:", err);
-          setUser(null);
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-      setIsLoading(false);
-    }
+    fetch('http://localhost:4200/verify', {
+      method: 'GET',
+      credentials: 'include',  // include credentials to send the cookies
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response from /verify:', data);  // log the response from the server
+      if (data.user) {
+        setUser(data.user);
+      } else {
+        setUser(null);
+      }
+    })
+    .catch(err => {
+      console.error('Error verifying token:', err);
+      setUser(null);
+    })
+    .finally(() => {
+      setIsLoading(false);  // set isLoading to false once the request is complete
+    });
   }, []);
 
   if (isLoading) {
     return <div>Loading...</div>; // Or your custom loading component
   }
 
+  // Include isLoading in the context value
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isLoading }}>
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="AI" element={<ProtectedRoute><AI /></ProtectedRoute>} />
+            <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
