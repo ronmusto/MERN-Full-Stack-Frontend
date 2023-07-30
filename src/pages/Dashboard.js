@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.module.css';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, Label } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush } from 'recharts';
 
 function Dashboard() {
     const [retailData1, setRetailData1] = useState([]);
@@ -79,13 +79,14 @@ function Dashboard() {
                             <Label value="Quantity" angle={-90} position="insideLeft" />
                         </YAxis>
                         <Tooltip />
+                        <Brush dataKey="Index" height={30} stroke="#8884d8" />
                         </LineChart>
                     )}
 
                     <h3>Data Set 2</h3>
                     {retailData2 && (
                         <BarChart width={500} height={300} data={retailData2}>
-                        <Bar dataKey="Quantity" fill="#82ca9d" onClick={data => console.log(data)} />
+                        <Bar dataKey="Quantity" fill="#82ca9d" />
                         <XAxis dataKey="Index">
                             <Label value="Index" offset={-5} position="insideBottom" />
                         </XAxis>
@@ -93,7 +94,9 @@ function Dashboard() {
                             <Label value="Quantity" angle={-90} position="insideLeft" />
                         </YAxis>
                         <Tooltip />
+                        <Brush dataKey="Index" height={30} stroke="#82ca9d" />
                         </BarChart>
+
                     )}
                 <button onClick={fetchMoreData1}>Load More 2009-2010 Data</button>
                 <button onClick={fetchMoreData2}>Load More 2010-2011 Data</button>
