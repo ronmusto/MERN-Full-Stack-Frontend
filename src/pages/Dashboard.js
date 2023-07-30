@@ -7,7 +7,6 @@ function Dashboard() {
     const [retailData2, setRetailData2] = useState([]);
     const [skip, setSkip] = useState(0);
     const [skip2, setSkip2] = useState(0);
-    
 
     useEffect(() => {
         fetch(`http://localhost:4200/retail-data-2009-2010?limit=100&skip=${skip}`)
@@ -72,14 +71,14 @@ function Dashboard() {
                     {retailData1 && (
                         <LineChart width={500} height={300} data={retailData1}>
                         <Line type="monotone" dataKey="Quantity" stroke="#8884d8" />
-                        <XAxis dataKey="Index">
-                            <Label value="Index" offset={-5} position="insideBottom" />
+                        <XAxis dataKey="InvoiceDate">
+                            <Label value="InvoiceDate" offset={-5} position="insideBottom" />
                         </XAxis>
                         <YAxis>
                             <Label value="Quantity" angle={-90} position="insideLeft" />
                         </YAxis>
                         <Tooltip />
-                        <Brush dataKey="Index" height={30} stroke="#8884d8" />
+                        <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" />
                         </LineChart>
                     )}
 
@@ -87,14 +86,14 @@ function Dashboard() {
                     {retailData2 && (
                         <BarChart width={500} height={300} data={retailData2}>
                         <Bar dataKey="Quantity" fill="#82ca9d" />
-                        <XAxis dataKey="Index">
-                            <Label value="Index" offset={-5} position="insideBottom" />
+                        <XAxis dataKey="InvoiceDate">
+                            <Label value="InvoiceDate" offset={-5} position="insideBottom" />
                         </XAxis>
                         <YAxis>
                             <Label value="Quantity" angle={-90} position="insideLeft" />
                         </YAxis>
                         <Tooltip />
-                        <Brush dataKey="Index" height={30} stroke="#82ca9d" />
+                        <Brush dataKey="InvoiceDate" height={30} stroke="#82ca9d" />
                         </BarChart>
 
                     )}
