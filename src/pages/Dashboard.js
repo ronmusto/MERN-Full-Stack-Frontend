@@ -1,32 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import './Dashboard.module.css';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush } from 'recharts';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
+import TimeSeriesChart from './TimeSeriesChart';
+
 
 function Dashboard() {
     const [retailData1, setRetailData1] = useState([]);
     const [retailData2, setRetailData2] = useState([]);
     const [skip, setSkip] = useState(0);
     const [skip2, setSkip2] = useState(0);
+    const [xMetric, setXMetric] = useState('InvoiceDate');
+    const [yMetric, setYMetric] = useState('Quantity');
+    const [aggregation, setAggregation] = useState('Day');
+
+    const handleXChange = (eventKey) => {
+        setXMetric(eventKey);
+    };
+
+    const handleAggregationChange = (eventKey) => {
+        setAggregation(eventKey);
+      };
+
+    const handleYChange = (eventKey) => {
+        setYMetric(eventKey);
+    };
 
     useEffect(() => {
-        fetch(`http://localhost:4200/retail-data-2009-2010?limit=100&skip=${skip}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log('Data from /retail-data-2009-2010:', data);
-          setRetailData1(prevData => [...prevData, ...data]);  // append new data to existing data
-          setSkip(prevSkip => prevSkip + data.length);  // update skip value for next request
+        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?aggregation=${aggregation}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-        .catch(err => console.error(err));
-      
-    
-        fetch(`http://localhost:4200/retail-data-2010-2011?limit=100&skip=${skip2}`)
-        .then(response => response.json())
         .then(data => {
-          console.log('Data from /retail-data-2010-2011:', data);
-          setRetailData2(prevData => [...prevData, ...data]);  // append new data to existing data
-          setSkip2(prevSkip => prevSkip + data.length);  // update skip value for next request
+            console.log('Data from /retail-data-2009-2010:', data);
+            setRetailData1(prevData => [...prevData, ...data]);
+            setSkip(prevSkip => prevSkip + data.length);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error('There has been a problem with your fetch operation:', err));
+
+        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated?aggregation=${aggregation}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data from /retail-data-2010-2011:', data);
+            setRetailData2(prevData => [...prevData, ...data]);
+            setSkip2(prevSkip => prevSkip + data.length);
+        })
+        .catch(err => console.error('There has been a problem with your fetch operation:', err));
     }, []); // The empty array ensures this runs only on mount and not on updates
 
     const handleFilterChange = (filterValues) => {
@@ -35,7 +63,7 @@ function Dashboard() {
 
     const fetchMoreData1 = () => {
         // Fetch more data for retailData1
-        fetch(`http://localhost:4200/retail-data-2009-2010?skip=${skip}`)
+        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?aggregation=${aggregation}&skip=${skip}`)
           .then(response => response.json())
           .then(data => {
             setRetailData1(prevData => [...prevData, ...data]);  // Append new data to existing data
@@ -46,7 +74,7 @@ function Dashboard() {
     
       const fetchMoreData2 = () => {
         // Fetch more data for retailData2
-        fetch(`http://localhost:4200/retail-data-2010-2011?skip=${skip2}`)
+        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated?aggregation=${aggregation}&skip=${skip2}`)
           .then(response => response.json())
           .then(data => {
             setRetailData2(prevData => [...prevData, ...data]);  // Append new data to existing data
@@ -61,44 +89,88 @@ function Dashboard() {
 
             <div>
                 <h2>Filters</h2>
-                {/* Add your filters here */}
+                <Dropdown onSelect={handleXChange}>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic-x">
+                        X Metric: {xMetric}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item eventKey="Quantity">Quantity</Dropdown.Item>
+                        <Dropdown.Item eventKey="InvoiceDate">Invoice Date</Dropdown.Item>
+                        <Dropdown.Item eventKey="Invoice">Invoice Number</Dropdown.Item>
+                        <Dropdown.Item eventKey="StockCode">Stock Code</Dropdown.Item>
+                        <Dropdown.Item eventKey="Price">Price</Dropdown.Item>
+                        <Dropdown.Item eventKey="Customer ID">Customer ID</Dropdown.Item>
+                        <Dropdown.Item eventKey="Description">Description</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                
+                <Dropdown onSelect={handleYChange}>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic-y">
+                        Y Metric: {yMetric}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item eventKey="Quantity">Quantity</Dropdown.Item>
+                        <Dropdown.Item eventKey="InvoiceDate">Invoice Date</Dropdown.Item>
+                        <Dropdown.Item eventKey="Invoice">Invoice Number</Dropdown.Item>
+                        <Dropdown.Item eventKey="StockCode">Stock Code</Dropdown.Item>
+                        <Dropdown.Item eventKey="Price">Price</Dropdown.Item>
+                        <Dropdown.Item eventKey="Customer ID">Customer ID</Dropdown.Item>
+                        <Dropdown.Item eventKey="Description">Description</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+
+                <Dropdown onSelect={handleAggregationChange}>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Aggregation Level
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item eventKey="Hour">Hour</Dropdown.Item>
+                        <Dropdown.Item eventKey="Day">Day</Dropdown.Item>
+                        <Dropdown.Item eventKey="Week">Week</Dropdown.Item>
+                        <Dropdown.Item eventKey="Month">Month</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </div>
 
             <div>
                 <h2>Visualizations</h2>
-                {/* Add your charts here */}
-                    <h3>Data Set 1</h3>
-                    {retailData1 && (
-                        <LineChart width={500} height={300} data={retailData1}>
-                        <Line type="monotone" dataKey="Quantity" stroke="#8884d8" />
-                        <XAxis dataKey="InvoiceDate">
-                            <Label value="InvoiceDate" offset={-5} position="insideBottom" />
-                        </XAxis>
-                        <YAxis>
-                            <Label value="Quantity" angle={-90} position="insideLeft" />
-                        </YAxis>
-                        <Tooltip />
-                        <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" />
-                        </LineChart>
-                    )}
+                <h3>Data Set 1</h3>
+                {Array.isArray(retailData1) && retailData1.length > 0 && (
+                    <LineChart width={500} height={300} data={retailData1}>
+                    <Line type="monotone" dataKey={yMetric} stroke="#8884d8" />
+                    <XAxis dataKey={xMetric}>
+                        <Label value={xMetric} offset={-5} position="insideBottom" />
+                    </XAxis>
+                    <YAxis>
+                        <Label value={yMetric} angle={-90} position="insideLeft" />
+                    </YAxis>
+                    <Tooltip />
+                    <Brush dataKey={xMetric} height={30} stroke="#8884d8" />
+                    </LineChart>
+                )}
 
-                    <h3>Data Set 2</h3>
-                    {retailData2 && (
-                        <BarChart width={500} height={300} data={retailData2}>
-                        <Bar dataKey="Quantity" fill="#82ca9d" />
-                        <XAxis dataKey="InvoiceDate">
-                            <Label value="InvoiceDate" offset={-5} position="insideBottom" />
-                        </XAxis>
-                        <YAxis>
-                            <Label value="Quantity" angle={-90} position="insideLeft" />
-                        </YAxis>
-                        <Tooltip />
-                        <Brush dataKey="InvoiceDate" height={30} stroke="#82ca9d" />
-                        </BarChart>
+                <h3>Data Set 2</h3>
+                {Array.isArray(retailData2) && retailData2.length > 0 && (
+                    <BarChart width={500} height={300} data={retailData2}>
+                    <Bar dataKey={yMetric} fill="#82ca9d" />
+                    <XAxis dataKey={xMetric}>
+                        <Label value={xMetric} offset={-5} position="insideBottom" />
+                    </XAxis>
+                    <YAxis>
+                        <Label value={yMetric} angle={-90} position="insideLeft" />
+                    </YAxis>
+                    <Tooltip />
+                    <Brush dataKey={xMetric} height={30} stroke="#82ca9d" />
+                    </BarChart>
+                )}
+                <Button variant="primary" onClick={fetchMoreData1}>Load More 2009-2010 Data</Button>
+                <Button variant="primary" onClick={fetchMoreData2}>Load More 2010-2011 Data</Button>
 
-                    )}
-                <button onClick={fetchMoreData1}>Load More 2009-2010 Data</button>
-                <button onClick={fetchMoreData2}>Load More 2010-2011 Data</button>
+                {Array.isArray(retailData1) && <TimeSeriesChart data={retailData1} />}
+
             </div>
         </div>
     );
