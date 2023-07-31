@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './Dashboard.module.css';
 import { LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
-    Pie, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell, 
+    Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, 
     Histogram, HeatMap  } from 'recharts';
 
 function Dashboard() {
