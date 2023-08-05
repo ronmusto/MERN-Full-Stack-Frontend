@@ -119,60 +119,68 @@ const AI = () => {
   return (
     <div>
       <h1>My Prediction Form</h1>
-      <form id="predict-form" onSubmit={handleSubmit}>
+      <form data-testid="predict-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <h3>Median Income (0 to 10):</h3>
           <br />
-          <input type="number" id="medInc" name="medInc" onChange={handleChange} value={inputs.medInc}/>
+          <input type="number" id="medInc" name="medInc" onChange={handleChange} 
+          value={inputs.medInc} data-testid="medInc"/>
           <br />
         </div>
         <div className="form-group">
           <h3>House Age (0 to 50):</h3>
           <br />
-          <input type="number" id="houseAge" name="houseAge" onChange={handleChange} value={inputs.houseAge}/>
+          <input type="number" id="houseAge" name="houseAge" onChange={handleChange} 
+          value={inputs.houseAge} data-testid="houseAge"/>
           <br />
         </div>
         <div className="form-group">
           <h3>Average Rooms (0 to 10):</h3>
           <br />
-          <input type="number" id="aveRooms" name="aveRooms" onChange={handleChange} value={inputs.aveRooms}/>
+          <input type="number" id="aveRooms" name="aveRooms" onChange={handleChange} 
+          value={inputs.aveRooms} data-testid="aveRooms"/>
           <br />
         </div>
         <div className="form-group">
           <h3>Average Bedrooms (0 to 5):</h3>
           <br />
-          <input type="number" id="aveBedrms" name="aveBedrms" onChange={handleChange} value={inputs.aveBedrms}/>
+          <input type="number" id="aveBedrms" name="aveBedrms" onChange={handleChange} 
+          value={inputs.aveBedrms} data-testid="aveBedrms"/>
           <br />
         </div>
         <div className="form-group">
           <h3>Population (0 to 5000):</h3>
           <br />
-          <input type="number" id="population" name="population" onChange={handleChange} value={inputs.population}/>
+          <input type="number" id="population" name="population" onChange={handleChange} 
+          value={inputs.population} data-testid="population"/>
           <br />
         </div>
         <div className="form-group">
           <h3>Average Occupancy (0 to 10):</h3>
           <br />
-          <input type="number" id="aveOccup" name="aveOccup" onChange={handleChange} value={inputs.aveOccup}/>
+          <input type="number" id="aveOccup" name="aveOccup" onChange={handleChange} 
+          value={inputs.aveOccup} data-testid="aveOccup"/>
           <br />
         </div>
         <div className="form-group">
           <h3>Latitude (33 to 42):</h3>
           <br />
-          <input type="number" id="latitude" name="latitude" onChange={handleChange} value={inputs.latitude}/>
+          <input type="number" id="latitude" name="latitude" onChange={handleChange} 
+          value={inputs.latitude} data-testid="latitude"/>
           <br />
         </div>
         <div className="form-group">
           <h3>Longitude (-124 to -114):</h3>
           <br />
-          <input type="number" id="longitude" name="longitude" onChange={handleChange} value={inputs.longitude}/>
+          <input type="number" id="longitude" name="longitude" onChange={handleChange} 
+          value={inputs.longitude} data-testid="longitude"/>
           <br />
         </div>
         <div className="form-group">
           <button type="submit">Predict</button>
         </div>
       </form>
-      <div id="prediction">{prediction}</div>
+      <div data-testid="prediction-result" id="prediction">{prediction}</div>
       <div>
         <h2>Feature Importances</h2>
         <p>This bar chart shows the importance of each feature for predicting house prices, 

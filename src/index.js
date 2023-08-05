@@ -10,6 +10,8 @@ import Resume from "./pages/Resume";
 import AI from "./pages/AI";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './pages/Global.css';
 
 function App() {
   const [user, setUser] = useState(null);
