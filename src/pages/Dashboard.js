@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './Dashboard.module.css';
 import { LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
-    Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, 
+    Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, ResponsiveContainer, Area, AreaChart, 
     Histogram, HeatMap  } from 'recharts';
 
 function Dashboard() {
@@ -18,6 +18,9 @@ function Dashboard() {
     const [yMetric, setYMetric] = useState('Quantity');
     const [aggregatedXMetric, setAggregatedXMetric] = useState('_id');
     const [aggregatedYMetric, setAggregatedYMetric] = useState('totalQuantity');
+    const [processedRetailData1, setProcessedRetailData1] = useState([]);
+    const [processedRetailData2, setProcessedRetailData2] = useState([]);
+
     
 
     const handleXChange = (eventKey) => {
@@ -47,8 +50,14 @@ function Dashboard() {
         .then(data => {
             console.log('Data from /retail-data-2009-2010:', data);
             setRetailData1(prevData => [...prevData, ...data]);
-            setSkip(prevSkip => prevSkip + data.length);
-        })
+            
+            const transformedData = data.map(item => ({
+              ...item,
+              InvoiceDate: new Date(item.InvoiceDate).toISOString().split('T')[0], // Convert to a simple date string
+              Sales: item.Quantity * item.Price
+            }));
+            setProcessedRetailData1(prevData => [...prevData, ...transformedData]);
+        })        
         .catch(err => console.error('There has been a problem with your fetch operation:', err));
         
         fetch(`http://localhost:4200/retail-data-2010-2011?limit=100`)
@@ -61,8 +70,22 @@ function Dashboard() {
         .then(data => {
             console.log('Data from /retail-data-2010-2011:', data);
             setRetailData2(prevData => [...prevData, ...data]);
-            setSkip2(prevSkip => prevSkip + data.length);
-        })
+            
+            const aggregatedSales = data.reduce((acc, item) => {
+              const sales = item.Quantity * item.Price;
+              if (!acc[item.Country]) {
+                acc[item.Country] = {
+                  Country: item.Country,
+                  Sales: 0
+                };
+              }
+              acc[item.Country].Sales += sales;
+              return acc;
+            }, {});
+        
+            const transformedData = Object.values(aggregatedSales);
+            setProcessedRetailData2(prevData => [...prevData, ...transformedData]);
+        })        
         .catch(err => console.error('There has been a problem with your fetch operation:', err));
 
         fetch(`http://localhost:4200/retail-data-2009-2010-aggregated?limit=100`)
@@ -243,6 +266,40 @@ function Dashboard() {
                     <Brush dataKey={aggregatedXMetric} height={30} stroke="#82ca9d" />
                 </BarChart>
             )}
+        </div>
+        <div>
+        <h2>Time Series Analysis of Sales</h2>
+        {Array.isArray(processedRetailData1) && processedRetailData1.length > 0 && (
+            <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={processedRetailData1} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                <linearGradient id="salesColor" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                </linearGradient>
+                </defs>
+                <XAxis dataKey="InvoiceDate" />
+                <YAxis />
+                <Tooltip />
+                <Area type="monotone" dataKey="Sales" stroke="#8884d8" fillOpacity={1} fill="url(#salesColor)" />
+            </AreaChart>
+            </ResponsiveContainer>
+        )}
+        </div>
+
+        <div>
+        <h2>Sales by Country</h2>
+        {Array.isArray(processedRetailData2) && processedRetailData2.length > 0 && (
+            <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={processedRetailData2} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="Country" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="Sales" fill="#82ca9d" />
+            </BarChart>
+            </ResponsiveContainer>
+        )}
         </div>
     </div>
 );
