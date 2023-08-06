@@ -10,6 +10,7 @@ import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Lab
 function Dashboard() {
     const [aggregatedData1, setAggregatedData1] = useState([]);
     const [aggregatedData2, setAggregatedData2] = useState([]);
+    const [timeSeriesData, setTimeSeriesData] = useState([]);
     const [xMetric, setXMetric] = useState('Price');
     const [yMetric, setYMetric] = useState('Quantity');
     const [skip1, setSkip1] = useState(0);
@@ -17,8 +18,20 @@ function Dashboard() {
     const [aggregatedXMetric, setAggregatedXMetric] = useState('_id');
     const [aggregatedYMetric, setAggregatedYMetric] = useState('totalQuantity');
     const [aggregatedTimeFrame, setAggregatedTimeFrame] = useState('day');
-    const [dataByCountry, setDataByCountry] = useState([]);
+    const [dataByCountry, setDataByCountry] = useState([]);  
 
+    // Tick formatter function
+    const formatDate = (timestamp) => {
+        if (!timestamp) return '';
+        
+        let date = new Date(timestamp); // Convert timestamp back to Date object for formatting
+        const formattedMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const formattedDay = String(date.getDate()).padStart(2, '0');
+        const formattedYear = date.getFullYear();
+        
+        return `${formattedMonth}/${formattedDay}/${formattedYear}`;
+    };      
+    
     const handleXChange = (eventKey) => {
         setXMetric(eventKey);
     };
@@ -37,9 +50,30 @@ function Dashboard() {
 
     const handleAggregatedTimeFrameChange = (eventKey) => {
         setAggregatedTimeFrame(eventKey);
-    };    
+    };
+    
+    const fetchTimeSeriesData = () => {
+        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const processedData = data.map(item => ({
+                    ...item,
+                    InvoiceDate: new Date(item.InvoiceDate.$date).getTime()
+                }));
+                console.log(`Time Series Data from /retail-data-2009-2010:`, processedData);
+                setTimeSeriesData(processedData);
+            })
+            .catch(err => console.error('There has been a problem with your fetch operation:', err));
+    };       
 
     useEffect(() => {
+
+        fetchTimeSeriesData();
 
         fetch('http://localhost:4200/aggregate-by-country-2010-2011')
         .then(response => response.json())
@@ -56,7 +90,7 @@ function Dashboard() {
             .then(data => {
                 const processedData = data.map(item => ({
                     ...item,
-                    _id: new Date(item._id) // Convert InvoiceDate string to Date object
+                    _id: item._id
                 }));
                 console.log(`Aggregated Data from /retail-data-2009-2010 (Timeframe: ${aggregatedTimeFrame}):`, processedData);
                 setAggregatedData1(processedData);
@@ -73,7 +107,7 @@ function Dashboard() {
             .then(data => {
                 const processedData = data.map(item => ({
                     ...item,
-                    _id: new Date(item._id) // Convert InvoiceDate string to Date object
+                    _id: item._id
                 }));
                 console.log(`Aggregated Data from /retail-data-2010-2011 (Timeframe: ${aggregatedTimeFrame}):`, processedData);
                 setAggregatedData2(processedData);
@@ -184,19 +218,24 @@ function Dashboard() {
         </div>
         <div>
         <h2>Time Series Analysis of Sales</h2>
-        {Array.isArray(aggregatedData1) && aggregatedData1.length > 0 && (
+        {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
             <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={aggregatedData1} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <AreaChart data={timeSeriesData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
                     <linearGradient id="salesColor" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
                         <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
                     </linearGradient>
                 </defs>
-                <XAxis dataKey="_id" />
-                <YAxis />
+                <XAxis dataKey="InvoiceDate" tickFormatter={formatDate}>
+                    <Label value="Invoice Date" offset={-5} position="insideBottom" />
+                </XAxis>
+                <YAxis>
+                    <Label value="Total Quantity" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
+                </YAxis>
                 <Tooltip />
                 <Area type="monotone" dataKey="totalQuantity" stroke="#8884d8" fillOpacity={1} fill="url(#salesColor)" />
+                <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" />
             </AreaChart>
             </ResponsiveContainer>
         )}
@@ -213,7 +252,7 @@ function Dashboard() {
                     <YAxis name="Total Sales Value ($)" />
                     <Tooltip />
                     <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
-                    <Brush dataKey="_id" height={30} stroke="#82ca9d" />
+                    <Brush dataKey="_id" height={20} stroke="#82ca9d" />
                 </BarChart>
             </ResponsiveContainer>
             )}
