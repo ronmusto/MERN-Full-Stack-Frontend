@@ -3,6 +3,7 @@ import './Dashboard.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './Dashboard.module.css';
+import moment from 'moment';
 import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
     Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, ResponsiveContainer, Area, AreaChart, 
     Histogram, HeatMap  } from 'recharts';
@@ -61,15 +62,25 @@ function Dashboard() {
             return response.json();
           })
           .then(data => {
-            const processedData = data.map(item => ({
-              ...item,
-              InvoiceDate: new Date(item._id.year, item._id.month - 1, item._id.day).getTime() // Combine year, month, day to create InvoiceDate
-            }));
+            const processedData = data.map(item => {
+              let invoiceDate;
+              if (item._id.week) { // Week aggregation
+                invoiceDate = moment().year(item._id.year).week(item._id.week).toDate().getTime();
+              } else if (item._id.hour) { // Hour aggregation
+                invoiceDate = moment({ year: item._id.year, month: item._id.month - 1, day: item._id.day, hour: item._id.hour }).toDate().getTime();
+              } else { // Day, month, or other aggregations
+                invoiceDate = new Date(item._id.year, item._id.month - 1, item._id.day || 1).getTime();
+              }
+              return {
+                ...item,
+                InvoiceDate: invoiceDate
+              };
+            });
             console.log(`Time Series Data from /retail-data-2009-2010:`, processedData);
             setTimeSeriesData(processedData);
           })
           .catch(err => console.error('There has been a problem with your fetch operation:', err));
-      };          
+      };                   
 
     useEffect(() => {
 
@@ -233,9 +244,32 @@ function Dashboard() {
                 <YAxis>
                     <Label value="Total Quantity" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
                 </YAxis>
-                <Tooltip />
+                <Tooltip
+                content={({ payload, label }) => {
+                    if (payload && payload.length > 0) {
+                    const data = payload[0].payload;
+                    // Format the total sales as USD
+                    const totalSalesFormatted = new Intl.NumberFormat('en-US', 
+                    { style: 'currency', currency: 'USD' }).format(data.totalSales);
+
+                    // Extract the date and optionally the hour
+                    const dateObj = new Date(data.InvoiceDate);
+                    const dateStr = dateObj.toLocaleDateString();
+                    const timeStr = data._id.hour ? dateObj.toLocaleTimeString() : ''; // Include the time if hour is present
+
+                    return (
+                        <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+                        <p>Date: {dateStr} {timeStr}</p> {/* Include the time here */}
+                        <p>Total Quantity: {data.totalQuantity}</p>
+                        <p>Total Sales: {totalSalesFormatted}</p>
+                        </div>
+                    );
+                    }
+                    return null;
+                }}
+                />
                 <Area type="monotone" dataKey="totalQuantity" stroke="#8884d8" fillOpacity={1} fill="url(#salesColor)" />
-                <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" />
+                <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" tickFormatter={formatDate} />
             </AreaChart>
             </ResponsiveContainer>
         )}

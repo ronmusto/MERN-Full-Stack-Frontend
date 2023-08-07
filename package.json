@@ -9,6 +9,7 @@
     "css-loader": "^6.8.1",
     "date-fns": "^2.30.0",
     "jsonwebtoken": "^9.0.1",
+    "moment": "^2.29.4",
     "node-fetch": "^3.3.1",
     "python-shell": "^5.0.0",
     "react": "^18.2.0",
