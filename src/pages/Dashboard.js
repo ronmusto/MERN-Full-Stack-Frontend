@@ -4,6 +4,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './Dashboard.module.css';
 import moment from 'moment';
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main CSS file for calendar
+import 'react-date-range/dist/theme/default.css'; // theme CSS file calendar
 import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
     Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, ResponsiveContainer, Area, AreaChart, 
     Histogram, HeatMap  } from 'recharts';
@@ -31,15 +34,16 @@ function Dashboard() {
         const formattedYear = date.getFullYear();
         
         return `${formattedMonth}/${formattedDay}/${formattedYear}`;
-    };      
+    };
     
-    const handleXChange = (eventKey) => {
-        setXMetric(eventKey);
-    };
-
-    const handleYChange = (eventKey) => {
-        setYMetric(eventKey);
-    };
+    //Keep track of the selected date range
+    const [dateRange, setDateRange] = useState([
+        {
+          startDate: new Date(),
+          endDate: null,
+          key: 'selection',
+        },
+      ]);      
 
     const handleAggregatedXChange = (eventKey) => {
         setAggregatedXMetric(eventKey);
@@ -54,6 +58,9 @@ function Dashboard() {
     };
     
     const fetchTimeSeriesData = () => {
+        const startDateStr = dateRange[0].startDate.toISOString().split('T')[0];
+        const endDateStr = dateRange[0].endDate ? dateRange[0].endDate.toISOString().split('T')[0] : '';
+        
         fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100`)
           .then(response => {
             if (!response.ok) {
@@ -226,7 +233,14 @@ function Dashboard() {
                     <Brush dataKey={aggregatedXMetric} height={30} stroke="#82ca9d" />
                 </BarChart>
             )}
+
         </div>
+        <DateRangePicker
+        ranges={dateRange}
+        onChange={item => setDateRange([item.selection])}
+        />
+        <Button onClick={fetchTimeSeriesData}>Load Data</Button>
+
         <div>
         <h2>Time Series Analysis of Sales</h2>
         {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
