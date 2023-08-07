@@ -54,22 +54,22 @@ function Dashboard() {
     
     const fetchTimeSeriesData = () => {
         fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const processedData = data.map(item => ({
-                    ...item,
-                    InvoiceDate: new Date(item.InvoiceDate.$date).getTime()
-                }));
-                console.log(`Time Series Data from /retail-data-2009-2010:`, processedData);
-                setTimeSeriesData(processedData);
-            })
-            .catch(err => console.error('There has been a problem with your fetch operation:', err));
-    };       
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            const processedData = data.map(item => ({
+              ...item,
+              InvoiceDate: new Date(item._id.year, item._id.month - 1, item._id.day).getTime() // Combine year, month, day to create InvoiceDate
+            }));
+            console.log(`Time Series Data from /retail-data-2009-2010:`, processedData);
+            setTimeSeriesData(processedData);
+          })
+          .catch(err => console.error('There has been a problem with your fetch operation:', err));
+      };          
 
     useEffect(() => {
 
