@@ -4,7 +4,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './Dashboard.module.css';
 import moment from 'moment';
-import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main CSS file for calendar
 import 'react-date-range/dist/theme/default.css'; // theme CSS file calendar
 import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
@@ -12,15 +11,9 @@ import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Lab
     Histogram, HeatMap  } from 'recharts';
 
 function Dashboard() {
-    const [aggregatedData1, setAggregatedData1] = useState([]);
-    const [aggregatedData2, setAggregatedData2] = useState([]);
+    const [setAggregatedData1] = useState([]);
+    const [setAggregatedData2] = useState([]);
     const [timeSeriesData, setTimeSeriesData] = useState([]);
-    const [xMetric, setXMetric] = useState('Price');
-    const [yMetric, setYMetric] = useState('Quantity');
-    const [skip1, setSkip1] = useState(0);
-    const [skip2, setSkip2] = useState(0);
-    const [aggregatedXMetric, setAggregatedXMetric] = useState('_id');
-    const [aggregatedYMetric, setAggregatedYMetric] = useState('totalQuantity');
     const [aggregatedTimeFrame, setAggregatedTimeFrame] = useState('day');
     const [dataByCountry, setDataByCountry] = useState([]);  
 
@@ -35,23 +28,12 @@ function Dashboard() {
         
         return `${formattedMonth}/${formattedDay}/${formattedYear}`;
     };
-    
-    //Keep track of the selected date range
-    const [dateRange, setDateRange] = useState([
-        {
-          startDate: new Date(),
-          endDate: null,
-          key: 'selection',
-        },
-      ]);
 
     const handleAggregatedTimeFrameChange = (eventKey) => {
         setAggregatedTimeFrame(eventKey);
     };
     
     const fetchTimeSeriesData = () => {
-        const startDateStr = dateRange[0].startDate.toISOString().split('T')[0];
-        const endDateStr = dateRange[0].endDate ? dateRange[0].endDate.toISOString().split('T')[0] : '';
         
         fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
           .then(response => {
@@ -124,27 +106,7 @@ function Dashboard() {
             })
             .catch(err => console.error('There has been a problem with your fetch operation:', err));
     
-    }, [aggregatedTimeFrame, aggregatedXMetric, aggregatedYMetric]);    
-
-    const fetchMoreData1 = () => {
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100&skip=${skip1}`)
-            .then(response => response.json())
-            .then(data => {
-                setAggregatedData1(prevData => [...prevData, ...data]);
-                setSkip1(prevSkip => prevSkip + data.length);
-            })
-            .catch(err => console.error(err));
-    };
-    
-    const fetchMoreData2 = () => {
-        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100&skip=${skip2}`)
-            .then(response => response.json())
-            .then(data => {
-                setAggregatedData2(prevData => [...prevData, ...data]);
-                setSkip2(prevSkip => prevSkip + data.length);
-            })
-            .catch(err => console.error(err));
-    };    
+    }, [aggregatedTimeFrame]);    
 
     return (
         <div>
