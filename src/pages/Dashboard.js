@@ -15,7 +15,8 @@ function Dashboard() {
     const [setAggregatedData2] = useState([]);
     const [timeSeriesData, setTimeSeriesData] = useState([]);
     const [aggregatedTimeFrame, setAggregatedTimeFrame] = useState('day');
-    const [dataByCountry, setDataByCountry] = useState([]);  
+    const [dataByCountry09, setDataByCountry09 ] = useState([]);
+    const [dataByCountry11, setDataByCountry11 ] = useState([]);
 
     // Tick formatter function
     const formatDate = (timestamp) => {
@@ -68,45 +69,16 @@ function Dashboard() {
         fetchTimeSeriesData();
 
         fetch('http://localhost:4200/aggregate-by-country-2010-2011')
-        .then(response => response.json())
-        .then(data => setDataByCountry(data))
-        .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
+            .then(response => response.json())
+            .then(data => setDataByCountry09(data))
+            .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
 
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const processedData = data.map(item => ({
-                    ...item,
-                    _id: item._id
-                }));
-                console.log(`Aggregated Data from /retail-data-2009-2010 (Timeframe: ${aggregatedTimeFrame}):`, processedData);
-                setAggregatedData1(processedData);
-            })
-            .catch(err => console.error('There has been a problem with your fetch operation:', err));
-    
-        fetch(`http://localhost:4200/retail-data-2010-2011-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const processedData = data.map(item => ({
-                    ...item,
-                    _id: item._id
-                }));
-                console.log(`Aggregated Data from /retail-data-2010-2011 (Timeframe: ${aggregatedTimeFrame}):`, processedData);
-                setAggregatedData2(processedData);
-            })
-            .catch(err => console.error('There has been a problem with your fetch operation:', err));
-    
-    }, [aggregatedTimeFrame]);    
+        fetch('http://localhost:4200/aggregate-by-country-2009-2010')
+            .then(response => response.json())
+            .then(data => setDataByCountry11(data))
+            .catch(err => console.error('Error fetching aggregated data by country 2009-2010:', err));
+
+    }, []);    
 
     return (
         <div>
@@ -183,9 +155,25 @@ function Dashboard() {
         {/* Visualizing the aggregated data by country using a BarChart */}
         <div>
             <h2>Total Sales in $USD by Country 2010-2011</h2>
-            {Array.isArray(dataByCountry) && dataByCountry.length > 0 && (
+            {Array.isArray(dataByCountry09) && dataByCountry09.length > 0 && (
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={dataByCountry} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <BarChart data={dataByCountry09} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="_id" name="Country" />
+                    <YAxis name="Total Sales Value ($)" />
+                    <Tooltip />
+                    <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
+                    <Brush dataKey="_id" height={20} stroke="#82ca9d" />
+                </BarChart>
+            </ResponsiveContainer>
+            )}
+        </div>
+
+        <div>
+            <h2>Total Sales in $USD by Country 2009-2010</h2>
+            {Array.isArray(dataByCountry11) && dataByCountry11.length > 0 && (
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={dataByCountry11} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="_id" name="Country" />
                     <YAxis name="Total Sales Value ($)" />
