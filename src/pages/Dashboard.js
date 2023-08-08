@@ -43,15 +43,7 @@ function Dashboard() {
           endDate: null,
           key: 'selection',
         },
-      ]);      
-
-    const handleAggregatedXChange = (eventKey) => {
-        setAggregatedXMetric(eventKey);
-    };
-
-    const handleAggregatedYChange = (eventKey) => {
-        setAggregatedYMetric(eventKey);
-    };
+      ]);
 
     const handleAggregatedTimeFrameChange = (eventKey) => {
         setAggregatedTimeFrame(eventKey);
@@ -61,7 +53,7 @@ function Dashboard() {
         const startDateStr = dateRange[0].startDate.toISOString().split('T')[0];
         const endDateStr = dateRange[0].endDate ? dateRange[0].endDate.toISOString().split('T')[0] : '';
         
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=100`)
+        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -159,30 +151,7 @@ function Dashboard() {
             <h1>Data Dashboard</h1>
 
             <div>
-            <h2>Filters for Aggregated Data</h2>
-            <Dropdown onSelect={handleAggregatedXChange}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic-x">
-                    X Metric for Data: {aggregatedXMetric}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item eventKey="InvoiceDate">Invoice Date</Dropdown.Item>
-                    <Dropdown.Item eventKey="StockCode">Stock Code</Dropdown.Item>
-                    <Dropdown.Item eventKey="Description">Description</Dropdown.Item>
-                    <Dropdown.Item eventKey="Country">Country</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-                                
-            <Dropdown onSelect={handleAggregatedYChange}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic-y">
-                    Y Metric for Data: {aggregatedYMetric}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item eventKey="Quantity">Quantity</Dropdown.Item>
-                    <Dropdown.Item eventKey="Price">Price</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <h2>Filters for Data</h2>
 
             <Dropdown onSelect={handleAggregatedTimeFrameChange}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic-aggregated-timeframe">
@@ -197,49 +166,9 @@ function Dashboard() {
                 </Dropdown.Menu>
             </Dropdown>
 
-            <Button onClick={fetchMoreData1}>Load More Data for 2009-2010</Button>
-            <Button onClick={fetchMoreData2}>Load More Data for 2010-2011</Button>
-
         </div>
-
             <div>
             <h2>Data Visualizations</h2>
-            <h3>Retail-data-2009-2010</h3>
-            {Array.isArray(aggregatedData1) && aggregatedData1.length > 0 && (
-                <LineChart width={500} height={300} data={aggregatedData1}>
-                    <Line type="monotone" dataKey={aggregatedYMetric} stroke="#8884d8" />
-                    <XAxis dataKey={aggregatedXMetric}>
-                        <Label value={aggregatedXMetric} offset={-5} position="insideBottom" />
-                    </XAxis>
-                    <YAxis domain={['dataMin', 'dataMax']}>
-                        <Label value={aggregatedYMetric} angle={-90} position="insideLeft" />
-                    </YAxis>
-                    <Tooltip />
-                    <Brush dataKey={aggregatedXMetric} height={30} stroke="#8884d8" />
-                </LineChart>
-            )}
-
-            <h3>Retail-data-2010-2011</h3>
-            {Array.isArray(aggregatedData2) && aggregatedData2.length > 0 && (
-                <BarChart width={500} height={300} data={aggregatedData2}>
-                    <Bar dataKey={aggregatedYMetric} fill="#82ca9d" />
-                    <XAxis dataKey={aggregatedXMetric}>
-                        <Label value={aggregatedXMetric} offset={-5} position="insideBottom" />
-                    </XAxis>
-                    <YAxis domain={['dataMin', 'dataMax']}>
-                        <Label value={aggregatedYMetric} angle={-90} position="insideLeft" />
-                    </YAxis>
-                    <Tooltip />
-                    <Brush dataKey={aggregatedXMetric} height={30} stroke="#82ca9d" />
-                </BarChart>
-            )}
-
-        </div>
-        <DateRangePicker
-        ranges={dateRange}
-        onChange={item => setDateRange([item.selection])}
-        />
-        <Button onClick={fetchTimeSeriesData}>Load Data</Button>
 
         <div>
         <h2>Time Series Analysis of Sales</h2>
@@ -253,10 +182,10 @@ function Dashboard() {
                     </linearGradient>
                 </defs>
                 <XAxis dataKey="InvoiceDate" tickFormatter={formatDate}>
-                    <Label value="Invoice Date" offset={-5} position="insideBottom" />
+                    <Label value="Date" offset={-5} position="insideBottom" />
                 </XAxis>
                 <YAxis>
-                    <Label value="Total Quantity" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
+                    <Label value="Sales Volume" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
                 </YAxis>
                 <Tooltip
                 content={({ payload, label }) => {
@@ -306,6 +235,7 @@ function Dashboard() {
             )}
         </div>
     </div>
+</div>
 );
 }
 
