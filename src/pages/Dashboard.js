@@ -4,17 +4,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import './Dashboard.module.css';
 import moment from 'moment';
-import 'react-date-range/dist/styles.css'; // main CSS file for calendar
-import 'react-date-range/dist/theme/default.css'; // theme CSS file calendar
+import Plot from 'react-plotly.js';
 import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
     Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, ResponsiveContainer, Area, AreaChart, 
-    Histogram, HeatMap  } from 'recharts';
+    Histogram  } from 'recharts';
 
 function Dashboard() {
     const [timeSeriesData, setTimeSeriesData] = useState([]);
     const [aggregatedTimeFrame, setAggregatedTimeFrame] = useState('day');
     const [dataByCountry09, setDataByCountry09 ] = useState([]);
     const [dataByCountry11, setDataByCountry11 ] = useState([]);
+    const [heatMapData, setHeatMapData] = useState([]);
 
     // Tick formatter function
     const formatDate = (timestamp) => {
@@ -30,6 +30,39 @@ function Dashboard() {
 
     const handleAggregatedTimeFrameChange = (eventKey) => {
         setAggregatedTimeFrame(eventKey);
+    };
+
+    /////////////////////////////
+    /*    FETCH FUNCTIONS      */
+    /////////////////////////////
+
+    // Function to fetch heatmap data
+    const fetchHeatMapData = () => {
+        fetch('http://localhost:4200/heatmap-data')
+            .then(response => response.json())
+            .then(data => {
+            // Prepare data for the heatmap
+            const countries = data.map(item => item._id);
+            const totalSales = data.map(item => item.totalSales);
+            const totalQuantity = data.map(item => item.totalQuantity);
+        
+            setHeatMapData({ countries, totalSales, totalQuantity });
+            })
+        .catch(err => console.error('Error fetching heatmap data:', err));
+    };
+
+    const fetchAggregateByCountry2010_2011 = () => {
+        fetch('http://localhost:4200/aggregate-by-country-2010-2011')
+            .then(response => response.json())
+            .then(data => setDataByCountry09(data))
+            .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
+    };
+
+    const fetchAggregateByCountry2009_2010 = () => {
+        fetch('http://localhost:4200/aggregate-by-country-2009-2010')
+            .then(response => response.json())
+            .then(data => setDataByCountry11(data))
+            .catch(err => console.error('Error fetching aggregated data by country 2009-2010:', err));
     };
     
     const fetchTimeSeriesData = () => {
@@ -60,28 +93,25 @@ function Dashboard() {
             setTimeSeriesData(processedData);
           })
           .catch(err => console.error('There has been a problem with your fetch operation:', err));
-      };                   
+      };
 
+    //Invoke fetch functions
     useEffect(() => {
 
         fetchTimeSeriesData();
 
-        fetch('http://localhost:4200/aggregate-by-country-2010-2011')
-            .then(response => response.json())
-            .then(data => setDataByCountry09(data))
-            .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
+        fetchHeatMapData();
 
-        fetch('http://localhost:4200/aggregate-by-country-2009-2010')
-            .then(response => response.json())
-            .then(data => setDataByCountry11(data))
-            .catch(err => console.error('Error fetching aggregated data by country 2009-2010:', err));
+        fetchAggregateByCountry2010_2011();
 
-    }, []);    
+        fetchAggregateByCountry2009_2010();
 
+    }, []);
+
+    //JSX for dashboard
     return (
         <div>
             <h1>Data Dashboard</h1>
-
             <div>
             <h2>Filters for Data</h2>
 
@@ -101,7 +131,6 @@ function Dashboard() {
         </div>
             <div>
             <h2>Data Visualizations</h2>
-
         <div>
         <h2>Time Series Analysis of Sales</h2>
         {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
@@ -182,6 +211,29 @@ function Dashboard() {
             </ResponsiveContainer>
             )}
         </div>
+
+        <div>
+        <h2>Heatmap of Sales Data by Country</h2>
+        {heatMapData && heatMapData.countries && (
+            <Plot
+            data={[
+                {
+                z: [heatMapData.totalSales, heatMapData.totalQuantity],
+                x: ['Total Sales', 'Total Quantity'],
+                y: heatMapData.countries,
+                type: 'heatmap',
+                colorscale: 'Viridis',
+                },
+            ]}
+            layout={{
+                title: 'Heatmap of Sales and Quantity by Country',
+                xaxis: { title: 'Metrics' },
+                yaxis: { title: 'Country' },
+            }}
+            />
+        )}
+        </div>
+
     </div>
 </div>
 );
