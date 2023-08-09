@@ -11,8 +11,6 @@ import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Lab
     Histogram, HeatMap  } from 'recharts';
 
 function Dashboard() {
-    const [setAggregatedData1] = useState([]);
-    const [setAggregatedData2] = useState([]);
     const [timeSeriesData, setTimeSeriesData] = useState([]);
     const [aggregatedTimeFrame, setAggregatedTimeFrame] = useState('day');
     const [dataByCountry09, setDataByCountry09 ] = useState([]);
