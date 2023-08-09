@@ -1,23 +1,95 @@
-.dashboard {
-    background-color: white;
-    color: black;
-}
-
-.header1, .header2, .header3 {
-    color: #333;
+.dashboard-container {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    padding: 20px;
     font-family: Arial, sans-serif;
 }
 
-.divStyle {
-    margin: 20px;
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
-.chart {
-    margin: 20px 0;
+.filters-container {
+    padding: 10px 20px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-.button {
-    margin: 10px 0;
-    padding: 5px 10px;
-    font-size: 16px;
+.custom-dropdown-toggle {
+    background-color: #007bff; /* Blue color */
+    border-color: #007bff;
+    color: #fff; /* White text */
+}
+
+.custom-dropdown-toggle:hover,
+.custom-dropdown-toggle:focus {
+    background-color: #0056b3; /* Darker blue on hover and focus */
+    border-color: #0056b3;
+}
+
+.custom-dropdown-item {
+    color: #007bff; /* Blue text for the items */
+}
+
+.custom-dropdown-item:hover,
+.custom-dropdown-item:focus {
+    background-color: #007bff; /* Blue background on hover and focus for the items */
+    color: #fff; /* White text on hover and focus for the items */
+}  
+
+.data-visualizations-container {
+    padding: 10px 20px;
+}
+
+.visualization-section {
+    margin-bottom: 30px;
+}
+
+.visualization-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.tooltip-container {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.dropdown-menu {
+    background-color: #2a2a2a;
+}
+
+.dropdown-item {
+    color: #f0f0f0;
+}
+
+.dropdown-item:hover {
+    background-color: #3a3a3a;
+}
+
+/* Customize react-plotly.js styles */
+.plot-container {
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Customize recharts styles */
+.recharts-cartesian-grid-vertical,
+.recharts-cartesian-grid-horizontal {
+    stroke: #888;
+}
+
+.recharts-cartesian-axis-ticks text {
+    fill: #f0f0f0;
+}
+
+.recharts-brush-bar {
+    fill: #3a3a3a;
 }
