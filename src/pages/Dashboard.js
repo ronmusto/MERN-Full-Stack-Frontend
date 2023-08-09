@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Dashboard.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
-import './Dashboard.module.css';
+import styles from './Dashboard.module.css';
 import moment from 'moment';
 import Plot from 'react-plotly.js';
 import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
@@ -108,136 +108,129 @@ function Dashboard() {
 
         fetchAggregateByCountry2009_2010();
 
-    }, []);
+    }, [aggregatedTimeFrame]);
 
-    //JSX for dashboard
-    return (
-        <div>
-            <h1>Data Dashboard</h1>
-            <div>
+//JSX for dashboard
+return (
+    <div className={styles['dashboard-container']}>
+        <h1 className={styles.header}>Data Dashboard</h1>
+        <div className={styles['blue-dropdown-toggle']}>
             <h2>Filters for Data</h2>
-
             <Dropdown onSelect={handleAggregatedTimeFrameChange}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic-aggregated-timeframe">
-                    Aggregated Timeframe: {aggregatedTimeFrame}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item eventKey="hour">Hour</Dropdown.Item>
-                    <Dropdown.Item eventKey="day">Day</Dropdown.Item>
-                    <Dropdown.Item eventKey="week">Week</Dropdown.Item>
-                    <Dropdown.Item eventKey="month">Month</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-
+            <Dropdown.Toggle className={styles['custom-dropdown-toggle']} variant="success" id="dropdown-basic-aggregated-timeframe">
+                Aggregated Timeframe: {aggregatedTimeFrame}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item className={styles['custom-dropdown-item']} eventKey="hour">Hour</Dropdown.Item>
+                <Dropdown.Item className={styles['custom-dropdown-item']} eventKey="day">Day</Dropdown.Item>
+                <Dropdown.Item className={styles['custom-dropdown-item']} eventKey="week">Week</Dropdown.Item>
+                <Dropdown.Item className={styles['custom-dropdown-item']} eventKey="month">Month</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
         </div>
-            <div>
+        <div className={styles['data-visualizations-container']}>
             <h2>Data Visualizations</h2>
-        <div>
-        <h2>Time Series Analysis of Sales</h2>
-        {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
-            <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={timeSeriesData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                    <linearGradient id="salesColor" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                    </linearGradient>
-                </defs>
-                <XAxis dataKey="InvoiceDate" tickFormatter={formatDate}>
-                    <Label value="Date" offset={-5} position="insideBottom" />
-                </XAxis>
-                <YAxis>
-                    <Label value="Sales Volume" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
-                </YAxis>
-                <Tooltip
-                content={({ payload, label }) => {
-                    if (payload && payload.length > 0) {
-                    const data = payload[0].payload;
-                    // Format the total sales as USD
-                    const totalSalesFormatted = new Intl.NumberFormat('en-US', 
-                    { style: 'currency', currency: 'USD' }).format(data.totalSales);
+            <div className={styles['visualization-section']}>
+                <h2 className={styles['visualization-title']}>Time Series Analysis of Sales</h2>
+                {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <AreaChart data={timeSeriesData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                            <defs>
+                                <linearGradient id="salesColor" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+                            <XAxis dataKey="InvoiceDate" tickFormatter={formatDate}>
+                                <Label value="Date" offset={-5} position="insideBottom" />
+                            </XAxis>
+                            <YAxis>
+                                <Label value="Sales Volume" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
+                            </YAxis>
+                            <Tooltip content={({ payload, label }) => {
+                                if (payload && payload.length > 0) {
+                                    const data = payload[0].payload;
+                                    // Format the total sales as USD
+                                    const totalSalesFormatted = new Intl.NumberFormat('en-US',
+                                        { style: 'currency', currency: 'USD' }).format(data.totalSales);
 
-                    // Extract the date and optionally the hour
-                    const dateObj = new Date(data.InvoiceDate);
-                    const dateStr = dateObj.toLocaleDateString();
-                    const timeStr = data._id.hour ? dateObj.toLocaleTimeString() : ''; // Include the time if hour is present
+                                    // Extract the date and optionally the hour
+                                    const dateObj = new Date(data.InvoiceDate);
+                                    const dateStr = dateObj.toLocaleDateString();
+                                    const timeStr = data._id.hour ? dateObj.toLocaleTimeString() : ''; // Include the time if hour is present
 
-                    return (
-                        <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
-                        <p>Date: {dateStr} {timeStr}</p> {/* Include the time here */}
-                        <p>Total Quantity: {data.totalQuantity}</p>
-                        <p>Total Sales: {totalSalesFormatted}</p>
-                        </div>
-                    );
-                    }
-                    return null;
-                }}
-                />
-                <Area type="monotone" dataKey="totalQuantity" stroke="#8884d8" fillOpacity={1} fill="url(#salesColor)" />
-                <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" tickFormatter={formatDate} />
-            </AreaChart>
-            </ResponsiveContainer>
-        )}
+                                    return (
+                                        <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+                                            <p>Date: {dateStr} {timeStr}</p> {/* Include the time here */}
+                                            <p>Total Quantity: {data.totalQuantity}</p>
+                                            <p>Total Sales: {totalSalesFormatted}</p>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }}
+                            />
+                            <Area type="monotone" dataKey="totalQuantity" stroke="#8884d8" fillOpacity={1} fill="url(#salesColor)" />
+                            <Brush dataKey="InvoiceDate" height={30} stroke="#8884d8" tickFormatter={formatDate} />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                )}
+            </div>
+            <div className={styles['visualization-section']}>
+                <h2 className={styles['visualization-title']}>Total Sales in $USD by Country 2010-2011</h2>
+                {Array.isArray(dataByCountry09) && dataByCountry09.length > 0 && (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={dataByCountry09} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="_id" name="Country" />
+                            <YAxis name="Total Sales Value ($)" />
+                            <Tooltip />
+                            <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
+                            <Brush dataKey="_id" height={20} stroke="#82ca9d" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                )}
+            </div>
+            <div className={styles['visualization-section']}>
+                <h2 className={styles['visualization-title']}>Total Sales in $USD by Country 2009-2010</h2>
+                {Array.isArray(dataByCountry11) && dataByCountry11.length > 0 && (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={dataByCountry11} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="_id" name="Country" />
+                            <YAxis name="Total Sales Value ($)" />
+                            <Tooltip />
+                            <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
+                            <Brush dataKey="_id" height={20} stroke="#82ca9d" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                )}
+            </div>
+            <div className={styles['visualization-section']}>
+                <h2 className={styles['visualization-title']}>Heatmap of Sales Data by Country</h2>
+                <div className={styles['plot-container']}>
+                    {heatMapData && heatMapData.countries && (
+                        <Plot
+                            data={[
+                                {
+                                    z: heatMapData.z,
+                                    x: ['Total Sales', 'Total Quantity'],
+                                    y: heatMapData.countries,
+                                    type: 'heatmap',
+                                    colorscale: 'Viridis',
+                                },
+                            ]}
+                            layout={{
+                                title: 'Heatmap of Sales and Quantity by Country',
+                                xaxis: { title: 'Metrics' },
+                                yaxis: { title: 'Country' },
+                            }}
+                        />
+                    )}
+                </div>
+            </div>
         </div>
-
-        {/* Visualizing the aggregated data by country using a BarChart */}
-        <div>
-            <h2>Total Sales in $USD by Country 2010-2011</h2>
-            {Array.isArray(dataByCountry09) && dataByCountry09.length > 0 && (
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={dataByCountry09} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="_id" name="Country" />
-                    <YAxis name="Total Sales Value ($)" />
-                    <Tooltip />
-                    <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
-                    <Brush dataKey="_id" height={20} stroke="#82ca9d" />
-                </BarChart>
-            </ResponsiveContainer>
-            )}
-        </div>
-
-        <div>
-            <h2>Total Sales in $USD by Country 2009-2010</h2>
-            {Array.isArray(dataByCountry11) && dataByCountry11.length > 0 && (
-            <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={dataByCountry11} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="_id" name="Country" />
-                    <YAxis name="Total Sales Value ($)" />
-                    <Tooltip />
-                    <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
-                    <Brush dataKey="_id" height={20} stroke="#82ca9d" />
-                </BarChart>
-            </ResponsiveContainer>
-            )}
-        </div>
-
-        <div>
-        <h2>Heatmap of Sales Data by Country</h2>
-        {heatMapData && heatMapData.countries && (
-            <Plot
-            data={[
-                {
-                    z: heatMapData.z,
-                    x: ['Total Sales', 'Total Quantity'],
-                    y: heatMapData.countries,                    
-                    type: 'heatmap',
-                    colorscale: 'Viridis',
-                },
-            ]}
-            layout={{
-                title: 'Heatmap of Sales and Quantity by Country',
-                xaxis: { title: 'Metrics' },
-                yaxis: { title: 'Country' },
-            }}
-            />
-        )}
-        </div>
-
     </div>
-</div>
 );
 }
 
