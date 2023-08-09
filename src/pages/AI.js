@@ -117,79 +117,63 @@ const AI = () => {
   } = useTable({ columns, data: tableData });
 
   return (
-    <div>
-      <h1>My Prediction Form</h1>
+    <div className="form-container">
+      <h1 className="form-title">My Prediction Form</h1>
       <form data-testid="predict-form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <h3>Median Income (0 to 10):</h3>
-          <br />
+          <h3 className="form-subtitle">Median Income (0 to 10):</h3>
           <input type="number" id="medInc" name="medInc" onChange={handleChange} 
-          value={inputs.medInc} data-testid="medInc"/>
-          <br />
+          value={inputs.medInc} data-testid="medInc" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>House Age (0 to 50):</h3>
-          <br />
+          <h3 className="form-subtitle">House Age (0 to 50):</h3>
           <input type="number" id="houseAge" name="houseAge" onChange={handleChange} 
-          value={inputs.houseAge} data-testid="houseAge"/>
-          <br />
+          value={inputs.houseAge} data-testid="houseAge" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>Average Rooms (0 to 10):</h3>
-          <br />
+          <h3 className="form-subtitle">Average Rooms (0 to 10):</h3>
           <input type="number" id="aveRooms" name="aveRooms" onChange={handleChange} 
-          value={inputs.aveRooms} data-testid="aveRooms"/>
-          <br />
+          value={inputs.aveRooms} data-testid="aveRooms" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>Average Bedrooms (0 to 5):</h3>
-          <br />
+          <h3 className="form-subtitle">Average Bedrooms (0 to 5):</h3>
           <input type="number" id="aveBedrms" name="aveBedrms" onChange={handleChange} 
-          value={inputs.aveBedrms} data-testid="aveBedrms"/>
-          <br />
+          value={inputs.aveBedrms} data-testid="aveBedrms" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>Population (0 to 5000):</h3>
-          <br />
+          <h3 className="form-subtitle">Population (0 to 5000):</h3>
           <input type="number" id="population" name="population" onChange={handleChange} 
-          value={inputs.population} data-testid="population"/>
-          <br />
+          value={inputs.population} data-testid="population" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>Average Occupancy (0 to 10):</h3>
-          <br />
+          <h3 className="form-subtitle">Average Occupancy (0 to 10):</h3>
           <input type="number" id="aveOccup" name="aveOccup" onChange={handleChange} 
-          value={inputs.aveOccup} data-testid="aveOccup"/>
-          <br />
+          value={inputs.aveOccup} data-testid="aveOccup" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>Latitude (33 to 42):</h3>
-          <br />
+          <h3 className="form-subtitle">Latitude (33 to 42):</h3>
           <input type="number" id="latitude" name="latitude" onChange={handleChange} 
-          value={inputs.latitude} data-testid="latitude"/>
-          <br />
+          value={inputs.latitude} data-testid="latitude" className="form-input"/>
         </div>
         <div className="form-group">
-          <h3>Longitude (-124 to -114):</h3>
-          <br />
+          <h3 className="form-subtitle">Longitude (-124 to -114):</h3>
           <input type="number" id="longitude" name="longitude" onChange={handleChange} 
-          value={inputs.longitude} data-testid="longitude"/>
-          <br />
+          value={inputs.longitude} data-testid="longitude" className="form-input"/>
         </div>
         <div className="form-group">
-          <button type="submit">Predict</button>
+          <button type="submit" className="form-button">Predict</button>
         </div>
       </form>
       <div data-testid="prediction-result" id="prediction">{prediction}</div>
       <div>
         <h2>Feature Importances</h2>
         <p>This bar chart shows the importance of each feature for predicting house prices, 
-          according to our machine learning model. The taller the bar, the more important the
-           feature. For example, if the 'Median Income' bar is taller than the 'House Age' 
-           bar, that means median income is a more important predictor of house price than 
-           house age. Note that this doesn't tell us whether house prices go up or down as 
-           these features increase; it only tells us how important the feature is for making 
-           accurate predictions.</p>
+          according to our machine learning model. The taller the bar, the more important the 
+          feature. For example, if the 'Median Income' bar is taller than the 'House Age' 
+          bar, that means median income is a more important predictor of house price than 
+          house age. Note that this doesn't tell us whether house prices go up or down as 
+          these features increase; it only tells us how important the feature is for making 
+          accurate predictions.</p>
         <Bar data={chartData} options={options} key={key} />
       </div>
       <div className="table-container">
@@ -218,7 +202,7 @@ const AI = () => {
         </table>
       </div>
     </div>
-  );
+  );  
 };
 
 export default AI;
