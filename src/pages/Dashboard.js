@@ -42,14 +42,16 @@ function Dashboard() {
             .then(response => response.json())
             .then(data => {
             // Prepare data for the heatmap
-            const countries = data.map(item => item._id);
-            const totalSales = data.map(item => item.totalSales);
-            const totalQuantity = data.map(item => item.totalQuantity);
-        
-            setHeatMapData({ countries, totalSales, totalQuantity });
+            const countries = [];
+            const z = data.map(item => {
+                countries.push(item._id);
+                return [item.totalSales, item.totalQuantity];
+            });
+    
+            setHeatMapData({ countries, z });
             })
         .catch(err => console.error('Error fetching heatmap data:', err));
-    };
+    };    
 
     const fetchAggregateByCountry2010_2011 = () => {
         fetch('http://localhost:4200/aggregate-by-country-2010-2011')
@@ -218,11 +220,11 @@ function Dashboard() {
             <Plot
             data={[
                 {
-                z: [heatMapData.totalSales, heatMapData.totalQuantity],
-                x: ['Total Sales', 'Total Quantity'],
-                y: heatMapData.countries,
-                type: 'heatmap',
-                colorscale: 'Viridis',
+                    z: heatMapData.z,
+                    x: ['Total Sales', 'Total Quantity'],
+                    y: heatMapData.countries,                    
+                    type: 'heatmap',
+                    colorscale: 'Viridis',
                 },
             ]}
             layout={{
