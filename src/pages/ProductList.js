@@ -1,28 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function ProductList() {
-  // Dummy data for products (replace with actual data fetching)
-  const products = [
-    {
-      "Invoice": 489434,
-      "StockCode": 85048,
-      "Description": "15CM CHRISTMAS GLASS BALL 20 LIGHTS",
-      "Quantity": 12,
-      "Price": 6.95,
-      "Country": "United Kingdom"
-    },
-    // Add more products as needed
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch unique products from the new API endpoint
+    fetch('http://localhost:4200/unique-products')
+      .then(response => response.json())
+      .then(data => setProducts(data))
+      .catch(error => console.error('Error fetching unique products:', error));
+  }, []);
 
   return (
     <div>
       <h2>Product List</h2>
       <ul>
-        {products.map((product, index) => (
-          <li key={index}>
+        {products.map(product => (
+          <li key={product.StockCode}>
             <Link to={`/shopping/product/${product.StockCode}`}>
-                {product.Description} - ${product.Price} (Available: {product.Quantity})
+                {product.Description} - ${product.Price}
             </Link>
           </li>
         ))}
