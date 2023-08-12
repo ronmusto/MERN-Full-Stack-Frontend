@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Resume from "./pages/Resume";
 import AI from "./pages/AI";
+import StockAI from "./pages/StockAI";
 import Shopping from "./components/shopping";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
@@ -57,6 +58,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
+            <Route path="stockai" element={<ProtectedRoute><StockAI /></ProtectedRoute>} />
             <Route path="shopping" element={<ProtectedRoute><Shopping /></ProtectedRoute>} />
           </Route>
         </Routes>

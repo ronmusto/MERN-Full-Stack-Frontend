@@ -24,7 +24,7 @@ const Layout = () => {
             {user && (
               <li className={styles.layoutNavItem}>
                 <Link to="/AI" className={styles.layoutNavLink}>
-                  AI
+                  House AI
                 </Link>
               </li>
             )}
@@ -39,6 +39,13 @@ const Layout = () => {
               <li className={styles.layoutNavItem}>
                 <Link to="/shopping" className={styles.layoutNavLink}>
                   Shopping
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li className={styles.layoutNavItem}>
+                <Link to="/stockai" className={styles.layoutNavLink}>
+                  Stock AI
                 </Link>
               </li>
             )}
