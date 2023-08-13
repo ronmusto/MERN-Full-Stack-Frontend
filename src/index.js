@@ -13,8 +13,7 @@ import Shopping from "./components/shopping";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './pages/Global.css';
-
+import './CSS/Global.css';
 function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import styles from './Layout.module.css';
+import styles from '../CSS/Layout.module.css';
 import { UserContext } from '../UserContext';
 
 const Layout = () => {

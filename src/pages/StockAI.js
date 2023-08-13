@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../CSS/StockAI.module.css'
 
 const StockPrediction = () => {
   const [stockSymbol, setStockSymbol] = useState('');
@@ -33,6 +34,7 @@ const StockPrediction = () => {
   return (
     <div className="form-container">
       <h1 className="form-title">Next Day Stock Price Prediction</h1>
+      <h2 className="form-subtitle">Enter the stock symbol below:</h2> {/* Added subtitle */}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label" htmlFor="stockSymbol">Stock Symbol:</label>
@@ -54,8 +56,11 @@ const StockPrediction = () => {
         <div id="prediction">Predicted Price for {stockSymbol}: ${prediction}</div>
       )}
       {error && <div className="error">{error}</div>}
+      <div className="chart-container">
+        {/* You can insert a chart or other content here */}
+      </div>
     </div>
-  );
+  );  
 };
 
 export default StockPrediction;

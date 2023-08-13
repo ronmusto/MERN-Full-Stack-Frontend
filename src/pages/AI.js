@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useTable } from 'react-table';
-import './AI.module.css';
+import '../CSS/AI.module.css';
 import { Chart, BarController, LinearScale, CategoryScale, BarElement } from 'chart.js';
 
 Chart.register(BarController, LinearScale, CategoryScale, BarElement);

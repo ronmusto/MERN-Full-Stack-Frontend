@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './Dashboard.module.css';
+import '../CSS/Dashboard.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
-import styles from './Dashboard.module.css';
+import styles from '../CSS/Dashboard.module.css';
 import moment from 'moment';
 import Plot from 'react-plotly.js';
 import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
