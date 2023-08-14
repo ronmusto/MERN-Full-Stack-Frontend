@@ -1,0 +1,40 @@
+.layoutHeader {
+  /* control header vertically */
+  padding: 15px 20px; /* Increased padding for more space */
+  font-size: 18px; /* Increased font size */
+  height: auto; /* Allow height to adjust based on content */
+  background-color: #f5f5f5; /* Optional: light background color */
+  border-bottom: 1px solid #ccc; /* Optional: subtle border */
+}
+
+.layoutHeader img {
+  /* Set the max-height property to ensure the logo doesn't exceed the header height */
+  max-height: 25px; /* Increased max-height to match increased header size */
+}
+
+.layoutNavigation {
+  display: flex;
+}
+
+.layoutNavList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.layoutNavItem {
+  margin-left: 20px; /* Increased margin for more spacing between items */
+}
+
+.layoutNavLink {
+  color: #555; /* Darker color for better readability */
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px; /* Padding around links for more clickable area */
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.layoutNavLink:hover {
+  color: #007bff; /* Color change on hover for visual feedback */
+}

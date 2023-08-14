@@ -11,7 +11,9 @@ import AI from "./pages/AI";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './pages/Global.css';
+import Travel from "./pages/Travel";
+import Checkout from "./pages/Checkout";
+import VacationDetails from "./pages/VacationDetails";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -56,6 +58,9 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
+            <Route path="travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
+            <Route path="vacation/:id" element={<ProtectedRoute><VacationDetails /></ProtectedRoute>} />
+            <Route path="checkout/:id" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           </Route>
         </Routes>
       </BrowserRouter>

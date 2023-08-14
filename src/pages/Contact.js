@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Contact.module.css';
+import styles from '../CSS/Contact.module.css';
 
 const Contact = () => {
   return (

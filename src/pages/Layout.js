@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import styles from './Layout.module.css';
+import styles from '../CSS/Layout.module.css';
 import { UserContext } from '../UserContext';
 
 const Layout = () => {
@@ -24,7 +24,7 @@ const Layout = () => {
             {user && (
               <li className={styles.layoutNavItem}>
                 <Link to="/AI" className={styles.layoutNavLink}>
-                  AI
+                  House AI
                 </Link>
               </li>
             )}
@@ -35,6 +35,29 @@ const Layout = () => {
                 </Link>
               </li>
             )}
+            {user && (
+              <li className={styles.layoutNavItem}>
+                <Link to="/travel" className={styles.layoutNavLink}>
+                  Travel
+                </Link>
+              </li>
+            )}
+            {/*
+            {user && (
+              <li className={styles.layoutNavItem}>
+                <Link to="/shopping" className={styles.layoutNavLink}>
+                  Shopping
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li className={styles.layoutNavItem}>
+                <Link to="/stockai" className={styles.layoutNavLink}>
+                  Stock AI
+                </Link>
+              </li>
+            )}
+            {*/}
           </ul>
         </nav>
       </header>

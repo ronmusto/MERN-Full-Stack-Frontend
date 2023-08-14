@@ -1,0 +1,51 @@
+/* === Page Container === */
+.pageContainer {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2; /* Light background for contrast */
+  margin: 0;
+  padding: 1rem;
+  color: #333; /* Dark color for text */
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff; /* White background for container */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+/* === Headings === */
+h1 {
+  margin-bottom: 2rem;
+  color: #007bff; /* Blue color for main title */
+  text-align: center;
+}
+
+h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333; /* Darker color for headings */
+}
+
+/* === Paragraphs === */
+p {
+  margin-bottom: 1rem;
+  color: #555; /* Darker color for better readability */
+}
+
+/* === Skills List === */
+.skillsList {
+  padding-left: 1.5rem;
+}
+
+/* === Links === */
+a {
+  color: #007bff; /* Blue color for links */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import styles from './Home.module.css';
+import styles from '../CSS/Home.module.css';
 import { UserContext } from '../UserContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AI from './AI';

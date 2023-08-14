@@ -1,0 +1,39 @@
+/* === Contact Container === */
+.contactContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f2f2f2; /* Light background for contrast */
+  color: #333; /* Darker color for text */
+}
+
+.contactHeading {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #007bff; /* Blue color for the heading */
+}
+
+.contactDetails {
+  font-size: 1.2rem;
+  color: #555; /* Darker color for better readability */
+}
+
+/* === Contact Button === */
+.contactButton {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 10px; /* Rounded corners to match other elements */
+  background-color: #007bff; /* Blue color for button */
+  color: #ffffff; /* White color for text */
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.contactButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

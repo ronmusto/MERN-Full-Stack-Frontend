@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Home from './pages/Home';
+import Home from '../src/pages/Home';
 import fetchMock from 'jest-fetch-mock';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { MockUserProvider } from '../__mocks__/userProvider';

@@ -1,23 +1,27 @@
+/* === Dashboard Container === */
 .dashboard-container {
-    background-color: #1a1a1a;
-    color: #f0f0f0;
+    background-color: #f2f2f2; /* Light background for contrast */
+    color: #333; /* Dark color for text */
     padding: 20px;
     font-family: Arial, sans-serif;
 }
 
-.header {
+.dashboard-header {
     text-align: center;
     margin-bottom: 20px;
     font-size: 24px;
 }
 
+/* === Filters Container === */
 .filters-container {
     padding: 10px 20px;
-    background-color: #2a2a2a;
-    border-radius: 5px;
+    background-color: #ffffff; /* White background for cards */
+    border-radius: 10px;
     margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
+/* === Custom Dropdown === */
 .custom-dropdown-toggle {
     background-color: #007bff; /* Blue color */
     border-color: #007bff;
@@ -38,8 +42,9 @@
 .custom-dropdown-item:focus {
     background-color: #007bff; /* Blue background on hover and focus for the items */
     color: #fff; /* White text on hover and focus for the items */
-}  
+}
 
+/* === Data Visualizations Container === */
 .data-visualizations-container {
     padding: 10px 20px;
 }
@@ -55,41 +60,43 @@
 }
 
 .tooltip-container {
-    background-color: #fff;
+    background-color: #ffffff; /* White background for tooltips */
     color: #333;
     padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
+/* === Dropdown Menu === */
 .dropdown-menu {
-    background-color: #2a2a2a;
+    background-color: #ffffff; /* White background for dropdown */
 }
 
 .dropdown-item {
-    color: #f0f0f0;
+    color: #333; /* Dark color for text */
 }
 
 .dropdown-item:hover {
-    background-color: #3a3a3a;
+    background-color: #f5f5f5; /* Light hover effect */
 }
 
-/* Customize react-plotly.js styles */
+/* === Plot Container === */
 .plot-container {
-    background-color: #2a2a2a;
-    border-radius: 5px;
-    padding: 10px;
+    background-color: #ffffff; /* White background for plots */
+    border-radius: 10px;
+    padding: 20px; /* Increased padding for labels and axes */
 }
 
-/* Customize recharts styles */
+/* === Customize recharts styles === */
 .recharts-cartesian-grid-vertical,
 .recharts-cartesian-grid-horizontal {
     stroke: #888;
 }
 
 .recharts-cartesian-axis-ticks text {
-    fill: #f0f0f0;
+    fill: #333; /* Dark color for text */
 }
 
 .recharts-brush-bar {
-    fill: #3a3a3a;
+    fill: #f5f5f5; /* Light fill for brush bar */
 }
