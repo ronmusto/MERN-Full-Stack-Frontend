@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../CSS/StockAI.module.css'
+//finish importing styles in jsx
 
 const StockPrediction = () => {
   const [stockSymbol, setStockSymbol] = useState('');
@@ -23,7 +24,7 @@ const StockPrediction = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setPrediction(data.prediction[0]); // Assuming prediction is a single value
+        setPrediction(data.prediction[0]);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -34,7 +35,7 @@ const StockPrediction = () => {
   return (
     <div className="form-container">
       <h1 className="form-title">Next Day Stock Price Prediction</h1>
-      <h2 className="form-subtitle">Enter the stock symbol below:</h2> {/* Added subtitle */}
+      <h2 className="form-subtitle">Enter the stock symbol below:</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label" htmlFor="stockSymbol">Stock Symbol:</label>

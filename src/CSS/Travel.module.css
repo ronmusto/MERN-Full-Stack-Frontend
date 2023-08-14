@@ -1,0 +1,54 @@
+.travelContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f2f2f2; /* Light background for contrast */
+}
+
+.vacationTile {
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+  margin: 15px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #ffffff; /* White background for cards */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.vacationTile:hover {
+  transform: scale(1.03); /* Scale effect on hover */
+}
+
+.vacationTile h2 {
+  font-size: 1.3em; /* Larger font size for the title */
+  margin: 10px 0;
+  color: #333; /* Darker color for better readability */
+}
+
+.vacationTile p {
+  margin: 10px 0;
+  line-height: 1.5; /* Improved line spacing */
+  color: #555; /* Darker color for better readability */
+}
+
+.vacationLink {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .vacationTile {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .vacationTile {
+    flex: 1 1 calc(100% - 20px);
+  }
+}

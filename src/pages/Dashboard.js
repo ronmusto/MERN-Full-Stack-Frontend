@@ -113,7 +113,7 @@ function Dashboard() {
 //JSX for dashboard
 return (
     <div className={styles['dashboard-container']}>
-        <h1 className={styles.header}>Data Dashboard</h1>
+        <h1 className={styles['dashboard-header']}>Data Dashboard</h1>
         <div className={styles['blue-dropdown-toggle']}>
             <h2>Filters for Data</h2>
             <Dropdown onSelect={handleAggregatedTimeFrameChange}>

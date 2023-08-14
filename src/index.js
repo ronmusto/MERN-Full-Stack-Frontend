@@ -8,12 +8,13 @@ import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Resume from "./pages/Resume";
 import AI from "./pages/AI";
-import StockAI from "./pages/StockAI";
-import Shopping from "./components/shopping";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './CSS/Global.css';
+import Travel from "./pages/Travel";
+import Checkout from "./pages/Checkout";
+import VacationDetails from "./pages/VacationDetails";
+
 function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,8 +58,9 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
-            <Route path="stockai" element={<ProtectedRoute><StockAI /></ProtectedRoute>} />
-            <Route path="shopping" element={<ProtectedRoute><Shopping /></ProtectedRoute>} />
+            <Route path="travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
+            <Route path="vacation/:id" element={<ProtectedRoute><VacationDetails /></ProtectedRoute>} />
+            <Route path="checkout/:id" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           </Route>
         </Routes>
       </BrowserRouter>

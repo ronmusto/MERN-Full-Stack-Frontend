@@ -37,6 +37,14 @@ const Layout = () => {
             )}
             {user && (
               <li className={styles.layoutNavItem}>
+                <Link to="/travel" className={styles.layoutNavLink}>
+                  Travel
+                </Link>
+              </li>
+            )}
+            {/*
+            {user && (
+              <li className={styles.layoutNavItem}>
                 <Link to="/shopping" className={styles.layoutNavLink}>
                   Shopping
                 </Link>
@@ -49,6 +57,7 @@ const Layout = () => {
                 </Link>
               </li>
             )}
+            {*/}
           </ul>
         </nav>
       </header>
