@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Travel from "./pages/Travel";
+import Account from "./pages/Account";
 import Checkout from "./pages/Checkout";
 import VacationDetails from "./pages/VacationDetails";
 
@@ -58,6 +59,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
+            <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
             <Route path="travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
             <Route path="vacation/:id" element={<ProtectedRoute><VacationDetails /></ProtectedRoute>} />
             <Route path="checkout/:id" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
