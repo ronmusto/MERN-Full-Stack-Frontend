@@ -24,7 +24,7 @@ const Checkout = () => {
     e.preventDefault();
     // Send booking details to the server...
     // Navigate to confirmation or user profile page...
-    navigate('/confirmation');
+    navigate('/account');
   };
 
   if (!vacation) {
@@ -33,20 +33,27 @@ const Checkout = () => {
 
   return (
     <div className={styles.checkoutContainer}>
-      <h1 className={styles.checkoutHeading}>Checkout</h1>
-      <form>
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="name">Full Name</label>
-          <input type="text" id="name" className={styles.inputField} required />
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="email">Email</label>
-          <input type="email" id="email" className={styles.inputField} required />
-        </div>
-        {/* Additional form fields can go here */}
-        <a href={`/confirmation/${id}`} className={styles.submitButton}>Confirm Booking</a>
-      </form>
+    <h1 className={styles.checkoutHeading}>Checkout</h1>
+
+    <div className={styles.vacationReview}>
+      <h2 className={styles.vacationDestination}>{vacation.destination}</h2>
+      <p className={styles.vacationDescription}>{vacation.description}</p>
+      <p className={styles.vacationPrice}>${vacation.price}</p>
     </div>
+
+    <form>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="name">Full Name</label>
+        <input type="text" id="name" className={styles.inputField} required />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="email">Email</label>
+        <input type="email" id="email" className={styles.inputField} required />
+      </div>
+      {/* Additional form fields can go here */}
+      <a href={`/confirmation/${id}`} className={styles.submitButton}>Confirm Booking</a>
+    </form>
+  </div>
   );
 };
 
