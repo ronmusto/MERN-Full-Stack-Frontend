@@ -1,0 +1,80 @@
+.accountContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+
+.accountDetails {
+  width: 80%;
+  max-width: 800px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.accountDetails h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: #333;
+}
+
+.accountDetails p {
+  margin: 10px 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+.bookedVacations {
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bookedVacationTile {
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+  margin: 15px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.bookedVacationTile:hover {
+  transform: scale(1.03);
+}
+
+.bookedVacationTile h3 {
+  font-size: 1.3em;
+  margin: 10px 0;
+  color: #333;
+}
+
+.bookedVacationTile p {
+  margin: 10px 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .bookedVacationTile {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .bookedVacationTile {
+    flex: 1 1 calc(100% - 20px);
+  }
+}

@@ -3,7 +3,7 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import styles from '../CSS/Home.module.css';
 import { UserContext } from '../UserContext';
 import ProtectedRoute from '../components/ProtectedRoute';
-import AI from './AI';
+import Travel from '../pages/Travel';
 
 function Home() {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ function Home() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [regUsername, setRegUsername] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:4200/verify', {
@@ -53,7 +54,7 @@ function Home() {
       .then(data => {
         setUser(data.user);
         if (data.user) {
-          navigate('/ai'); // Redirect to /ai page
+          navigate('/travel');
         }
       })
       .catch(err => console.error('Error logging in:', err));
@@ -67,7 +68,7 @@ function Home() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: regEmail, password: regPassword }),
+      body: JSON.stringify({ email: regEmail, username: regUsername, password: regPassword }),
       credentials: 'include',
     })
       .then(response => response.json())
@@ -99,6 +100,12 @@ function Home() {
                       placeholder="Email"
                       value={regEmail}
                       onChange={e => setRegEmail(e.target.value)}
+                    />
+                    <input
+                      type="username"
+                      placeholder="Username"
+                      value={regUsername}
+                      onChange={e => setRegUsername(e.target.value)}
                     />
                     <input
                       type="password"
@@ -139,10 +146,10 @@ function Home() {
           }
         />
         <Route
-          path="/ai"
+          path="/travel"
           element={
             <ProtectedRoute>
-              <AI />
+              <Travel />
             </ProtectedRoute>
           }
         />
