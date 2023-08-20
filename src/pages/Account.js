@@ -8,7 +8,7 @@ const Account = () => {
   const [bookedVacations, setBookedVacations] = useState([]);
 
   const fetchAccountData = () => {
-    console.log('user info', user)
+    // Ensure there's a user ID available
     if (!user._id) {
       console.error('User or User ID is not available');
       return;
@@ -25,14 +25,28 @@ const Account = () => {
       .catch(err => console.error('Error fetching specified user data', err));
   };
 
-  useEffect(() => {
-    const mockBookedVacations = [
-      { id: 1, destination: "Paris", description: "5 days in Paris" },
-      { id: 2, destination: "New York", description: "7 days in NYC" },
-    ];
-    
+  const fetchBookedVacations = () => {
+    // Ensure there's a user ID available
+    if (!user._id) {
+      console.error('User or User ID is not available');
+      return;
+    }
+
+    // Fetch the vacations booked by the user
+    fetch(`http://localhost:4200/user-booked-vacations/${user._id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => setBookedVacations(data))
+      .catch(err => console.error('Error fetching booked vacations', err));
+  };
+
+  useEffect(() => {  
     fetchAccountData();
-    setBookedVacations(mockBookedVacations);
+    fetchBookedVacations();
   }, [user && user._id]);
 
   return (

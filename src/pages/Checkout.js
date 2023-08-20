@@ -9,7 +9,6 @@ const Checkout = () => {
   const [bookingDetails, setBookingDetails] = useState({
     name: '',
     email: '',
-    // Other booking details...
   });
 
   useEffect(() => {
@@ -22,9 +21,32 @@ const Checkout = () => {
 
   const handleBooking = (e) => {
     e.preventDefault();
-    // Send booking details to the server...
-    // Navigate to confirmation or user profile page...
-    navigate('/account');
+    
+    // Create a combined object of the vacation and booking details
+    const combinedDetails = {
+        vacationDetails: vacation, 
+        userBookingDetails: bookingDetails
+    };
+    
+    // Send combined details to the server
+    fetch('http://localhost:4200/bookVacation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(combinedDetails)
+    })
+    .then((response) => {
+      if (response.ok) {
+        navigate('/account'); // Navigate to confirmation or user profile page
+      } else {
+        // Handle error
+        console.error('Error booking vacation:', response.statusText);
+      }
+    })
+    .catch((error) => {
+      console.error('Error sending booking details:', error);
+    });
   };
 
   if (!vacation) {
@@ -41,19 +63,33 @@ const Checkout = () => {
       <p className={styles.vacationPrice}>${vacation.price}</p>
     </div>
 
-    <form>
-      <div className={styles.formGroup}>
-        <label className={styles.label} htmlFor="name">Full Name</label>
-        <input type="text" id="name" className={styles.inputField} required />
-      </div>
-      <div className={styles.formGroup}>
-        <label className={styles.label} htmlFor="email">Email</label>
-        <input type="email" id="email" className={styles.inputField} required />
-      </div>
-      {/* Additional form fields can go here */}
-      <a href={`/confirmation/${id}`} className={styles.submitButton}>Confirm Booking</a>
-    </form>
-  </div>
+    <form onSubmit={handleBooking}>
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="name">Full Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            className={styles.inputField} 
+            required 
+            value={bookingDetails.name}
+            onChange={(e) => setBookingDetails(prev => ({ ...prev, name: e.target.value }))}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            className={styles.inputField} 
+            required 
+            value={bookingDetails.email}
+            onChange={(e) => setBookingDetails(prev => ({ ...prev, email: e.target.value }))}
+          />
+        </div>
+        {/* Additional form fields can go here */}
+        <button type="submit" className={styles.submitButton}>Confirm Booking</button>
+      </form>
+    </div>
   );
 };
 
