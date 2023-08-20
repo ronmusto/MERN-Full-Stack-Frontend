@@ -27,7 +27,6 @@ function App() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Response from /verify:', data);  // log the response from the server
       if (data.user) {
         setUser(data.user);
       } else {

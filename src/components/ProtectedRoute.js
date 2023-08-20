@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '../UserContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { user, isLoading } = useContext(UserContext); // Add isLoading here
+  const { user, isLoading } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
