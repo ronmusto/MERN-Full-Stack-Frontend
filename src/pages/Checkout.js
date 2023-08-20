@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../CSS/Checkout.module.css';
 import { UserContext } from '../UserContext';
-console.log("hello");
+
 const Checkout = () => {
+  const userContextValue = useContext(UserContext);
+  console.log("UserContext value:", userContextValue);
   const { id } = useParams(); // Get vacation ID from URL parameters
-  const { _id: userId } = useContext(UserContext);
-  console.log(userId);
+  const { _id } = useContext(UserContext);
   const [vacation, setVacation] = useState(null);
   const navigate = useNavigate();
   const [bookingDetails, setBookingDetails] = useState({
@@ -27,10 +28,12 @@ const Checkout = () => {
     
     // Create a combined object of the vacation and booking details
     const combinedDetails = {
-      userId,
+      userID: userContextValue.user._id,
       vacationDetails: vacation, 
       userBookingDetails: bookingDetails
   };
+
+  console.log(combinedDetails);
     
     // Send combined details to the server
     fetch('http://localhost:4200/bookVacation', {
