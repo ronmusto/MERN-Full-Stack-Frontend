@@ -8,7 +8,7 @@ const Account = () => {
   const [bookedVacations, setBookedVacations] = useState([]);
 
   const fetchAccountData = () => {
-    console.log('user info', user)
+    // Ensure there's a user ID available
     if (!user._id) {
       console.error('User or User ID is not available');
       return;
@@ -25,29 +25,49 @@ const Account = () => {
       .catch(err => console.error('Error fetching specified user data', err));
   };
 
-  useEffect(() => {
-    const mockBookedVacations = [
-      { id: 1, destination: "Paris", description: "5 days in Paris" },
-      { id: 2, destination: "New York", description: "7 days in NYC" },
-    ];
-    
+  const fetchBookedVacations = () => {
+    // Ensure there's a user ID available
+    if (!user._id) {
+      console.error('User or User ID is not available');
+      return;
+    }
+
+    // Fetch the vacations booked by the user
+    fetch(`http://localhost:4200/user-booked-vacations/${user._id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => setBookedVacations(data))
+      .catch(err => console.error('Error fetching booked vacations', err));
+  };
+
+  useEffect(() => {  
     fetchAccountData();
-    setBookedVacations(mockBookedVacations);
+    fetchBookedVacations();
   }, [user && user._id]);
 
   return (
     <UserContext.Provider value={user}>
     <div className={styles.accountContainer}>
       <div className={styles.accountDetails}>
-        <h2>{userData.username}</h2>
+        <h2>{userData.name}</h2>
         <p>Email: {userData.email}</p>
       </div>
 
       <div className={styles.bookedVacations}>
         {bookedVacations.map((vacation) => (
-          <div key={vacation.id} className={styles.bookedVacationTile}>
-            <h3>{vacation.destination}</h3>
-            <p>{vacation.description}</p>
+          <div key={vacation.vacationDetails.id} className={styles.bookedVacationTile}>
+            <h3>{vacation.vacationDetails.destination}</h3>
+            <p>{vacation.vacationDetails.description}</p>
+            <p>Price: ${vacation.vacationDetails.price}</p>
+            <div className={styles.vacationImages}>
+              {vacation.vacationDetails.images.split(';').map((img, index) => (
+                <img key={index} src={img} alt={`Image ${index}`} />
+              ))}
+            </div>
           </div>
         ))}
       </div>
