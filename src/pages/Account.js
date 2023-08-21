@@ -53,15 +53,21 @@ const Account = () => {
     <UserContext.Provider value={user}>
     <div className={styles.accountContainer}>
       <div className={styles.accountDetails}>
-        <h2>{userData.username}</h2>
+        <h2>{userData.name}</h2>
         <p>Email: {userData.email}</p>
       </div>
 
       <div className={styles.bookedVacations}>
         {bookedVacations.map((vacation) => (
-          <div key={vacation.id} className={styles.bookedVacationTile}>
-            <h3>{vacation.destination}</h3>
-            <p>{vacation.description}</p>
+          <div key={vacation.vacationDetails.id} className={styles.bookedVacationTile}>
+            <h3>{vacation.vacationDetails.destination}</h3>
+            <p>{vacation.vacationDetails.description}</p>
+            <p>Price: ${vacation.vacationDetails.price}</p>
+            <div className={styles.vacationImages}>
+              {vacation.vacationDetails.images.split(';').map((img, index) => (
+                <img key={index} src={img} alt={`Image ${index}`} />
+              ))}
+            </div>
           </div>
         ))}
       </div>
