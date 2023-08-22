@@ -26,7 +26,7 @@ const VacationDetails = () => {
       <h1 className={styles.detailsHeading}>{vacation.destination}</h1>
       <div className={styles.detailsImages}>
         {imagesArray.map((image, index) => (
-          <img key={index} src={image} alt={vacation.destination} className={styles.detailsImage} />
+          <img key={index} src={`http://localhost:4200/images/${image}`} alt={vacation.destination} className={styles.detailsImage} />
         ))}
       </div>
       <p className={styles.detailsDescription}>{vacation.description}</p>

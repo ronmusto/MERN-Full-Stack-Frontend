@@ -2,6 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../CSS/Checkout.module.css';
 import { UserContext } from '../UserContext';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
+
 
 const Checkout = () => {
   const userContextValue = useContext(UserContext);
@@ -10,6 +13,8 @@ const Checkout = () => {
   const { _id } = useContext(UserContext);
   const [vacation, setVacation] = useState(null);
   const navigate = useNavigate();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [bookingDetails, setBookingDetails] = useState({
     name: '',
     email: '',
@@ -30,7 +35,9 @@ const Checkout = () => {
     const combinedDetails = {
       userID: userContextValue.user._id,
       vacationDetails: vacation, 
-      userBookingDetails: bookingDetails
+      userBookingDetails: bookingDetails,
+      startDate: startDate,
+      endDate: endDate
   };
 
   console.log(combinedDetails);
@@ -68,6 +75,31 @@ const Checkout = () => {
       <h2 className={styles.vacationDestination}>{vacation.destination}</h2>
       <p className={styles.vacationDescription}>{vacation.description}</p>
       <p className={styles.vacationPrice}>${vacation.price}</p>
+    </div>
+
+    {/* Start Date Picker */}
+    <div>
+        <label>Start Date:</label>
+        <DatePicker 
+            selected={startDate} 
+            onChange={date => setStartDate(date)} 
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+        />
+    </div>
+
+    {/* End Date Picker */}
+    <div>
+        <label>End Date:</label>
+        <DatePicker 
+            selected={endDate} 
+            onChange={date => setEndDate(date)} 
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+        />
     </div>
 
     <form onSubmit={handleBooking}>
