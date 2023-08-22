@@ -63,9 +63,11 @@ const Account = () => {
             <h3>{vacation.vacationDetails.destination}</h3>
             <p>{vacation.vacationDetails.description}</p>
             <p>Price: ${vacation.vacationDetails.price}</p>
+            <p>Arrival: {new Date(vacation.startDate).toLocaleDateString()}</p>
+            <p>Departure: {new Date(vacation.endDate).toLocaleDateString()}</p>
             <div className={styles.vacationImages}>
               {vacation.vacationDetails.images.split(';').map((img, index) => (
-                <img key={index} src={img} alt={`Image ${index}`} />
+                <img key={index} src={`http://localhost:4200/images/${img}`} alt={`Image ${index}`} />
               ))}
             </div>
           </div>
