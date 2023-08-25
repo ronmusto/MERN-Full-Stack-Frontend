@@ -78,3 +78,11 @@
     flex: 1 1 calc(100% - 20px);
   }
 }
+
+.vacationImages img {
+  width: 150px;  /* or any desired width */
+  height: 150px; /* or any desired height */
+  object-fit: cover;
+  border-radius: 5px; /* optional: for rounded corners */
+  margin: 5px;  /* spacing between images */
+}

@@ -69,65 +69,67 @@ const Checkout = () => {
 
   return (
     <div className={styles.checkoutContainer}>
-    <h1 className={styles.checkoutHeading}>Checkout</h1>
+        <h1 className={styles.checkoutHeading}>Checkout</h1>
 
-    <div className={styles.vacationReview}>
-      <h2 className={styles.vacationDestination}>{vacation.destination}</h2>
-      <p className={styles.vacationDescription}>{vacation.description}</p>
-      <p className={styles.vacationPrice}>${vacation.price}</p>
-    </div>
-
-    {/* Start Date Picker */}
-    <div>
-        <label>Start Date:</label>
-        <DatePicker 
-            selected={startDate} 
-            onChange={date => setStartDate(date)} 
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-        />
-    </div>
-
-    {/* End Date Picker */}
-    <div>
-        <label>End Date:</label>
-        <DatePicker 
-            selected={endDate} 
-            onChange={date => setEndDate(date)} 
-            selectsEnd
-            startDate={startDate}
-            endDate={endDate}
-            minDate={startDate}
-        />
-    </div>
-
-    <form onSubmit={handleBooking}>
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="name">Full Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            className={styles.inputField} 
-            required 
-            value={bookingDetails.name}
-            onChange={(e) => setBookingDetails(prev => ({ ...prev, name: e.target.value }))}
-          />
+        <div className={styles.vacationReview}>
+            <h2 className={styles.vacationDestination}>{vacation.destination}</h2>
+            <p className={styles.vacationDescription}>{vacation.description}</p>
+            <p className={styles.vacationPrice}>${vacation.price}</p>
         </div>
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="email">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            className={styles.inputField} 
-            required 
-            value={bookingDetails.email}
-            onChange={(e) => setBookingDetails(prev => ({ ...prev, email: e.target.value }))}
-          />
+
+        {/* Start Date Picker */}
+        <div className={styles.datePickerContainer}>
+            <label>Start Date:</label>
+            <DatePicker 
+                className={styles.inputField} 
+                selected={startDate} 
+                onChange={date => setStartDate(date)} 
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+            />
         </div>
-        {/* Additional form fields can go here */}
-        <button type="submit" className={styles.submitButton}>Confirm Booking</button>
-      </form>
+
+        {/* End Date Picker */}
+        <div className={styles.datePickerContainer}>
+            <label>End Date:</label>
+            <DatePicker 
+                className={styles.inputField} 
+                selected={endDate} 
+                onChange={date => setEndDate(date)} 
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+            />
+        </div>
+
+        <form onSubmit={handleBooking}>
+            <div className={styles.formGroup}>
+                <label className={styles.label} htmlFor="name">Full Name</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    className={styles.inputField} 
+                    required 
+                    value={bookingDetails.name}
+                    onChange={(e) => setBookingDetails(prev => ({ ...prev, name: e.target.value }))}
+                />
+            </div>
+            <div className={styles.formGroup}>
+                <label className={styles.label} htmlFor="email">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    className={styles.inputField} 
+                    required 
+                    value={bookingDetails.email}
+                    onChange={(e) => setBookingDetails(prev => ({ ...prev, email: e.target.value }))}
+                />
+            </div>
+            {/* Additional form fields can go here */}
+            <button type="submit" className={styles.submitButton}>Confirm Booking</button>
+        </form>
     </div>
   );
 };

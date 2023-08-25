@@ -50,3 +50,48 @@
 .submitButton:hover {
   background-color: #0056b3;
 }
+
+/* Date Picker Container */
+.datePickerContainer {
+  margin: 20px 0;
+}
+
+/* Date Picker Label */
+.datePickerContainer > label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555; /* Consistent with the other labels */
+}
+
+/* Date Picker Input Field */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker-wrapper > input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer; /* To indicate it's clickable */
+}
+
+/* Date Picker Calendar Pop-up */
+.react-datepicker {
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  font-size: 0.9em; /* Slightly smaller font for the calendar */
+}
+
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+  width: 1.8em;
+  line-height: 1.8em;
+}
+
+/* Hover effect for selectable days */
+.react-datepicker__day--selected, 
+.react-datepicker__day:hover {
+  background-color: #007bff;
+  color: #fff;
+}
