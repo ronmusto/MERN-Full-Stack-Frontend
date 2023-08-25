@@ -53,7 +53,7 @@ const Account = () => {
     <UserContext.Provider value={user}>
     <div className={styles.accountContainer}>
       <div className={styles.accountDetails}>
-        <h2>{userData.name}</h2>
+        <h2>{userData.username}</h2>
         <p>Email: {userData.email}</p>
       </div>
 
