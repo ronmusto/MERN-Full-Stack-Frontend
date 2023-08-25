@@ -133,8 +133,8 @@ return (
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Time Series Analysis of Sales</h2>
                 {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
-                    <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart data={timeSeriesData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <ResponsiveContainer width="100%" height={350}>
+                        <AreaChart data={timeSeriesData} margin={{ top: 10, right: 85, left: 30, bottom: 70 }}>
                             <defs>
                                 <linearGradient id="salesColor" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -142,10 +142,10 @@ return (
                                 </linearGradient>
                             </defs>
                             <XAxis dataKey="InvoiceDate" tickFormatter={formatDate}>
-                                <Label value="Date" offset={-5} position="insideBottom" />
+                                <Label value="Date" offset={-50} position="insideBottom" />
                             </XAxis>
                             <YAxis>
-                                <Label value="Sales Volume" angle={-90} position="insideLeft" /> {/* Label for y-axis */}
+                                <Label value="Sales Volume" angle={-90} position="insideLeft" offset={-10} /> {/* Label for y-axis */}
                             </YAxis>
                             <Tooltip content={({ payload, label }) => {
                                 if (payload && payload.length > 0) {
