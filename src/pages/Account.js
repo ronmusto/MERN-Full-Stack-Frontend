@@ -105,10 +105,10 @@ const Account = () => {
               {vacation.vacationDetails.images.split(';').map((img, index) => (
                 <img key={index} src={`http://localhost:4200/images/${img}`} alt={`Image ${index}`} />
               ))}
-            <button onClick={() => deleteBooking(vacation._id)}>Delete</button>
+            <button onClick={() => deleteBooking(vacation._id)} className={styles.deleteButton}>Delete</button>
             <input type="date" defaultValue={vacation.startDate} ref={startDateRef} />
             <input type="date" defaultValue={vacation.endDate} ref={endDateRef} />
-            <button onClick={() => updateBookingDates(vacation._id, startDateRef.current.value, endDateRef.current.value)}>Update Dates</button>
+            <button onClick={() => updateBookingDates(vacation._id, startDateRef.current.value, endDateRef.current.value)} className={styles.updateButton}>Update Dates</button>
             </div>
           </div>
         ))}

@@ -79,6 +79,32 @@
   }
 }
 
+.updateButton {
+  display: block;
+  padding: 10px 20px;
+  margin: 20px auto;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  width: fit-content;
+  text-align: center;
+  text-decoration: none;
+}
+
+.deleteButton {
+  display: block;
+  padding: 10px 20px;
+  margin: 20px auto;
+  background-color: #bc0202;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  width: fit-content;
+  text-align: center;
+  text-decoration: none;
+}
+
 .vacationImages img {
   width: 150px;  /* or any desired width */
   height: 150px; /* or any desired height */
