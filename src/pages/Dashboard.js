@@ -35,7 +35,7 @@ function Dashboard() {
 
     // Function to fetch heatmap data
     const fetchHeatMapData = () => {
-        fetch('http://localhost:4200/heatmap-data')
+        fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/heatmap-data')
             .then(response => response.json())
             .then(data => {
             // Prepare data for the heatmap
@@ -51,14 +51,14 @@ function Dashboard() {
     };    
 
     const fetchAggregateByCountry2010_2011 = () => {
-        fetch('http://localhost:4200/aggregate-by-country-2010-2011')
+        fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/aggregate-by-country-2010-2011')
             .then(response => response.json())
             .then(data => setDataByCountry09(data))
             .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
     };
 
     const fetchAggregateByCountry2009_2010 = () => {
-        fetch('http://localhost:4200/aggregate-by-country-2009-2010')
+        fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/aggregate-by-country-2009-2010')
             .then(response => response.json())
             .then(data => setDataByCountry11(data))
             .catch(err => console.error('Error fetching aggregated data by country 2009-2010:', err));
@@ -66,7 +66,7 @@ function Dashboard() {
     
     const fetchTimeSeriesData = () => {
         
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
+        fetch(`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
