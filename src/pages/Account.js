@@ -16,7 +16,7 @@ const Account = () => {
       return;
     }
 
-    fetch(`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/user-data/${user._id}`)
+    fetch(`https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/user-data/${user._id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -28,7 +28,7 @@ const Account = () => {
   };
 
   const deleteBooking = (bookingID) => {
-    fetch(`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/delete-booked-vacation/${bookingID}`, {
+    fetch(`https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/delete-booked-vacation/${bookingID}`, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -43,7 +43,7 @@ const Account = () => {
   };
 
   const updateBookingDates = (bookingID, newStartDate, newEndDate) => {
-    fetch(`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/update-booked-vacation/${bookingID}`, {
+    fetch(`https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/update-booked-vacation/${bookingID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ const Account = () => {
     }
 
     // Fetch the vacations booked by the user
-    fetch(`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/user-booked-vacations/${user._id}`)
+    fetch(`https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/user-booked-vacations/${user._id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
