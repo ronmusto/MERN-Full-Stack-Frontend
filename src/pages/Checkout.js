@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../CSS/Checkout.module.css';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../components/UserContext';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 
 
 const Checkout = () => {
   const userContextValue = useContext(UserContext);
-  console.log("UserContext value:", userContextValue);
   const { id } = useParams(); // Get vacation ID from URL parameters
   const { _id } = useContext(UserContext);
   const [vacation, setVacation] = useState(null);
@@ -39,8 +38,6 @@ const Checkout = () => {
       startDate: startDate,
       endDate: endDate
   };
-
-  console.log(combinedDetails);
     
     // Send combined details to the server
     fetch('http://localhost:4200/bookVacation', {

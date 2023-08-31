@@ -1,6 +1,6 @@
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../components/UserContext';
 
 const ProtectedRoute = ({ children }) => {
   const { user, isLoading } = useContext(UserContext);

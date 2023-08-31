@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import styles from '../CSS/Home.module.css';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../components/UserContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Travel from '../pages/Travel';
 
@@ -22,7 +22,6 @@ function Home() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log("User Details:", data);
       if (data.user) {
         setUser(data.user);
       } else {

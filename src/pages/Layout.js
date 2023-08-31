@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import styles from '../CSS/Layout.module.css';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../components/UserContext';
 
 const Layout = () => {
   const { user } = useContext(UserContext);

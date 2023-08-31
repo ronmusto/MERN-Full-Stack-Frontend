@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../components/UserContext';
 import styles from '../CSS/Account.module.css';
 
 const Account = () => {
