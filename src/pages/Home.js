@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import styles from '../CSS/Home.module.css';
-import { UserContext } from '../UserContext';
+import { UserContext } from '../components/UserContext';
 import ProtectedRoute from '../components/ProtectedRoute';
 import Travel from '../pages/Travel';
 
@@ -16,13 +16,12 @@ function Home() {
   const [regUsername, setRegUsername] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:4200/verify', {
+    fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/verify', {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
     .then(response => response.json())
     .then(data => {
-      console.log("User Details:", data);
       if (data.user) {
         setUser(data.user);
       } else {
@@ -42,7 +41,7 @@ function Home() {
   const handleLogin = e => {
     e.preventDefault();
   
-    fetch('http://localhost:4200/login', {
+    fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +62,7 @@ function Home() {
   const handleRegister = e => {
     e.preventDefault();
   
-    fetch('http://localhost:4200/register', {
+    fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

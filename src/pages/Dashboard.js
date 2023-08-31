@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '../CSS/Dashboard.module.css';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
 import styles from '../CSS/Dashboard.module.css';
 import moment from 'moment';
 import Plot from 'react-plotly.js';
-import {ReferenceDot, LineChart, Line, XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, PieChart, 
-    Pie, ScatterChart, Scatter, CartesianGrid, Legend, Cell, ResponsiveContainer, Area, AreaChart, 
-    Histogram  } from 'recharts';
+import { XAxis, YAxis, Tooltip, BarChart, Bar, Label, Brush, CartesianGrid, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 function Dashboard() {
     const [timeSeriesData, setTimeSeriesData] = useState([]);
@@ -38,7 +35,7 @@ function Dashboard() {
 
     // Function to fetch heatmap data
     const fetchHeatMapData = () => {
-        fetch('http://localhost:4200/heatmap-data')
+        fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/heatmap-data')
             .then(response => response.json())
             .then(data => {
             // Prepare data for the heatmap
@@ -54,14 +51,14 @@ function Dashboard() {
     };    
 
     const fetchAggregateByCountry2010_2011 = () => {
-        fetch('http://localhost:4200/aggregate-by-country-2010-2011')
+        fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/aggregate-by-country-2010-2011')
             .then(response => response.json())
             .then(data => setDataByCountry09(data))
             .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
     };
 
     const fetchAggregateByCountry2009_2010 = () => {
-        fetch('http://localhost:4200/aggregate-by-country-2009-2010')
+        fetch('http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/aggregate-by-country-2009-2010')
             .then(response => response.json())
             .then(data => setDataByCountry11(data))
             .catch(err => console.error('Error fetching aggregated data by country 2009-2010:', err));
@@ -69,7 +66,7 @@ function Dashboard() {
     
     const fetchTimeSeriesData = () => {
         
-        fetch(`http://localhost:4200/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
+        fetch(`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -131,7 +128,7 @@ return (
         <div className={styles['data-visualizations-container']}>
             <h2>Data Visualizations</h2>
             <div className={styles['visualization-section']}>
-                <h2 className={styles['visualization-title']}>Time Series Analysis of Sales</h2>
+                <h2 className={styles['visualization-title']}>Time Series Analysis of Foreign Sales</h2>
                 {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
                     <ResponsiveContainer width="100%" height={350}>
                         <AreaChart data={timeSeriesData} margin={{ top: 10, right: 85, left: 30, bottom: 70 }}>
@@ -177,7 +174,7 @@ return (
                 )}
             </div>
             <div className={styles['visualization-section']}>
-                <h2 className={styles['visualization-title']}>Total Sales in $USD by Country 2010-2011</h2>
+                <h2 className={styles['visualization-title']}>Total Foreign Sales in pounds sterling check this by Country 2010-2011</h2>
                 {Array.isArray(dataByCountry09) && dataByCountry09.length > 0 && (
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={dataByCountry09} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -192,7 +189,7 @@ return (
                 )}
             </div>
             <div className={styles['visualization-section']}>
-                <h2 className={styles['visualization-title']}>Total Sales in $USD by Country 2009-2010</h2>
+                <h2 className={styles['visualization-title']}>Total Foreign Sales in $USD by Country 2009-2010</h2>
                 {Array.isArray(dataByCountry11) && dataByCountry11.length > 0 && (
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={dataByCountry11} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -207,7 +204,7 @@ return (
                 )}
             </div>
             <div className={styles['visualization-section']}>
-                <h2 className={styles['visualization-title']}>Heatmap of Sales Data by Country</h2>
+                <h2 className={styles['visualization-title']}>Heatmap of Foreign Sales Data by Country</h2>
                 <div className={styles['plot-container']}>
                     {heatMapData && heatMapData.countries && (
                         <Plot
