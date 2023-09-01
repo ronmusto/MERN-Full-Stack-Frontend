@@ -7,7 +7,7 @@ const Travel = () => {
 
   // Fetch vacations from the API
   useEffect(() => {
-    fetch('https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/vacations')
+    fetch('https://app.renaldomusto.com/vacations')
       .then((response) => response.json())
       .then((data) => setVacations(data))
       .catch((error) => console.error('Error fetching vacations:', error));

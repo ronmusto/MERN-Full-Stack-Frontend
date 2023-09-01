@@ -16,7 +16,7 @@ function Home() {
   const [regUsername, setRegUsername] = useState('');
 
   useEffect(() => {
-    fetch('https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/verify', {
+    fetch('https://app.renaldomusto.com/verify', {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
@@ -41,7 +41,7 @@ function Home() {
   const handleLogin = e => {
     e.preventDefault();
   
-    fetch('https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/login', {
+    fetch('https://app.renaldomusto.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function Home() {
   const handleRegister = e => {
     e.preventDefault();
   
-    fetch('https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/register', {
+    fetch('https://app.renaldomusto.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

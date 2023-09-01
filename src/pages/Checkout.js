@@ -21,7 +21,7 @@ const Checkout = () => {
 
   useEffect(() => {
     // Fetch vacation details from the API
-    fetch(`https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/vacation/${id}`)
+    fetch(`https://app.renaldomusto.com/vacation/${id}`)
       .then((response) => response.json())
       .then((data) => setVacation(data))
       .catch((error) => console.error('Error fetching vacation:', error));
@@ -40,7 +40,7 @@ const Checkout = () => {
   };
     
     // Send combined details to the server
-    fetch('https://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/bookVacation', {
+    fetch('https://app.renaldomusto.com/bookVacation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
