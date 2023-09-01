@@ -103,7 +103,7 @@ const Account = () => {
             <p>Departure: {new Date(vacation.endDate).toLocaleDateString()}</p>
             <div className={styles.vacationImages}>
               {vacation.vacationDetails.images.split(';').map((img, index) => (
-                <img key={index} src={`http://website-backend-env.eba-6eqympxa.us-east-1.elasticbeanstalk.com/images/${img}`} alt={`Image ${index}`} />
+                <img key={index} src={`https://app.renaldomusto.com/images/${img}`} alt={`Image ${index}`} />
               ))}
             <button onClick={() => deleteBooking(vacation._id)} className={styles.deleteButton}>Delete</button>
             <input type="date" defaultValue={vacation.startDate} ref={startDateRef} />
