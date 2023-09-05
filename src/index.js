@@ -20,8 +20,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
- /* useEffect(() => {
-    fetch('https://app.renaldomusto.com/verify', {
+  useEffect(() => {
+    fetch('http://localhost:4200/verify', {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
@@ -40,7 +40,7 @@ function App() {
     .finally(() => {
       setIsLoading(false);  // set isLoading to false once the request is complete
     });
-  }, []);*/
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>; // Or your custom loading component
