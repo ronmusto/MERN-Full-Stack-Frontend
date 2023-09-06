@@ -16,7 +16,7 @@ function Home() {
   const [regUsername, setRegUsername] = useState('');
 
   useEffect(() => {
-    fetch('https://app.renaldomusto.com/verify', {
+    fetch(process.env.REACT_APP_VERIFY, {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
@@ -41,7 +41,7 @@ function Home() {
   const handleLogin = e => {
     e.preventDefault();
   
-    fetch('https://app.renaldomusto.com/login', {
+    fetch(process.env.REACT_APP_LOGIN, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function Home() {
   const handleRegister = e => {
     e.preventDefault();
   
-    fetch('https://app.renaldomusto.com/register', {
+    fetch(process.env.REACT_APP_REGISTER, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
