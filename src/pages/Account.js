@@ -16,7 +16,7 @@ const Account = () => {
       return;
     }
 
-    fetch(`https://app.renaldomusto.com/user-data/${user._id}`)
+    fetch(process.env.REACT_APP_USER_DETAILS)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -28,7 +28,7 @@ const Account = () => {
   };
 
   const deleteBooking = (bookingID) => {
-    fetch(`https://app.renaldomusto.com/delete-booked-vacation/${bookingID}`, {
+    fetch(process.env.REACT_APP_DELETE_BOOKED_VACATION, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -43,7 +43,7 @@ const Account = () => {
   };
 
   const updateBookingDates = (bookingID, newStartDate, newEndDate) => {
-    fetch(`https://app.renaldomusto.com/update-booked-vacation/${bookingID}`, {
+    fetch(process.env.REACT_APP_UPDATE_BOOKED_VACATION, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
