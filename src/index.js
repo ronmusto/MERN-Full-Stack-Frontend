@@ -21,7 +21,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://app.renaldomusto.com/verify', {
+    fetch(process.env.REACT_APP_VERIFY, {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
