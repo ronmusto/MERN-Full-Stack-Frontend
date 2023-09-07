@@ -16,7 +16,8 @@ const Account = () => {
       return;
     }
 
-    fetch(process.env.REACT_APP_USER_DETAILS)
+    //fetch user account details
+    fetch(`${process.env.REACT_APP_BACKEND}/user-data/${user._id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -27,8 +28,9 @@ const Account = () => {
       .catch(err => console.error('Error fetching specified user data', err));
   };
 
+  //delete user vacations
   const deleteBooking = (bookingID) => {
-    fetch(process.env.REACT_APP_DELETE_BOOKED_VACATION, {
+    fetch(`${process.env.REACT_APP_BACKEND}/delete-booked-vacation/${bookingID}`, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -42,8 +44,9 @@ const Account = () => {
     .catch(err => console.error('Error deleting booking:', err));
   };
 
+  //update user booking dates
   const updateBookingDates = (bookingID, newStartDate, newEndDate) => {
-    fetch(process.env.REACT_APP_UPDATE_BOOKED_VACATION, {
+    fetch(`${process.env.REACT_APP_BACKEND}/update-booked-vacation/${bookingID}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -60,16 +63,16 @@ const Account = () => {
     })
     .catch(err => console.error('Error updating booking:', err));
   };
-
+  
+  // Fetch the vacations booked by the user
   const fetchBookedVacations = () => {
     // Ensure there's a user ID available
     if (!user._id) {
       console.error('User or User ID is not available');
       return;
     }
-
     // Fetch the vacations booked by the user
-    fetch(`https://app.renaldomusto.com/user-booked-vacations/${user._id}`)
+    fetch(`${process.env.REACT_APP_BACKEND}/user-booked-vacations/${user._id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

@@ -16,7 +16,7 @@ function Home() {
   const [regUsername, setRegUsername] = useState('');
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_VERIFY, {
+    fetch(`${process.env.REACT_APP_BACKEND}/verify`, {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
@@ -62,7 +62,7 @@ function Home() {
   const handleRegister = e => {
     e.preventDefault();
   
-    fetch(process.env.REACT_APP_REGISTER, {
+    fetch(`${process.env.REACT_APP_BACKEND}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
