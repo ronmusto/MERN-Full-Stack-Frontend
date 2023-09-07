@@ -21,7 +21,7 @@ const Checkout = () => {
 
   useEffect(() => {
     // Fetch vacation details from the API
-    fetch(`https://app.renaldomusto.com/vacation/${id}`)
+    fetch(`${process.env.REACT_APP_BACKEND}/vacation/${id}`)
       .then((response) => response.json())
       .then((data) => setVacation(data))
       .catch((error) => console.error('Error fetching vacation:', error));
@@ -40,7 +40,7 @@ const Checkout = () => {
   };
     
     // Send combined details to the server
-    fetch('https://app.renaldomusto.com/bookVacation', {
+    fetch(`${process.env.REACT_APP_BACKEND}/bookVacation`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

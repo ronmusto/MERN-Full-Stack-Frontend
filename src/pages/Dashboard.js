@@ -29,13 +29,9 @@ function Dashboard() {
         setAggregatedTimeFrame(eventKey);
     };
 
-    /////////////////////////////
-    /*    FETCH FUNCTIONS      */
-    /////////////////////////////
-
     // Function to fetch heatmap data
     const fetchHeatMapData = () => {
-        fetch('https://app.renaldomusto.com/heatmap-data')
+        fetch(`${process.env.REACT_APP_BACKEND}/heatmap-data`)
             .then(response => response.json())
             .then(data => {
             // Prepare data for the heatmap
@@ -51,14 +47,14 @@ function Dashboard() {
     };    
 
     const fetchAggregateByCountry2010_2011 = () => {
-        fetch('https://app.renaldomusto.com/aggregate-by-country-2010-2011')
+        fetch(`${process.env.REACT_APP_BACKEND}/aggregate-by-country-2010-2011`)
             .then(response => response.json())
             .then(data => setDataByCountry09(data))
             .catch(err => console.error('Error fetching aggregated data by country 2010-2011:', err));
     };
 
     const fetchAggregateByCountry2009_2010 = () => {
-        fetch('https://app.renaldomusto.com/aggregate-by-country-2009-2010')
+        fetch(`${process.env.REACT_APP_BACKEND}/aggregate-by-country-2009-2010`)
             .then(response => response.json())
             .then(data => setDataByCountry11(data))
             .catch(err => console.error('Error fetching aggregated data by country 2009-2010:', err));
@@ -66,7 +62,7 @@ function Dashboard() {
     
     const fetchTimeSeriesData = () => {
         
-        fetch(`https://app.renaldomusto.com/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
+        fetch(`${process.env.REACT_APP_BACKEND}/retail-data-2009-2010-aggregated-timeframe?timeFrame=${aggregatedTimeFrame}&limit=1000000`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
