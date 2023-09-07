@@ -7,7 +7,7 @@ const Travel = () => {
 
   // Fetch vacations from the API
   useEffect(() => {
-    fetch('https://app.renaldomusto.com/vacations')
+    fetch(`${process.env.REACT_APP_BACKEND}/vacations`)
       .then((response) => response.json())
       .then((data) => setVacations(data))
       .catch((error) => console.error('Error fetching vacations:', error));
