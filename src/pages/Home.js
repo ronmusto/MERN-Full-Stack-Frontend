@@ -41,7 +41,7 @@ function Home() {
   const handleLogin = e => {
     e.preventDefault();
   
-    fetch(process.env.REACT_APP_LOGIN, {
+    fetch(`${process.env.REACT_APP_BACKEND}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
