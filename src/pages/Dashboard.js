@@ -125,6 +125,9 @@ return (
             <h2>Data Visualizations</h2>
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Time Series Analysis of Foreign Sales</h2>
+                <p className={styles['visualization-description']}>
+                    This area chart showcases the sales trend over a specific period. By aggregating the sales data based on the selected timeframe (day, week, month, etc.), you can observe patterns and identify peak sales periods.
+                </p>
                 {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
                     <ResponsiveContainer width="100%" height={350}>
                         <AreaChart data={timeSeriesData} margin={{ top: 10, right: 85, left: 30, bottom: 70 }}>
@@ -171,6 +174,9 @@ return (
             </div>
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Total Foreign Sales in pounds sterling check this by Country 2010-2011</h2>
+                <p className={styles['visualization-description']}>
+                    This bar chart provides an insightful comparison of total sales across different countries for the year 2009. Easily identify which countries contributed the most to your sales in that specific year.
+                </p>
                 {Array.isArray(dataByCountry09) && dataByCountry09.length > 0 && (
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={dataByCountry09} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -185,7 +191,10 @@ return (
                 )}
             </div>
             <div className={styles['visualization-section']}>
-                <h2 className={styles['visualization-title']}>Total Foreign Sales in $USD by Country 2009-2010</h2>
+                <h2 className={styles['visualization-title']}>Total Foreign Sales in pounds sterling check this by Country 2009-2010</h2>
+                <p className={styles['visualization-description']}>
+                    Similar to the 2009 chart, this visualization highlights the sales distribution across countries for the year 2011. Compare and analyze the growth or decline in sales for each country from the previous chart.
+                </p>
                 {Array.isArray(dataByCountry11) && dataByCountry11.length > 0 && (
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={dataByCountry11} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
@@ -201,6 +210,9 @@ return (
             </div>
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Heatmap of Foreign Sales Data by Country</h2>
+                <p className={styles['visualization-description']}>
+                    Dive deep into the foreign sales data with this heatmap. It visually represents two critical metrics: total sales and total quantity sold by country. Darker shades indicate higher values, helping you quickly spot countries with the most sales and the highest quantities sold.
+                </p>
                 <div className={styles['plot-container']}>
                     {heatMapData && heatMapData.countries && (
                         <Plot

@@ -80,6 +80,14 @@
     background-color: #f5f5f5; /* Light hover effect */
 }
 
+.visualization-description {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    padding: 0 15%;
+    text-align: center;
+}
+
 /* === Plot Container === */
 .plot-container {
     background-color: #ffffff; /* White background for plots */
