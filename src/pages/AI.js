@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
 import { useTable } from 'react-table';
 import styles from '../CSS/AI.module.css';
 import { Chart, BarController, LinearScale, CategoryScale, BarElement } from 'chart.js';
+import PredictionForm from '../AIcomponents/predictionForm';
+import PredictionResult from '../AIcomponents/predictionResult';
+import TableDisplay from '../AIcomponents/AITableDisplay';
+import FeatureImportancesChart from '../AIcomponents/featureChart';
+
 
 Chart.register(BarController, LinearScale, CategoryScale, BarElement);
 
@@ -118,62 +122,29 @@ const AI = () => {
 
   return (
     <div className={styles.aiContainer}>
-      <h1 className={styles.formTitle}>My Prediction Form</h1>
-      <form data-testid="predict-form" onSubmit={handleSubmit}>
-        {/* All form group sections */}
-        {['Median Income (0 to 10)', 'House Age (0 to 50)', 'Average Rooms (0 to 10)', 
-        'Average Bedrooms (0 to 5)', 'Population (0 to 5000)', 'Average Occupancy (0 to 10)',
-        'Latitude (33 to 42)', 'Longitude (-124 to -114)']
-        .map((title, index) => (
-          <div className={styles.formGroup}>
-            <h3 className={styles.formSubtitle}>{title}:</h3>
-            <input type="number" onChange={handleChange} value={inputs[Object.keys(inputs)[index]]} 
-                   data-testid={Object.keys(inputs)[index]} className={styles.formInput} />
-          </div>
-        ))}
-        <div className={styles.formGroup}>
-          <button type="submit" className={styles.formButton}>Predict</button>
-        </div>
-      </form>
-      <div data-testid="prediction-result" id="prediction">{prediction}</div>
-      <div>
-        <h2>Feature Importances</h2>
-        <p>This bar chart shows the importance of each feature for predicting house prices,
-          according to our machine learning model. The taller the bar, the more important the
-          feature. For example, if the 'Median Income' bar is taller than the 'House Age'
-          bar, that means median income is a more important predictor of house price than
-          house age. Note that this doesn't tell us whether house prices go up or down as
-          these features increase; it only tells us how important the feature is for making
-          accurate predictions.</p>
-        <Bar data={chartData} options={options} key={key} />
-      </div>
-      <div className={styles.tableContainer}>
-        <table {...getTableProps()} style={{ margin: 'auto' }}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map(row => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  ))}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
+        <PredictionForm 
+            inputs={inputs}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+        />
+        
+        <PredictionResult prediction={prediction} />
+
+        <FeatureImportancesChart 
+            chartData={chartData}
+            options={options}
+            key={key}
+        />
+
+        <TableDisplay 
+            getTableProps={getTableProps}
+            headerGroups={headerGroups}
+            getTableBodyProps={getTableBodyProps}
+            rows={rows}
+            prepareRow={prepareRow}
+        />
     </div>
-  );  
+  ); 
 };
 
 export default AI;

@@ -12,7 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Travel from "./pages/Travel";
-import Account from "./pages/Account";
+import Account from "./components/Account";
 import Checkout from "./pages/Checkout";
 import VacationDetails from "./pages/VacationDetails";
 
@@ -21,7 +21,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_VERIFY, {
+    fetch(`${process.env.REACT_APP_BACKEND}/verify`, {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
