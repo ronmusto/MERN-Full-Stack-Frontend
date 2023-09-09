@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-const FeatureImportancesChart = ({ chartData, options, key }) => {
+const FeatureImportancesChart = ({ chartData, options, chartKey }) => {  // Rename key to chartKey
     return (
         <div>
             <h2>Feature Importances</h2>
@@ -12,7 +12,7 @@ const FeatureImportancesChart = ({ chartData, options, key }) => {
               house age. Note that this doesn't tell us whether house prices go up or down as
               these features increase; it only tells us how important the feature is for making
               accurate predictions.</p>
-            <Bar data={chartData} options={options} key={key} />
+            <Bar data={chartData} options={options} />  // Remove key prop from here
         </div>
     );
 }
