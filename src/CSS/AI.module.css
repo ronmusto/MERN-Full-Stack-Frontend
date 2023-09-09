@@ -26,6 +26,16 @@
   margin: 10px 0;
 }
 
+/* === Map Container === */
+.mapContainer {
+  height: 400px; /* You can adjust this based on your desired map height */
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 8px; /* Rounded corners to match other elements */
+  overflow: hidden; /* Ensures that the map doesn't overflow the rounded container */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect to match the .aiContainer */
+}
+
 /* === Inputs === */
 .formInput {
   width: 100%;

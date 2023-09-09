@@ -12,7 +12,7 @@ const FeatureImportancesChart = ({ chartData, options, chartKey }) => {  // Rena
               house age. Note that this doesn't tell us whether house prices go up or down as
               these features increase; it only tells us how important the feature is for making
               accurate predictions.</p>
-            <Bar data={chartData} options={options} />  // Remove key prop from here
+            <Bar data={chartData} options={options} />
         </div>
     );
 }

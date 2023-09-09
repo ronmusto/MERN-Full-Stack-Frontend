@@ -6,12 +6,19 @@ import PredictionForm from '../AIcomponents/predictionForm';
 import PredictionResult from '../AIcomponents/predictionResult';
 import TableDisplay from '../AIcomponents/AITableDisplay';
 import FeatureImportancesChart from '../AIcomponents/featureChart';
-
+import CaliforniaMap from '../AIcomponents/caliMap';
 
 Chart.register(BarController, LinearScale, CategoryScale, BarElement);
 
 const AI = () => {
   const [prediction, setPrediction] = useState('');
+  const [importances, setImportances] = useState([]);
+  const [chartkey, setKey] = useState(0);
+  const [selectedLocation, setSelectedLocation] = useState({
+    lat: 34,
+    lng: -118
+  });
+
   const [inputs, setInputs] = useState({
     medInc: '2.5',
     houseAge: '35',
@@ -23,11 +30,6 @@ const AI = () => {
     longitude: '-118'
   });
 
-  const [importances, setImportances] = useState([]);
-
-  // ADD THIS NEW STATE VARIABLE
-  const [chartkey, setKey] = useState(0);
-
   const expectedFeatures = ['medInc', 'houseAge', 'aveRooms', 'aveBedrms',
    'population', 'aveOccup', 'latitude', 'longitude'];
 
@@ -37,19 +39,33 @@ const AI = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
+  // Extract latitude and longitude from selectedLocation
+  let { lat, lng } = selectedLocation;
+
+  // Round and convert to string
+  lat = Math.round(lat).toString();
+  lng = Math.round(lng).toString();
+
+  // Create a modified inputs array with the updated lat and lng values
+  const modifiedInputs = [
+      ...Object.values(inputs).slice(0, 6), // First 6 values remain unchanged
+      lat, // Replace 7th value with updated latitude
+      lng  // Replace 8th value with updated longitude
+  ];
   
     fetch('http://localhost:5000/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ input: Object.values(inputs) })
+      body: JSON.stringify({ input: Object.values(modifiedInputs) })
     })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
+        return response.json(modifiedInputs);
       })
       .then(data => {
         // Format the prediction into a dollar amount
@@ -127,6 +143,8 @@ const AI = () => {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
         />
+
+        <CaliforniaMap setSelectedLocation={setSelectedLocation}/>
         
         <PredictionResult prediction={prediction} />
 
