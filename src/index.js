@@ -15,6 +15,7 @@ import Travel from "./pages/Travel";
 import Account from "./components/Account";
 import Checkout from "./pages/Checkout";
 import VacationDetails from "./pages/VacationDetails";
+import StockPrediction from "./pages/StockAI";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -60,6 +61,7 @@ function App() {
             <Route path="resume" element={<Resume />} />
             <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
             <Route path="travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
+            <Route path="predict-stock" element={<ProtectedRoute><StockPrediction /></ProtectedRoute>} />
             <Route path="vacation/:id" element={<ProtectedRoute><VacationDetails /></ProtectedRoute>} />
             <Route path="checkout/:id" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           </Route>
