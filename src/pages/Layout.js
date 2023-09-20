@@ -49,13 +49,6 @@ const Layout = () => {
                 </Link>
               </li>
             )}
-            {user && (
-              <li className={styles.layoutNavItem}>
-                <Link to="/predict-stock" className={styles.layoutNavLink}>
-                  Stock AI
-                </Link>
-              </li>
-            )}
           </ul>
         </nav>
       </header>

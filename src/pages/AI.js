@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useTable } from 'react-table';
 import styles from '../CSS/AI.module.css';
 import { Chart, BarController, LinearScale, CategoryScale, BarElement } from 'chart.js';
 import PredictionForm from '../AIcomponents/predictionForm';
 import PredictionResult from '../AIcomponents/predictionResult';
-import TableDisplay from '../AIcomponents/AITableDisplay';
 import FeatureImportancesChart from '../AIcomponents/featureChart';
 import CaliforniaMap from '../AIcomponents/caliMap';
 
@@ -83,6 +81,16 @@ const AI = () => {
       });
   };
 
+  const getGradientColors = (importances) => {
+    const maxImportance = Math.max(...importances);
+    return importances.map((imp) => {
+      const intensity = Math.floor(255 * imp / maxImportance);
+      return `rgb(${255 - intensity}, ${intensity}, 192)`;
+    });
+  };
+  
+  const chartColors = getGradientColors(importances);
+
   // Sort the features by their importances
   const chartData = {
     labels: expectedFeatures,
@@ -90,9 +98,9 @@ const AI = () => {
       {
         label: 'Feature Importances',
         data: importances,
-        backgroundColor: 'rgb(75, 192, 192)',
+        backgroundColor: chartColors
       },
-    ],
+    ]
   };
 
   chartData.labels.sort((a, b) => chartData.datasets[0].data[expectedFeatures.indexOf(b)] - chartData.datasets[0].data[expectedFeatures.indexOf(a)]);
@@ -105,36 +113,6 @@ const AI = () => {
       },
     },
   };
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Feature',
-        accessor: 'feature', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Value',
-        accessor: 'value',
-      },
-    ],
-    []
-  );
-
-  const tableData = React.useMemo(
-    () => expectedFeatures.map((feature, index) => ({
-      feature,
-      value: inputs[feature]
-    })),
-    [inputs]
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data: tableData });
 
   return (
     <div className={styles.aiContainer}>
@@ -154,14 +132,8 @@ const AI = () => {
             key={chartkey}
         />
 
-        <TableDisplay 
-            getTableProps={getTableProps}
-            headerGroups={headerGroups}
-            getTableBodyProps={getTableBodyProps}
-            rows={rows}
-            prepareRow={prepareRow}
-        />
-    </div>
+
+    </div> 
   ); 
 };
 
