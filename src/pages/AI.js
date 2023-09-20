@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { useTable } from 'react-table';
 import styles from '../CSS/AI.module.css';
 import { Chart, BarController, LinearScale, CategoryScale, BarElement } from 'chart.js';
+import PredictionForm from '../AIcomponents/predictionForm';
+import PredictionResult from '../AIcomponents/predictionResult';
+import FeatureImportancesChart from '../AIcomponents/featureChart';
+import CaliforniaMap from '../AIcomponents/caliMap';
 
 Chart.register(BarController, LinearScale, CategoryScale, BarElement);
 
 const AI = () => {
   const [prediction, setPrediction] = useState('');
+  const [importances, setImportances] = useState([]);
+  const [chartkey, setKey] = useState(0);
+  const [selectedLocation, setSelectedLocation] = useState({
+    lat: 34,
+    lng: -118
+  });
+
   const [inputs, setInputs] = useState({
     medInc: '2.5',
     houseAge: '35',
@@ -19,11 +28,6 @@ const AI = () => {
     longitude: '-118'
   });
 
-  const [importances, setImportances] = useState([]);
-
-  // ADD THIS NEW STATE VARIABLE
-  const [key, setKey] = useState(0);
-
   const expectedFeatures = ['medInc', 'houseAge', 'aveRooms', 'aveBedrms',
    'population', 'aveOccup', 'latitude', 'longitude'];
 
@@ -33,19 +37,33 @@ const AI = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
+  // Extract latitude and longitude from selectedLocation
+  let { lat, lng } = selectedLocation;
+
+  // Round and convert to string
+  lat = Math.round(lat).toString();
+  lng = Math.round(lng).toString();
+
+  // Create a modified inputs array with the updated lat and lng values
+  const modifiedInputs = [
+      ...Object.values(inputs).slice(0, 6), // First 6 values remain unchanged
+      lat, // Replace 7th value with updated latitude
+      lng  // Replace 8th value with updated longitude
+  ];
   
     fetch('http://localhost:5000/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ input: Object.values(inputs) })
+      body: JSON.stringify({ input: Object.values(modifiedInputs) })
     })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return response.json();
+        return response.json(modifiedInputs);
       })
       .then(data => {
         // Format the prediction into a dollar amount
@@ -63,6 +81,16 @@ const AI = () => {
       });
   };
 
+  const getGradientColors = (importances) => {
+    const maxImportance = Math.max(...importances);
+    return importances.map((imp) => {
+      const intensity = Math.floor(255 * imp / maxImportance);
+      return `rgb(${255 - intensity}, ${intensity}, 192)`;
+    });
+  };
+  
+  const chartColors = getGradientColors(importances);
+
   // Sort the features by their importances
   const chartData = {
     labels: expectedFeatures,
@@ -70,9 +98,9 @@ const AI = () => {
       {
         label: 'Feature Importances',
         data: importances,
-        backgroundColor: 'rgb(75, 192, 192)',
+        backgroundColor: chartColors
       },
-    ],
+    ]
   };
 
   chartData.labels.sort((a, b) => chartData.datasets[0].data[expectedFeatures.indexOf(b)] - chartData.datasets[0].data[expectedFeatures.indexOf(a)]);
@@ -86,94 +114,27 @@ const AI = () => {
     },
   };
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Feature',
-        accessor: 'feature', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Value',
-        accessor: 'value',
-      },
-    ],
-    []
-  );
-
-  const tableData = React.useMemo(
-    () => expectedFeatures.map((feature, index) => ({
-      feature,
-      value: inputs[feature]
-    })),
-    [inputs]
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data: tableData });
-
   return (
     <div className={styles.aiContainer}>
-      <h1 className={styles.formTitle}>My Prediction Form</h1>
-      <form data-testid="predict-form" onSubmit={handleSubmit}>
-        {/* All form group sections */}
-        {['Median Income (0 to 10)', 'House Age (0 to 50)', 'Average Rooms (0 to 10)', 
-        'Average Bedrooms (0 to 5)', 'Population (0 to 5000)', 'Average Occupancy (0 to 10)',
-        'Latitude (33 to 42)', 'Longitude (-124 to -114)']
-        .map((title, index) => (
-          <div className={styles.formGroup}>
-            <h3 className={styles.formSubtitle}>{title}:</h3>
-            <input type="number" onChange={handleChange} value={inputs[Object.keys(inputs)[index]]} 
-                   data-testid={Object.keys(inputs)[index]} className={styles.formInput} />
-          </div>
-        ))}
-        <div className={styles.formGroup}>
-          <button type="submit" className={styles.formButton}>Predict</button>
-        </div>
-      </form>
-      <div data-testid="prediction-result" id="prediction">{prediction}</div>
-      <div>
-        <h2>Feature Importances</h2>
-        <p>This bar chart shows the importance of each feature for predicting house prices,
-          according to our machine learning model. The taller the bar, the more important the
-          feature. For example, if the 'Median Income' bar is taller than the 'House Age'
-          bar, that means median income is a more important predictor of house price than
-          house age. Note that this doesn't tell us whether house prices go up or down as
-          these features increase; it only tells us how important the feature is for making
-          accurate predictions.</p>
-        <Bar data={chartData} options={options} key={key} />
-      </div>
-      <div className={styles.tableContainer}>
-        <table {...getTableProps()} style={{ margin: 'auto' }}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map(row => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  ))}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );  
+        <PredictionForm 
+            inputs={inputs}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+        />
+
+        <CaliforniaMap setSelectedLocation={setSelectedLocation}/>
+        
+        <PredictionResult prediction={prediction} />
+
+        <FeatureImportancesChart 
+            chartData={chartData}
+            options={options}
+            key={chartkey}
+        />
+
+
+    </div> 
+  ); 
 };
 
 export default AI;

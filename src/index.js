@@ -12,16 +12,17 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Travel from "./pages/Travel";
-import Account from "./pages/Account";
+import Account from "./components/Account";
 import Checkout from "./pages/Checkout";
 import VacationDetails from "./pages/VacationDetails";
+import StockPrediction from "./pages/StockAI";
 
 function App() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_VERIFY, {
+    fetch(`${process.env.REACT_APP_BACKEND}/verify`, {
       method: 'GET',
       credentials: 'include',  // include credentials to send the cookies
     })
@@ -60,6 +61,7 @@ function App() {
             <Route path="resume" element={<Resume />} />
             <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
             <Route path="travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
+            <Route path="predict-stock" element={<ProtectedRoute><StockPrediction /></ProtectedRoute>} />
             <Route path="vacation/:id" element={<ProtectedRoute><VacationDetails /></ProtectedRoute>} />
             <Route path="checkout/:id" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           </Route>
