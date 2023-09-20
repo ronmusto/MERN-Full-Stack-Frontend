@@ -7,7 +7,7 @@ const PredictionForm = ({ inputs, handleChange, handleSubmit }) => {
             <h1 className={styles.formTitle}>California Housing Price Predictor</h1>
             <p className={styles['visualization-description']}>This tool allows users to estimate housing prices in California based on 1990s data 
                 that contains various factors. By inputting specific property details, the 
-                AI generates a predicted price.
+                AI generates a predicted price. 
             </p>
             <p className={styles['legal-disclaimer']}>
                 Disclaimer: This tool is for entertainment and educational purposes only and should not be taken as financial advice. 
