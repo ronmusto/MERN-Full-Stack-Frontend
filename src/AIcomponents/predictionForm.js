@@ -33,7 +33,7 @@ const PredictionForm = ({ inputs, handleChange, handleSubmit }) => {
                 </div>
             </form>
         </div>
-    );
+    ); 
 }
 
 export default PredictionForm;
