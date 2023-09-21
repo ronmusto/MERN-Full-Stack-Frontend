@@ -52,7 +52,7 @@ const AI = () => {
       lng  // Replace 8th value with updated longitude
   ];
   
-    fetch('http://localhost:4200/predict', {
+    fetch(`${process.env.REACT_APP_BACKEND}/predict`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
