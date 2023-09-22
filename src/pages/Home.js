@@ -61,6 +61,12 @@ function Home() {
   
   const handleRegister = e => {
     e.preventDefault();
+
+    // Validate inputs
+    if (!regEmail || !regUsername || !regPassword) {
+      alert('All fields are required');
+    return;
+    }
   
     fetch(`${process.env.REACT_APP_BACKEND}/register`, {
       method: 'POST',
