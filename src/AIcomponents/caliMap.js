@@ -11,6 +11,10 @@ const center = {
   lng: -119.4179
 };
 
+const mapOptions = {
+    streetViewControl: false  // This disables Street View
+};
+
 const CaliforniaMap = ({ setSelectedLocation }) => {
     const [selectedCoord, setSelectedCoord] = useState(null);
 
@@ -28,6 +32,7 @@ const CaliforniaMap = ({ setSelectedLocation }) => {
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={6}
+                options={mapOptions}
                 center={center}
                 onClick={handleMapClick}
             >
