@@ -106,9 +106,8 @@ function Dashboard() {
 //JSX for dashboard
 return (
     <div className={styles['dashboard-container']}>
-        <h1 className={styles['dashboard-header']}>Data Dashboard</h1>
+        <h1 className={styles['dashboard-header']}></h1>
         <div className={styles['blue-dropdown-toggle']}>
-            <h2>Filters for Data</h2>
             <Dropdown onSelect={handleAggregatedTimeFrameChange}>
             <Dropdown.Toggle className={styles['custom-dropdown-toggle']} variant="success" id="dropdown-basic-aggregated-timeframe">
                 Aggregated Timeframe: {aggregatedTimeFrame}
@@ -122,11 +121,12 @@ return (
         </Dropdown>
         </div>
         <div className={styles['data-visualizations-container']}>
-            <h2>Data Visualizations</h2>
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Time Series Analysis of Foreign Sales</h2>
                 <p className={styles['visualization-description']}>
-                    This interactive area chart offers a detailed look at the trend of foreign sales over various time periods. By selecting different aggregation timeframes (e.g., hour, day, week, or month) from the dropdown above, you can customize the chart to display data in a way that best suits your analytical needs. The x-axis represents the date, while the y-axis shows the sales volume. Hover over the chart to view a tooltip that provides additional metrics, such as total sales and total quantity, for each time point. The brush feature at the bottom allows you to zoom into specific date ranges for a closer look. This chart serves as a valuable tool for identifying sales patterns and peak sales periods.
+                    This interactive area chart offers a detailed look at the trend of foreign sales over various time periods. By selecting different aggregation timeframes (e.g., hour, day, week, or month) from the dropdown above, you can customize the chart to display data in a way that best suits your analytical needs.
+                     The x-axis represents the date, while the y-axis shows the sales volume. Hover over the chart to view a tooltip that provides additional metrics, such as total sales and total quantity, for each time point. The brush feature at the bottom allows you to zoom into specific date ranges for a closer look. 
+                     This chart serves as a valuable tool for identifying sales patterns and peak sales periods.
                 </p>
                 {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
                     <ResponsiveContainer width="100%" height={350}>
@@ -175,7 +175,12 @@ return (
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Total Foreign Sales in pounds sterling check this by Country 2010-2011</h2>
                 <p className={styles['visualization-description']}>
-                    This bar chart provides an insightful comparison of total sales across different countries for the year 2009. Easily identify which countries contributed the most to your sales in that specific year.
+                    This bar chart serves as a powerful demonstration tool for comparing total sales across various countries for the year 2009. 
+                    Each bar represents a different country, and the height of the bar indicates the total sales value in U.S. dollars for that country. 
+                    The x-axis enumerates the countries, while the y-axis shows the sales value in a quantitative measure. By hovering over each bar, you 
+                    can view a tooltip that provides additional information, such as the exact total sales for each country. The chart also includes a brush 
+                    feature at the bottom that allows you to focus on specific countries by selecting a narrower range. This visualization can be particularly 
+                    useful for stakeholders, analysts, and decision-makers to understand market penetration in different countries and to identify potential opportunities or areas for improvement.
                 </p>
                 {Array.isArray(dataByCountry09) && dataByCountry09.length > 0 && (
                     <ResponsiveContainer width="100%" height={300}>
@@ -213,7 +218,8 @@ return (
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Total Foreign Sales in pounds sterling check this by Country 2009-2010</h2>
                 <p className={styles['visualization-description']}>
-                    Similar to the 2009 chart, this visualization highlights the sales distribution across countries for the year 2011. Compare and analyze the growth or decline in sales for each country from the previous chart.
+                    Similar to the 2009 chart, this visualization highlights the sales distribution across countries for the year 2011. 
+                    Compare and analyze the growth or decline in sales for each country from the previous chart.
                 </p>
                 {Array.isArray(dataByCountry11) && dataByCountry11.length > 0 && (
                     <ResponsiveContainer width="100%" height={300}>
@@ -251,30 +257,65 @@ return (
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Heatmap of Foreign Sales Data by Country</h2>
                 <p className={styles['visualization-description']}>
-                    Dive deep into the foreign sales data with this heatmap. It visually represents two critical metrics: total sales and total quantity sold by country. Darker shades indicate higher values, helping you quickly spot countries with the most sales and the highest quantities sold.
+                    Dive deep into the foreign sales data with this heatmap. It visually represents two critical metrics: total sales and total quantity sold by country. 
+                    Darker shades indicate higher values, helping you quickly spot countries with the most sales and the highest quantities sold.
                 </p>
                 <div className={styles['plot-container']}>
-                    {heatMapData && heatMapData.countries && (
-                        <Plot
-                            data={[
-                                {
-                                    z: heatMapData.z,
-                                    x: ['Total Sales', 'Total Quantity'],
-                                    y: heatMapData.countries,
-                                    type: 'heatmap',
-                                    colorscale: 'Viridis',
-                                },
-                            ]}
-                            layout={{
-                                title: 'Heatmap of Sales and Quantity by Country',
-                                xaxis: { title: 'Metrics' },
-                                yaxis: { title: 'Country' },
-                            }}
-                        />
-                    )}
+                {heatMapData && heatMapData.countries && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'nowrap', width: '100%' }}>
+                    {/* Heatmap for Total Sales */}
+                    <div style={{ flex: '0 0 15%' }}>
+                    <Plot
+                        data={[
+                        {
+                            z: heatMapData.z.map(row => [row[0]]), // Only total sales
+                            x: ['Total Sales'],
+                            y: heatMapData.countries,
+                            type: 'heatmap',
+                            colorscale: 'Viridis',
+                        },
+                        ]}
+                        layout={{
+                        title: 'Heatmap of Total Sales by Country',
+                        xaxis: { title: 'Metrics' },
+                        yaxis: { title: 'Country' },
+                        width: 500,
+                        height: 400,
+                        margin: { l: 150 }
+                        }}
+                    />
+                    </div>
+
+                    {/* Heatmap for Total Quantity */}
+                    <div style={{ flex: '0 0 15%' }}>
+                    <Plot
+                        data={[
+                        {
+                            z: heatMapData.z.map(row => [row[1]]), // Only total quantity
+                            x: ['Total Quantity'],
+                            y: heatMapData.countries,
+                            type: 'heatmap',
+                            colorscale: 'Inferno',
+                        },
+                        ]}
+                        layout={{
+                        title: 'Heatmap of Total Quantity by Country',
+                        xaxis: { title: 'Metrics' },
+                        yaxis: { title: 'Country' },
+                        width: 500,
+                        height: 400,
+                        margin: { l: 150 }
+                        }}
+                    />
+                    </div>
+                </div>
+                )}
                 </div>
                 <small className={styles['legal-disclaimer']}>
-                    Disclaimer: The data presented in this chart is sourced from Chen,Daqing's "Online Retail II" dataset available at the UCI Machine Learning Repository (<a href="https://doi.org/10.24432/C5CG6D" target="_blank" rel="noopener noreferrer">https://doi.org/10.24432/C5CG6D</a>). This information is intended to be a demonstration only and should not be construed as financial or investment advice. All visualizations and interpretations are the author's own and users should exercise caution and independent judgment when using this data for decision-making.
+                    Disclaimer: The data presented in this chart is sourced from Chen,Daqing's "Online Retail II" dataset available at the UCI Machine Learning Repository 
+                    (<a href="https://doi.org/10.24432/C5CG6D" target="_blank" rel="noopener noreferrer">https://doi.org/10.24432/C5CG6D</a>). This information is intended 
+                    to be a demonstration only and should not be construed as financial or investment advice. All visualizations and interpretations are the author's own and 
+                    users should exercise caution and independent judgment when using this data for decision-making.
                 </small>
             </div>
         </div>
