@@ -126,7 +126,7 @@ return (
             <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Time Series Analysis of Foreign Sales</h2>
                 <p className={styles['visualization-description']}>
-                    This area chart showcases the sales trend over a specific period. By aggregating the sales data based on the selected timeframe (day, week, month, etc.), you can observe patterns and identify peak sales periods.
+                    This interactive area chart offers a detailed look at the trend of foreign sales over various time periods. By selecting different aggregation timeframes (e.g., hour, day, week, or month) from the dropdown above, you can customize the chart to display data in a way that best suits your analytical needs. The x-axis represents the date, while the y-axis shows the sales volume. Hover over the chart to view a tooltip that provides additional metrics, such as total sales and total quantity, for each time point. The brush feature at the bottom allows you to zoom into specific date ranges for a closer look. This chart serves as a valuable tool for identifying sales patterns and peak sales periods.
                 </p>
                 {Array.isArray(timeSeriesData) && timeSeriesData.length > 0 && (
                     <ResponsiveContainer width="100%" height={350}>
@@ -183,7 +183,27 @@ return (
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="_id" name="Country" />
                             <YAxis name="Total Sales Value ($)" />
-                            <Tooltip />
+                            <Tooltip content={({ payload, label }) => {
+                                if (payload && payload.length > 0) {
+                                    const data = payload[0].payload;
+
+                                    // Format the total sales as USD
+                                    const totalSalesFormatted = new Intl.NumberFormat('en-US',
+                                        { style: 'currency', currency: 'USD' }).format(data.totalSales);
+
+                                    // Extract the date and optionally the hour
+                                    const countryName = data._id; // Assume country name is stored in _id
+
+                                    return (
+                                        <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+                                            <p>Country: {countryName}</p>
+                                            <p>Total Sales: {totalSalesFormatted}</p>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }}
+                            />
                             <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
                             <Brush dataKey="_id" height={20} stroke="#82ca9d" />
                         </BarChart>
@@ -201,7 +221,27 @@ return (
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="_id" name="Country" />
                             <YAxis name="Total Sales Value ($)" />
-                            <Tooltip />
+                            <Tooltip content={({ payload, label }) => {
+                                if (payload && payload.length > 0) {
+                                    const data = payload[0].payload;
+
+                                    // Format the total sales as USD
+                                    const totalSalesFormatted = new Intl.NumberFormat('en-US',
+                                        { style: 'currency', currency: 'USD' }).format(data.totalSales);
+
+                                    // Extract the date and optionally the hour
+                                    const countryName = data._id; // Assume country name is stored in _id
+
+                                    return (
+                                        <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+                                            <p>Country: {countryName}</p>
+                                            <p>Total Sales: {totalSalesFormatted}</p>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }}
+                            />
                             <Bar dataKey="totalSales" name="Total Sales Value ($)" fill="#82ca9d" />
                             <Brush dataKey="_id" height={20} stroke="#82ca9d" />
                         </BarChart>
@@ -233,6 +273,9 @@ return (
                         />
                     )}
                 </div>
+                <small className={styles['legal-disclaimer']}>
+                    Disclaimer: The data presented in this chart is sourced from Chen,Daqing's "Online Retail II" dataset available at the UCI Machine Learning Repository (<a href="https://doi.org/10.24432/C5CG6D" target="_blank" rel="noopener noreferrer">https://doi.org/10.24432/C5CG6D</a>). This information is intended to be a demonstration only and should not be construed as financial or investment advice. All visualizations and interpretations are the author's own and users should exercise caution and independent judgment when using this data for decision-making.
+                </small>
             </div>
         </div>
     </div>

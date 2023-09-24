@@ -88,6 +88,15 @@
     text-align: center;
 }
 
+.legal-disclaimer {
+    font-size: 0.8em;
+    color: #535353;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+}
+  
+
 /* === Plot Container === */
 .plot-container {
     background-color: #ffffff; /* White background for plots */

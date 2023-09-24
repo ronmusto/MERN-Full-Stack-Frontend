@@ -10,7 +10,7 @@ const PredictionForm = ({ inputs, handleChange, handleSubmit }) => {
                 AI generates a predicted price. 
             </p>
             <p className={styles['legal-disclaimer']}>
-                Disclaimer: This tool is for entertainment and educational purposes only and should not be taken as financial advice. 
+                Disclaimer: This tool is for demonstration purposes only and should not be taken as financial advice. 
                 We hold no liability for actions taken as a result of these predictions. Please consult with a financial 
                 advisor or other professional before making any financial decisions.
             </p>
