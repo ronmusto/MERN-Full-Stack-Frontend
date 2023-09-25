@@ -19,6 +19,21 @@
   transition: transform 0.3s ease; /* Smooth hover effect */
 }
 
+/*search engine styles */
+.searchBar {
+  width: 50%;           
+  padding: 10px;
+  margin: 20px auto;     /* Center the search bar */
+  display: block;        /* Needed for centering */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.searchContainer {
+  text-align: center;  /* Center align the content */
+  margin-bottom: 20px; /* Add some space below the search bar */
+}
+
 .vacationTile:hover {
   transform: scale(1.03); /* Scale effect on hover */
 }
