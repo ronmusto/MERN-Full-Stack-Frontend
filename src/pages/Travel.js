@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../CSS/Travel.module.css';
+import TravelMap from '../components/TravelMap';
 
 const Travel = () => {
   const [vacations, setVacations] = useState([]);
@@ -31,6 +32,12 @@ const Travel = () => {
         className={styles.searchBar}  
       />
     </div>
+
+    {/* Separate container for the map to position it at the top */}
+      <div className={styles.mapContainer}>
+        <TravelMap vacations={filteredVacations} />
+      </div>
+
     {/* Existing container for vacations */}
     <div className={styles.travelContainer}>
       {filteredVacations.map(vacation => (

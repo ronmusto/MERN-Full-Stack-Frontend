@@ -12,7 +12,8 @@ const center = {
 };
 
 const mapOptions = {
-    streetViewControl: false  // This disables Street View
+    streetViewControl: false,  // This disables Street View
+    mapTypeControl: false      // This disables the map type control (including Satellite view)
 };
 
 const CaliforniaMap = ({ setSelectedLocation }) => {
