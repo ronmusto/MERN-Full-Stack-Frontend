@@ -253,74 +253,77 @@ return (
                         </BarChart>
                     </ResponsiveContainer>
                 )}
-            </div>
-            <div className={styles['visualization-section']}>
+           {/* Heatmap Section */}
+           <div className={styles['visualization-section']}>
                 <h2 className={styles['visualization-title']}>Heatmap of Foreign Sales Data by Country</h2>
-                <p className={styles['visualization-description']}>
-                    Dive deep into the foreign sales data with this heatmap. It visually represents two critical metrics: total sales and total quantity sold by country. 
-                    Darker shades indicate higher values, helping you quickly spot countries with the most sales and the highest quantities sold.
-                </p>
-                <div className={styles['plot-container']}>
-                {heatMapData && heatMapData.countries && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'nowrap', width: '100%' }}>
-                    {/* Heatmap for Total Sales */}
-                    <div style={{ flex: '0 0 15%' }}>
-                    <Plot
-                        data={[
-                        {
-                            z: heatMapData.z.map(row => [row[0]]), // Only total sales
-                            x: ['Total Sales'],
-                            y: heatMapData.countries,
-                            type: 'heatmap',
-                            colorscale: 'Viridis',
-                        },
-                        ]}
-                        layout={{
-                        title: 'Heatmap of Total Sales by Country',
-                        xaxis: { title: 'Metrics' },
-                        yaxis: { title: 'Country' },
-                        width: 500,
-                        height: 400,
-                        margin: { l: 150 }
-                        }}
-                    />
-                    </div>
+                <div className={styles['plot-container']} style={{ width: '100%' }}>
+                    {heatMapData && heatMapData.countries && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', width: '100%' }}>
+                        {/* Heatmap for Total Sales */}
+                        <div style={{ flex: '1 1 auto' }}>
+                        <Plot
+                            responsive={true}
+                            useResizeHandler={true}
+                            data={[
+                            {
+                                z: heatMapData.z.map(row => [row[0]]),
+                                x: ['Total Sales'],
+                                y: heatMapData.countries,
+                                type: 'heatmap',
+                                colorscale: 'Viridis',
+                            },
+                            ]}
+                            layout={{
+                            title: 'Heatmap of Total Sales by Country',
+                            xaxis: { title: 'Metrics' },
+                            yaxis: { title: 'Country' },
+                            autosize: true,
+                            margin: { l: 150 },
+                            }}
+                        />
+                        </div>
 
-                    {/* Heatmap for Total Quantity */}
-                    <div style={{ flex: '0 0 15%' }}>
-                    <Plot
-                        data={[
-                        {
-                            z: heatMapData.z.map(row => [row[1]]), // Only total quantity
-                            x: ['Total Quantity'],
-                            y: heatMapData.countries,
-                            type: 'heatmap',
-                            colorscale: 'Inferno',
-                        },
-                        ]}
-                        layout={{
-                        title: 'Heatmap of Total Quantity by Country',
-                        xaxis: { title: 'Metrics' },
-                        yaxis: { title: 'Country' },
-                        width: 500,
-                        height: 400,
-                        margin: { l: 150 }
-                        }}
-                    />
+                        {/* Heatmap for Total Quantity */}
+                        <div style={{ flex: '1 1 auto' }}>
+                        <Plot
+                            responsive={true}
+                            useResizeHandler={true}
+                            data={[
+                            {
+                                z: heatMapData.z.map(row => [row[1]]),
+                                x: ['Total Quantity'],
+                                y: heatMapData.countries,
+                                type: 'heatmap',
+                                colorscale: 'Inferno',
+                            },
+                            ]}
+                            layout={{
+                            title: 'Heatmap of Total Quantity by Country',
+                            xaxis: { title: 'Metrics' },
+                            yaxis: { title: 'Country' },
+                            autosize: true,
+                            margin: { l: 150 },
+                            }}
+                        />
+                        </div>
                     </div>
+                    )}
                 </div>
-                )}
-                </div>
-                <small className={styles['legal-disclaimer']}>
-                    Disclaimer: The data presented in this chart is sourced from Chen,Daqing's "Online Retail II" dataset available at the UCI Machine Learning Repository 
-                    (<a href="https://doi.org/10.24432/C5CG6D" target="_blank" rel="noopener noreferrer">https://doi.org/10.24432/C5CG6D</a>). This information is intended 
-                    to be a demonstration only and should not be construed as financial or investment advice. All visualizations and interpretations are the author's own and 
-                    users should exercise caution and independent judgment when using this data for decision-making.
-                </small>
             </div>
+            
+            <small className={styles['legal-disclaimer']}>
+                {/* Legal Disclaimer */}
+            </small>
         </div>
     </div>
-);
+            <small className={styles['legal-disclaimer']}>
+                Disclaimer: The data presented in this chart is sourced from Chen,Daqing's "Online Retail II" dataset available at the UCI Machine Learning Repository 
+                (<a href="https://doi.org/10.24432/C5CG6D" target="_blank" rel="noopener noreferrer">https://doi.org/10.24432/C5CG6D</a>). This information is intended 
+                to be a demonstration only and should not be construed as financial or investment advice. All visualizations and interpretations are the author's own and 
+                users should exercise caution and independent judgment when using this data for decision-making.
+            </small>
+            </div>
+    );
 }
 
 export default Dashboard;

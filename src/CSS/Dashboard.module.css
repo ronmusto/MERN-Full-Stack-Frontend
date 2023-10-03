@@ -47,10 +47,14 @@
 /* === Data Visualizations Container === */
 .data-visualizations-container {
     padding: 10px 20px;
+    width: 100%;
+    margin: auto;
 }
 
 .visualization-section {
     margin-bottom: 30px;
+    margin: auto;
+    width: 100%;
 }
 
 .visualization-title {
@@ -97,12 +101,21 @@
 }
   
 
-/* === Plot Container === */
 .plot-container {
-    background-color: #ffffff; /* White background for plots */
+    background-color: #ffffff;
     border-radius: 10px;
-    padding: 20px; /* Controls padding for labels and axes */
-    overflow: visible; /* Ensure content doesn't get clipped */
+    padding: 20px;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .plot-container {
+        padding: 10px;
+    }
 }
 
 /* === Customize recharts styles === */
