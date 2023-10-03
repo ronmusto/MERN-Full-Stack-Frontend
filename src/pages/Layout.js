@@ -1,58 +1,32 @@
 import React, { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import styles from '../CSS/Layout.module.css';
+// import styles from '../CSS/Layout.module.css';
 import { UserContext } from '../components/UserContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const Layout = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className={styles.layoutContainer}>
-      <header className={styles.layoutHeader}>
-        <nav className={styles.layoutNavigation}>
-          <ul className={styles.layoutNavList}>
-            <li className={styles.layoutNavItem}>
-              <Link to="/" className={styles.layoutNavLink}>
-                Login
-              </Link>
-            </li>
-            <li className={styles.layoutNavItem}>
-              <Link to="/contact" className={styles.layoutNavLink}>
-                Contact
-              </Link>
-            </li>
-            {user && (
-              <li className={styles.layoutNavItem}>
-                <Link to="/AI" className={styles.layoutNavLink}>
-                  House AI
-                </Link>
-              </li>
-            )}
-            {user && (
-              <li className={styles.layoutNavItem}>
-                <Link to="/dashboard" className={styles.layoutNavLink}>
-                  Data
-                </Link>
-              </li>
-            )}
-            {user && (
-              <li className={styles.layoutNavItem}>
-                <Link to="/travel" className={styles.layoutNavLink}>
-                  Travel
-                </Link>
-              </li>
-            )}
-            {user && (
-              <li className={styles.layoutNavItem}>
-                <Link to="/account" className={styles.layoutNavLink}>
-                  Account
-                </Link>
-              </li>
-            )}
-          </ul>
-        </nav>
-      </header>
-      <Outlet />
+    <div>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand href="/">Your App</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Link as={Link} to="/">Login</Nav.Link>
+            <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
+            <Nav.Link as={Link} to="/AI">House AI</Nav.Link>
+            <Nav.Link as={Link} to="/dashboard">Data</Nav.Link>
+            <Nav.Link as={Link} to="/travel">Travel</Nav.Link>
+            <Nav.Link as={Link} to="/account">Account</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <Container>
+        <Outlet />
+      </Container>
     </div>
   );
 };

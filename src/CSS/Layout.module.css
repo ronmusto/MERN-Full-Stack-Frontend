@@ -1,7 +1,7 @@
 .layoutHeader {
   /* control header vertically */
-  padding: 15px 20px; /* Increased padding for more space */
-  font-size: 18px; /* Increased font size */
+  padding: 1em 1.5em;
+  font-size: 1.2em;
   height: auto; /* Allow height to adjust based on content */
   background-color: #f5f5f5; /* Optional: light background color */
   border-bottom: 1px solid #ccc; /* Optional: subtle border */
@@ -31,7 +31,7 @@
   color: #555; /* Darker color for better readability */
   text-decoration: none;
   font-weight: bold;
-  padding: 5px 10px; /* Padding around links for more clickable area */
+  padding: 0.5em 1em;
   transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 
