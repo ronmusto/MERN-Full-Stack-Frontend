@@ -58,7 +58,6 @@ const StockPrediction = () => {
       )}
       {error && <div className="error">{error}</div>}
       <div className="chart-container">
-        {/* You can insert a chart or other content here */}
       </div>
     </div>
   );  
