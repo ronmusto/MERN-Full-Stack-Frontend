@@ -83,10 +83,26 @@ export function useHomeLogic() {
           .catch(err => console.error('Error registering:', err));
       };
     
-      const handleLogout = () => {
-        setUser(null);
-        navigate('/'); // Redirect to home page
-      };
+      const handleLogout = async () => {
+        try {
+          // Make API call to logout endpoint to clear cookie
+          const response = await fetch('http://localhost:4200/logout', {
+            method: 'POST',
+          });
+      
+          if (response.ok) {
+            // Clear local storage
+            localStorage.clear();
+            
+            // Update context to set user to null
+            setUser(null);
+          } else {
+            console.error('Failed to log out');
+          }
+        } catch (error) {
+          console.error('An error occurred during logout:', error);
+        }
+      };    
 
     return {
         navigate,
