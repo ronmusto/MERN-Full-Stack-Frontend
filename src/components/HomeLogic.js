@@ -86,7 +86,7 @@ export function useHomeLogic() {
       const handleLogout = async () => {
         try {
           // Make API call to logout endpoint to clear cookie
-          const response = await fetch(process.env.REACT_APP_BACKEND, {
+          const response = await fetch(`${process.env.REACT_APP_BACKEND}/logout`, {
             method: 'POST',
           });
       
