@@ -15,7 +15,7 @@ export function useHomeLogic() {
     const [isLoading, setIsLoading] = useState(true);
     const [regUsername, setRegUsername] = useState('');
 
-    useEffect(() => {
+    useEffect(() => {/*{
         fetch(`${process.env.REACT_APP_BACKEND}/verify`, {
           method: 'GET',
           credentials: 'include',  // include credentials to send the cookies
@@ -34,7 +34,7 @@ export function useHomeLogic() {
         })
         .finally(() => {
           setIsLoading(false);  // set isLoading to false once the request is complete
-        });
+        });*/
       }, [setUser]);
       
     
@@ -102,7 +102,7 @@ export function useHomeLogic() {
         } catch (error) {
           console.error('An error occurred during logout:', error);
         }
-      };    
+      };
 
     return {
         navigate,
@@ -122,6 +122,6 @@ export function useHomeLogic() {
         setRegUsername,
         handleLogin,
         handleRegister,
-        handleLogout
+        handleLogout,
     };
 }
