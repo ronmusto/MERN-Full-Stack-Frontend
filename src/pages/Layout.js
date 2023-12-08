@@ -1,3 +1,4 @@
+import '../CSS/bootstrap.css';
 import React, { useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { UserContext } from '../components/UserContext';
