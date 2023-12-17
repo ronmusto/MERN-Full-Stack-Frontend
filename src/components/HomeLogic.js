@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import styles from '../CSS/Home.module.css';
+//import styles from '../CSS/Home.module.css';
 import { UserContext } from '../components/UserContext';
-import ProtectedRoute from '../components/ProtectedRoute';
-import Travel from '../pages/Travel';
+//import ProtectedRoute from '../components/ProtectedRoute';
+//import Travel from '../pages/Travel';
 
 export function useHomeLogic() {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ export function useHomeLogic() {
     const [isLoading, setIsLoading] = useState(true);
     const [regUsername, setRegUsername] = useState('');
 
-    useEffect(() => {/*{
+    useEffect(() => {
         fetch(`${process.env.REACT_APP_BACKEND}/verify`, {
           method: 'GET',
           credentials: 'include',  // include credentials to send the cookies
@@ -34,7 +34,7 @@ export function useHomeLogic() {
         })
         .finally(() => {
           setIsLoading(false);  // set isLoading to false once the request is complete
-        });*/
+        });
       }, [setUser]);
       
     

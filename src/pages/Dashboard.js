@@ -92,7 +92,7 @@ return (
         </Card.Body>
         </Card>
             <div className={styles['visualization-section']}>
-                <h2 className={styles['visualization-title']}>Total Foreign Sales in GBP check this by Country 2010-2011</h2>
+                <h2 className={styles['visualization-title']}>Total Foreign Sales in GBP by Country 2010-2011</h2>
                 <p className={styles['visualization-description']}>
                     This bar chart serves as a powerful demonstration tool for comparing total sales across various countries for the year 2009. 
                     Each bar represents a different country, and the height of the bar indicates the total sales value in U.S. dollars for that country. 
