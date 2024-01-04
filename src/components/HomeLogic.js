@@ -1,9 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
-//import styles from '../CSS/Home.module.css';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../components/UserContext';
-//import ProtectedRoute from '../components/ProtectedRoute';
-//import Travel from '../pages/Travel';
 
 export function useHomeLogic() {
     const navigate = useNavigate();

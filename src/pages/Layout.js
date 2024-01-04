@@ -1,10 +1,8 @@
 import '../CSS/bootstrap.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { UserContext } from '../components/UserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { useHomeLogic } from '../components/HomeLogic';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const Layout = () => {
 
