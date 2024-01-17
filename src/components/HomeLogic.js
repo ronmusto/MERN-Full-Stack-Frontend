@@ -76,6 +76,9 @@ export function useHomeLogic() {
           .then(response => response.json())
           .then(data => {
             setUser(data.user);
+            if (data.user) {
+              navigate('/travel');
+            }
           })
           .catch(err => console.error('Error registering:', err));
       };

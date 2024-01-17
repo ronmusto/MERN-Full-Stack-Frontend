@@ -53,17 +53,18 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="AI" element={<ProtectedRoute><AI /></ProtectedRoute>} />
-            <Route path="dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route index element={<Travel />} />
+            <Route path="AI" element={<AI />} />
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
+            <Route path="login" element={<Home />} />
             <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
-            <Route path="travel" element={<ProtectedRoute><Travel /></ProtectedRoute>} />
-            <Route path="predict-stock" element={<ProtectedRoute><StockPrediction /></ProtectedRoute>} />
-            <Route path="vacation/:id" element={<ProtectedRoute><VacationDetails /></ProtectedRoute>} />
-            <Route path="checkout/:id" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+            <Route path="travel" element={<Travel />} />
+            <Route path="predict-stock" element={<StockPrediction />} />
+            <Route path="vacation/:id" element={<VacationDetails />} />
+            <Route path="checkout/:id" element={<Checkout />} />
           </Route>
         </Routes>
       </BrowserRouter>
