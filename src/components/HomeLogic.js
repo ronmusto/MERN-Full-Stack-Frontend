@@ -50,7 +50,7 @@ export function useHomeLogic() {
           .then(data => {
             setUser(data.user);
             if (data.user) {
-              navigate('/travel');
+              navigate('/account');
             }
           })
           .catch(err => console.error('Error logging in:', err));
@@ -77,7 +77,7 @@ export function useHomeLogic() {
           .then(data => {
             setUser(data.user);
             if (data.user) {
-              navigate('/travel');
+              navigate('/account');
             }
           })
           .catch(err => console.error('Error registering:', err));
