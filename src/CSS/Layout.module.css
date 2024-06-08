@@ -1,40 +1,22 @@
 .layoutHeader {
-  /* control header vertically */
-  padding: 1em 1.5em;
-  font-size: 1.2em;
-  height: auto; /* Allow height to adjust based on content */
-  background-color: #f5f5f5; /* Optional: light background color */
-  border-bottom: 1px solid #ccc; /* Optional: subtle border */
+  padding: 1.2em 0;        
+  font-family: 'Arial', sans-serif;
+  font-size: 1.4em;
+  border-bottom: 1px solid #333; /* Keep the border for visual separation */
 }
 
-.layoutHeader img {
-  /* Set the max-height property to ensure the logo doesn't exceed the header height */
-  max-height: 25px; /* Increased max-height to match increased header size */
-}
-
-.layoutNavigation {
-  display: flex;
-}
-
-.layoutNavList {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.layoutNavItem {
-  margin-left: 20px; /* Increased margin for more spacing between items */
-}
+.layoutNavList { /* No additional styles needed here */ }
 
 .layoutNavLink {
-  color: #555; /* Darker color for better readability */
+  color: #e0e0e0;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
   padding: 0.5em 1em;
-  transition: color 0.3s ease; /* Smooth color transition on hover */
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .layoutNavLink:hover {
-  color: #007bff; /* Color change on hover for visual feedback */
+  background-color: #333;
+  color: white;
 }
