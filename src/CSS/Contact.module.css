@@ -1,39 +1,37 @@
-/* === Contact Container === */
-.contactContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f2f2f2; /* Light background for contrast */
-  color: #333; /* Darker color for text */
+/* Home.module.css (dark theme) */
+
+/* Overall Container */
+.homeContainer {
+  background-color: #121212; /* Dark background */
+  color: #f4f4f4; /* Light text color */
 }
 
-.contactHeading {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #007bff; /* Blue color for the heading */
+/* Headings */
+.sectionHeading {
+  color: #4f5051; /* Bright blue accent for headings */
 }
 
-.contactDetails {
-  font-size: 1.2rem;
-  color: #555; /* Darker color for better readability */
+/* Paragraphs and Details */
+.sectionText {
+  color: #e0e0e0; /* Slightly lighter text for readability */
 }
 
-/* === Contact Button === */
-.contactButton {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 10px; /* Rounded corners to match other elements */
-  background-color: #007bff; /* Blue color for button */
-  color: #ffffff; /* White color for text */
-  text-decoration: none;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
-  transition: background-color 0.3s ease; /* Smooth hover effect */
+/* Portfolio Section */
+.projectCard {
+  background-color: #242424; /* Darker card background */
+  border: 1px solid #333; /* Subtle border */
 }
 
-.contactButton:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+.mainHeading {
+  color: #555555; /* Modern grey color */
+  text-shadow: 0 0 10px rgba(0, 177, 255, 0.5); /* Blue glow */
+}
+
+/* Project Link */
+.projectLink {
+  background-color: #00d1ff; /* Blue link color */
+}
+
+.projectLink:hover {
+  background-color: #00a5cc; /* Slightly darker blue on hover */
 }

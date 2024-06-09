@@ -53,7 +53,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Layout />}>
-            <Route index element={<Travel />} />
+            <Route index element={<Contact />} />
             <Route path="AI" element={<AI />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="contact" element={<Contact />} />
