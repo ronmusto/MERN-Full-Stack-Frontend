@@ -34,13 +34,16 @@ const Contact = () => {
       {/* Education and Certifications */}
       <h2 className={styles.contactHeading}>Education & Certifications</h2>
       <p className={styles.contactDetails}>
-        Bachelor of Science in Computer Science
+        Master of Science in Computer Science - Expected October 2025
+      </p>
+      <p className={styles.contactDetails}>
+        Bachelor of Science in Computer Science - Awarded July 2023 
       </p>
       <p className={styles.contactDetails}>
         Google IT Support Professional Certificate
       </p>
 
-      {/* Portfolio */}
+      {/* Portfolio 
       <h2 className={styles.contactHeading}>Portfolio</h2>
       <div className={styles.portfolioContainer}> 
         {projects.map((project, index) => (
@@ -54,7 +57,7 @@ const Contact = () => {
           </div>
         ))}
       </div>
-
+      */}
       {/* Contact */}
       <h2 className={styles.contactHeading}>Contact Me</h2>
       <p className={styles.contactDetails}>Email: renaldomusto@gmail.com</p>

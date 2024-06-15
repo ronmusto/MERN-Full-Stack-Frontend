@@ -56,7 +56,7 @@ function App() {
             <Route index element={<Contact />} />
             <Route path="AI" element={<AI />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="contact" element={<Contact />} />
+            {/* <Route path="contact" element={<Contact />} /> */}
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
             <Route path="login" element={<Home />} />
