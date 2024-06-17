@@ -9,6 +9,7 @@
     "css-loader": "^6.8.1",
     "date-fns": "^2.30.0",
     "jsonwebtoken": "^9.0.1",
+    "luxon": "^3.4.4",
     "moment": "^2.29.4",
     "node-fetch": "^3.3.1",
     "plotly.js": "^2.25.1",
