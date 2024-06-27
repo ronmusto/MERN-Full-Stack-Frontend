@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { UserContext } from "./components/UserContext";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
-import Contact from "./pages/Contact";
-import NoPage from "./pages/NoPage";
 import Resume from "./pages/Resume";
+import NoPage from "./pages/NoPage";
+import AboutMe from "./pages/AboutMe";
 import AI from "./pages/AI";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
@@ -53,10 +53,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/*" element={<Layout />}>
-            <Route index element={<Contact />} />
+            <Route index element={<AboutMe />} />
             <Route path="AI" element={<AI />} />
             <Route path="dashboard" element={<Dashboard />} />
-            {/* <Route path="contact" element={<Contact />} /> */}
+            <Route path="aboutme" element={<AboutMe />} />
             <Route path="*" element={<NoPage />} />
             <Route path="resume" element={<Resume />} />
             <Route path="login" element={<Home />} />

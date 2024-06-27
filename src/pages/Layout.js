@@ -12,11 +12,11 @@ const Layout = () => {
         bg="dark" variant="dark" expand="lg"
       >
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">Home</Navbar.Brand> 
+          <Navbar.Brand as={Link} to="/">About Me</Navbar.Brand> 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
             <Nav className={LayoutStyles.layoutNavList}>
-              {/*<Nav.Link as={Link} to="/contact" className={LayoutStyles.layoutNavLink}>Contact</Nav.Link>*/}
+              <Nav.Link as={Link} to="/resume" className={LayoutStyles.layoutNavLink}>Resume</Nav.Link>
               <Nav.Link as={Link} to="/dashboard" className={LayoutStyles.layoutNavLink}>Data</Nav.Link>
               <Nav.Link as={Link} to="/travel" className={LayoutStyles.layoutNavLink}>Travel</Nav.Link>
               <Nav.Link as={Link} to="/account" className={LayoutStyles.layoutNavLink}>Account</Nav.Link>

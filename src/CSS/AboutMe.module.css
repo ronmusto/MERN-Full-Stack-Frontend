@@ -1,0 +1,37 @@
+/* Basic Styling */
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
+header {
+  background-color: #f0f0f0;
+  padding: 1em;
+  text-align: center;
+}
+
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+/* Specific Styling */
+#profile img {
+  max-width: 200px;
+  border-radius: 50%;
+}
+
+#interests ul, 
+#skills ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 1em;
+  background-color: #f0f0f0;
+}
