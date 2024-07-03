@@ -22,7 +22,7 @@ const Resume = () => {
       </p>
 
       {/* Skills and Experience */}
-      <h2 className={styles.contactHeading}>Skills & Experience</h2>
+      <h2 className={styles.contactHeading}>Skills</h2>
       <ul>
         <li>MERN Stack (MongoDB, Express, React, Node.js)</li>
         <li>Frontend Development (HTML, CSS, JavaScript)</li>
